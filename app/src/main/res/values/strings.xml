@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Exercise</string>
+
+    <string name="price_style">￥%s</string>
+    <string name="no_available_activity">未发现对应的Activity</string>
 </resources>
