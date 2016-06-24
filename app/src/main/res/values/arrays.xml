@@ -3,4 +3,8 @@
     <array name="activity_main_category">
         <item>View</item>
     </array>
+
+    <array name="activity_view_category">
+        <item>Custom View</item>
+    </array>
 </resources>

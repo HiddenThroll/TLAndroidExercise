@@ -3,4 +3,7 @@
 
     <string name="price_style">￥%s</string>
     <string name="no_available_activity">未发现对应的Activity</string>
+
+    <!-- View练习-->
+    <string name="view_exercise">View练习</string>
 </resources>
