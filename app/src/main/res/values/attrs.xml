@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomTitleView">
+        <attr name="custom_title_text" format="string"/>
+        <attr name="custom_title_size" format="dimension"/>
+        <attr name="custom_title_color" format="color"/>
+    </declare-styleable>
+</resources>

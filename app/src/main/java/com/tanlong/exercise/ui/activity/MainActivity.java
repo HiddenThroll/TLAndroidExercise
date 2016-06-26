@@ -34,7 +34,7 @@ public class MainActivity extends BaseActivity {
         mIvBack.setVisibility(View.INVISIBLE);
         mTvTitle.setText(R.string.app_name);
 
-        String[] items = getResources().getStringArray(R.array.activity_main_category);
+        String[] items = getResources().getStringArray(R.array.main_category);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_category, items);
         mLvCategory.setAdapter(adapter);
     }

@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="activity_main_category">
+    <array name="main_category">
         <item>View</item>
     </array>
 
-    <array name="activity_view_category">
+    <array name="view_category">
         <item>Custom View</item>
+    </array>
+
+    <array name="custom_view_category">
+        <item>CustomViewTitle</item>
+        <item>CustomImageView</item>
+        <item>CustomCircle</item>
+        <item>CustomVolumeBar</item>
+        <item>CustomArcShow</item>
     </array>
 </resources>
