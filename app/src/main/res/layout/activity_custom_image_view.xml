@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    >
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <com.tanlong.exercise.ui.view.customview.CustomImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:custom_image_title="Hello Android"
+        custom:custom_image_size="40sp"
+        custom:custom_image_color="#41ccef"
+        custom:custom_image_src="@mipmap/ic_launcher"
+        custom:custom_image_scale="center"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="16dp"
+        />
+
+    <com.tanlong.exercise.ui.view.customview.CustomImageView
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        custom:custom_image_title="Hello Android"
+        custom:custom_image_size="40sp"
+        custom:custom_image_color="#41ccef"
+        custom:custom_image_src="@mipmap/ic_launcher"
+        custom:custom_image_scale="center"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        />
+
+    <com.tanlong.exercise.ui.view.customview.CustomImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:custom_image_title="Hi"
+        custom:custom_image_size="40sp"
+        custom:custom_image_color="#41ccef"
+        custom:custom_image_src="@mipmap/ic_launcher"
+        custom:custom_image_scale="center"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        />
+
+</LinearLayout>

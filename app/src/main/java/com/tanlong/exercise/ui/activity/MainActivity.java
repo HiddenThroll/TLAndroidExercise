@@ -31,12 +31,15 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_category);
         ButterKnife.bind(this);
 
-        mIvBack.setVisibility(View.INVISIBLE);
-        mTvTitle.setText(R.string.app_name);
-
+        initView();
         String[] items = getResources().getStringArray(R.array.main_category);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_category, items);
         mLvCategory.setAdapter(adapter);
+    }
+
+    public void initView() {
+        mIvBack.setVisibility(View.INVISIBLE);
+        mTvTitle.setText(R.string.app_name);
     }
 
     @OnItemClick(R.id.lv_activity_category)

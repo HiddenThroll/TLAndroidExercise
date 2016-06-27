@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 /**
+ *
  * Created by 龙 on 2016/6/24.
  */
 public class ViewCategoryActivity extends BaseActivity {
@@ -31,15 +32,17 @@ public class ViewCategoryActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_category);
         ButterKnife.bind(this);
 
-        mTvTitle.setText(R.string.view_exercise);
-
+        initView();
         String[] items = getResources().getStringArray(R.array.view_category);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_category, items);
         mLvCategory.setAdapter(adapter);
+    }
+
+    public void initView() {
+        mTvTitle.setText(R.string.view_exercise);
     }
 
     @OnClick(R.id.iv_back)

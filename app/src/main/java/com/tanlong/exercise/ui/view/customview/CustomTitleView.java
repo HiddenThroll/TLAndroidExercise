@@ -9,7 +9,6 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
-
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.util.DisplayUtil;
 import com.tanlong.exercise.util.LogTool;
@@ -42,9 +41,7 @@ public class CustomTitleView extends View {
     public CustomTitleView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        /**
-         * 获得我们所定义的自定义样式属性
-         */
+        // TODO 2. 获得我们所定义的自定义样式属性
         TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CustomTitleView,
                 defStyleAttr, 0);
         for (int i = 0, size = array.length(); i < size; i++) {
@@ -79,9 +76,9 @@ public class CustomTitleView extends View {
         });
     }
 
+    //TODO 覆写onMeasure方法
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        LogTool.e(TAG, "onMeasure");
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
@@ -106,9 +103,9 @@ public class CustomTitleView extends View {
         setMeasuredDimension(width, height);
     }
 
+    // TODO 覆写onDraw方法
     @Override
     protected void onDraw(Canvas canvas) {
-        LogTool.e(TAG, "onDraw");
         mPaint.setColor(Color.YELLOW);
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
 

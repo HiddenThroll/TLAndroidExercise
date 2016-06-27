@@ -5,4 +5,15 @@
         <attr name="custom_title_size" format="dimension"/>
         <attr name="custom_title_color" format="color"/>
     </declare-styleable>
+
+    <declare-styleable name="CustomImageView">
+        <attr name="custom_image_title" format="string"/>
+        <attr name="custom_image_size" format="dimension"/>
+        <attr name="custom_image_color" format="color"/>
+        <attr name="custom_image_src" format="reference"/>
+        <attr name="custom_image_scale" format="enum">
+            <enum name="fillXY" value="0"/>
+            <enum name="center" value="1"/>
+        </attr>
+    </declare-styleable>
 </resources>

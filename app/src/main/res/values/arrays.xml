@@ -9,7 +9,7 @@
     </array>
 
     <array name="custom_view_category">
-        <item>CustomViewTitle</item>
+        <item>CustomTitleView</item>
         <item>CustomImageView</item>
         <item>CustomCircle</item>
         <item>CustomVolumeBar</item>

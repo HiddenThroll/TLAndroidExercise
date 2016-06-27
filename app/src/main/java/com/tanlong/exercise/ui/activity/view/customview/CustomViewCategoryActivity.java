@@ -16,6 +16,7 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 /**
+ *
  * Created by Administrator on 2016/6/26.
  */
 public class CustomViewCategoryActivity extends BaseActivity {
@@ -34,9 +35,14 @@ public class CustomViewCategoryActivity extends BaseActivity {
         setContentView(R.layout.activity_category);
         ButterKnife.bind(this);
 
+        initView();
         String[] items = getResources().getStringArray(R.array.custom_view_category);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_category, items);
         mLvCategory.setAdapter(adapter);
+    }
+
+    public void initView() {
+        mTvTitle.setText(R.string.custom_view_exercise);
     }
 
     @OnClick(R.id.iv_back)
@@ -51,6 +57,9 @@ public class CustomViewCategoryActivity extends BaseActivity {
         switch (position) {
             case 0:
                 intent.setClass(this, CustomTitleViewActivity.class);
+                break;
+            case 1:
+                intent.setClass(this, CustomImageViewActivity.class);
                 break;
 
         }
