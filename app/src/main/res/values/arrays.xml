@@ -6,6 +6,7 @@
 
     <array name="view_category">
         <item>Custom View</item>
+        <item>Custom ViewGroup</item>
     </array>
 
     <array name="custom_view_category">
@@ -14,5 +15,9 @@
         <item>CustomCircleView</item>
         <item>CustomVolumeBar</item>
         <item>CustomArcShowView</item>
+    </array>
+
+    <array name="custom_view_group_category">
+        <item>VerticalLinearLayout</item>
     </array>
 </resources>

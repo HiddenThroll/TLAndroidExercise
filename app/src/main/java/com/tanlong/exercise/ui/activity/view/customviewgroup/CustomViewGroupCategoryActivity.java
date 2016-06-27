@@ -1,7 +1,8 @@
-package com.tanlong.exercise.ui.activity.view;
+package com.tanlong.exercise.ui.activity.view.customviewgroup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -9,8 +10,6 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.ui.activity.view.customview.CustomViewCategoryActivity;
-import com.tanlong.exercise.ui.activity.view.customviewgroup.CustomViewGroupCategoryActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,48 +17,38 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 /**
- *
- * Created by 龙 on 2016/6/24.
+ * Created by Administrator on 2016/6/27.
  */
-public class ViewCategoryActivity extends BaseActivity {
+public class CustomViewGroupCategoryActivity extends BaseActivity {
 
-    @Bind(R.id.lv_activity_category)
-    ListView mLvCategory;
     @Bind(R.id.iv_back)
     ImageView mIvBack;
     @Bind(R.id.tv_title)
     TextView mTvTitle;
+    @Bind(R.id.lv_activity_category)
+    ListView mLvCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_category);
         ButterKnife.bind(this);
 
-        initView();
-        String[] items = getResources().getStringArray(R.array.view_category);
+        mTvTitle.setText(R.string.custom_view_group_exercise);
+
+        String[] items = getResources().getStringArray(R.array.custom_view_group_category);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_category, items);
         mLvCategory.setAdapter(adapter);
-    }
-
-    public void initView() {
-        mTvTitle.setText(R.string.view_exercise);
-    }
-
-    @OnClick(R.id.iv_back)
-    public void onBack() {
-        finish();
     }
 
     @OnItemClick(R.id.lv_activity_category)
     public void onItemClick(int position) {
         Intent intent = new Intent();
+
         switch (position) {
             case 0:
-                intent.setClass(this, CustomViewCategoryActivity.class);
-                break;
-            case 1:
-                intent.setClass(this, CustomViewGroupCategoryActivity.class);
+                intent.setClass(this, VerticalLinearLayoutActivity.class);
                 break;
         }
 

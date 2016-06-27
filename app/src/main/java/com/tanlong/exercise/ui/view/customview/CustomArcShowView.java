@@ -21,7 +21,6 @@ import com.tanlong.exercise.util.NumberUtil;
  * Created by Administrator on 2016/5/20.
  */
 public class CustomArcShowView extends View {
-    private final String TAG = "CustomArcShowView";
 
     private int mTotalCount; // 总数据
     private int currentCount;// 当前数据，要使用属性动画,属性前不要加m
@@ -154,7 +153,6 @@ public class CustomArcShowView extends View {
 
     public void setCurrentCount(int currentCount) {
         this.currentCount = currentCount;
-        LogTool.e(TAG, "set currentCount " + currentCount);
         invalidate();
     }
 }

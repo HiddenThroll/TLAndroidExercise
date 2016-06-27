@@ -65,7 +65,19 @@
             android:configChanges="keyboard"
             />
 
-
+        <!-- 自定义ViewGroup相关-->
+        <activity
+            android:name=".ui.activity.view.customviewgroup.CustomViewGroupCategoryActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
+        <activity
+            android:name=".ui.activity.view.customviewgroup.VerticalLinearLayoutActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
     </application>
 
 </manifest>
