@@ -13,6 +13,6 @@
         <item>CustomImageView</item>
         <item>CustomCircleView</item>
         <item>CustomVolumeBar</item>
-        <item>CustomArcShow</item>
+        <item>CustomArcShowView</item>
     </array>
 </resources>

@@ -32,4 +32,13 @@
         <attr name="custom_volume_bar_split_size" format="integer"/>
         <attr name="custom_volume_bar_circle_width" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="CustomArcShow">
+        <attr name="custom_arc_show_total_count" format="integer"/>
+        <attr name="custom_arc_show_current_count" format="integer"/>
+        <attr name="custom_arc_show_circle_width" format="dimension"/>
+        <attr name="custom_arc_show_arc_color" format="color"/>
+        <attr name="custom_arc_show_text_color" format="color"/>
+        <attr name="custom_arc_show_text_size" format="dimension"/>
+    </declare-styleable>
 </resources>

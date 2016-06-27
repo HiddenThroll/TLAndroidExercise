@@ -67,6 +67,9 @@ public class CustomViewCategoryActivity extends BaseActivity {
             case 3:
                 intent.setClass(this, CustomVolumeBarActivity.class);
                 break;
+            case 4:
+                intent.setClass(this, CustomArcShowActivity.class);
+                break;
 
         }
 

@@ -13,5 +13,5 @@
     <string name="custom_image_view">CustomImageView</string>
     <string name="custom_circle_view">CustomCircleView</string>
     <string name="custom_volume_bar">CustomVolumeBar</string>
-    <!--<string name="custom_Image_view">CustomImageView</string>-->
+    <string name="custom_arc_show_view">CustomArcShowView</string>
 </resources>

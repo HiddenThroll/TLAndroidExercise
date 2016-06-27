@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    >
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <com.tanlong.exercise.ui.view.customview.CustomArcShowView
+        android:id="@+id/cas_activity_custom_arc_show"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        custom:custom_arc_show_total_count="1000"
+        custom:custom_arc_show_current_count="30"
+        custom:custom_arc_show_circle_width="20dp"
+        custom:custom_arc_show_arc_color="#41ccef"
+        custom:custom_arc_show_text_color="#333333"
+        custom:custom_arc_show_text_size="20sp"
+        android:layout_marginTop="16dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/btn_activity_custom_arc_show_Add"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="ADD"
+            android:layout_margin="16dp"
+            />
+        <Button
+            android:id="@+id/btn_activity_custom_arc_show_Reduce"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="REDUCE"
+            android:layout_margin="16dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="16dp"
+        >
+
+        <EditText
+            android:id="@+id/et_activity_custom_arc_show_Count"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_marginRight="16dp"
+            />
+
+        <Button
+            android:id="@+id/btn_activity_custom_arc_show_Set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SET"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
