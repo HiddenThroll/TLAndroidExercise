@@ -23,4 +23,13 @@
         <attr name="custom_circle_sec_color" format="color"/>
         <attr name="custom_circle_speed" format="integer"/>
     </declare-styleable>
+
+    <declare-styleable name="CustomVolumeBar">
+        <attr name="custom_volume_bar_fir_color" format="color"/>
+        <attr name="custom_volume_bar_sec_color" format="color"/>
+        <attr name="custom_volume_bar_bg" format="reference"/>
+        <attr name="custom_volume_bar_count" format="integer"/>
+        <attr name="custom_volume_bar_split_size" format="integer"/>
+        <attr name="custom_volume_bar_circle_width" format="dimension"/>
+    </declare-styleable>
 </resources>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    >
+    <include layout="@layout/layout_toolbar"/>
+
+    <com.tanlong.exercise.ui.view.customview.CustomVolumeBar
+        android:id="@+id/cvb_custom_volume_bar"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        custom:custom_volume_bar_bg="@mipmap/ic_launcher"
+        custom:custom_volume_bar_circle_width="16dp"
+        custom:custom_volume_bar_count="12"
+        custom:custom_volume_bar_fir_color="#dddddd"
+        custom:custom_volume_bar_sec_color="@color/color_black"
+        custom:custom_volume_bar_split_size="16"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        >
+        <Button
+            android:id="@+id/btn_Reduce_Bar"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="减小"
+            android:layout_margin="8dp"
+            />
+        <Button
+            android:id="@+id/btn_Add_Bar"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="增大"
+            android:layout_margin="8dp"
+            />
+    </LinearLayout>
+
+</LinearLayout>

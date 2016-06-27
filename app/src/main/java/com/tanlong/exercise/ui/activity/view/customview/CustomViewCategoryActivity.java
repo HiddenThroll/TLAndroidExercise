@@ -64,6 +64,9 @@ public class CustomViewCategoryActivity extends BaseActivity {
             case 2:
                 intent.setClass(this, CustomCircleViewActivity.class);
                 break;
+            case 3:
+                intent.setClass(this, CustomVolumeBarActivity.class);
+                break;
 
         }
 

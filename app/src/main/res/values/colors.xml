@@ -8,4 +8,5 @@
     <color name="color_888888">#888888</color>
     <color name="color_aaaaaa">#aaaaaa</color>
     <color name="color_text_black">#333333</color>
+    <color name="color_black">#000000</color>
 </resources>
