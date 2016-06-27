@@ -11,7 +11,7 @@
     <array name="custom_view_category">
         <item>CustomTitleView</item>
         <item>CustomImageView</item>
-        <item>CustomCircle</item>
+        <item>CustomCircleView</item>
         <item>CustomVolumeBar</item>
         <item>CustomArcShow</item>
     </array>

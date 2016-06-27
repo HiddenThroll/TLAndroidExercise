@@ -46,6 +46,12 @@
             android:launchMode="singleTop"
             android:configChanges="keyboard"
             />
+        <activity
+            android:name=".ui.activity.view.customview.CustomCircleViewActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
 
 
     </application>

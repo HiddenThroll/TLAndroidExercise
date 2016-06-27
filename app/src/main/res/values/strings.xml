@@ -10,8 +10,8 @@
     <!-- CustomView练习-->
     <string name="custom_view_exercise">CustomView练习</string>
     <string name="custom_title_view">CustomViewTitle</string>
-    <string name="custom_Image_view">CustomImageView</string>
-    <!--<string name="custom_Image_view">CustomImageView</string>-->
+    <string name="custom_image_view">CustomImageView</string>
+    <string name="custom_circle_view">CustomCircleView</string>
     <!--<string name="custom_Image_view">CustomImageView</string>-->
     <!--<string name="custom_Image_view">CustomImageView</string>-->
 </resources>

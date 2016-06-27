@@ -11,12 +11,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
 /**
- *
- * Created by Administrator on 2016/5/16.
+ * Created by 龙 on 2016/6/27.
  */
-public class CustomImageViewActivity extends BaseActivity {
+public class CustomCircleViewActivity extends BaseActivity {
 
     @Bind(R.id.iv_back)
     ImageView mIvBack;
@@ -27,10 +25,10 @@ public class CustomImageViewActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_custom_image_view);
+        setContentView(R.layout.activity_custom_circle_view);
         ButterKnife.bind(this);
 
-        mTvTitle.setText(R.string.custom_image_view);
+        mTvTitle.setText(R.string.custom_circle_view);
     }
 
     @OnClick(R.id.iv_back)

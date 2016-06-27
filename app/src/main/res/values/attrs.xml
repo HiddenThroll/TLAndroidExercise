@@ -16,4 +16,11 @@
             <enum name="center" value="1"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="CustomCircle">
+        <attr name="custom_circle_width" format="dimension"/>
+        <attr name="custom_circle_fir_color" format="color"/>
+        <attr name="custom_circle_sec_color" format="color"/>
+        <attr name="custom_circle_speed" format="integer"/>
+    </declare-styleable>
 </resources>

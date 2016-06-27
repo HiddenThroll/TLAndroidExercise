@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <com.tanlong.exercise.ui.view.customview.CustomCircleView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerInParent="true"
+        custom:custom_circle_speed="6"
+        custom:custom_circle_width="16dp"
+        custom:custom_circle_fir_color="@color/color_text_black"
+        custom:custom_circle_sec_color="@color/color_888888"
+        />
+
+</RelativeLayout>
