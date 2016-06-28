@@ -58,6 +58,9 @@ public class ListViewCategoryActivity extends BaseActivity {
             case 1:
                 intent.setClass(this, LoadMoreListViewActivity.class);
                 break;
+            case 2:
+                intent.setClass(this, SwipeRefreshLoadMoreListViewActivity.class);
+                break;
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {

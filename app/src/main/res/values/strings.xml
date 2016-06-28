@@ -24,5 +24,6 @@
     <string name="list_view_exercise">ListView练习</string>
     <string name="list_view_swipe_refresh">使用SwipeRefreshLayout实现下拉刷新</string>
     <string name="list_view_load_more">使用OnScrollListener实现加载更多</string>
+    <string name="list_view_swipe_refresh_load_more">实现下拉刷新上拉加载侧滑菜单的ListView</string>
 
 </resources>

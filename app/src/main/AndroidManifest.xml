@@ -98,6 +98,12 @@
             android:launchMode="singleTop"
             android:configChanges="keyboard"
             />
+        <activity
+            android:name=".ui.activity.view.listview.SwipeRefreshLoadMoreListViewActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
 
     </application>
 

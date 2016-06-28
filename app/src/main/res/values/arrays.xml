@@ -25,5 +25,6 @@
     <array name="list_view_category">
         <item>使用SwipeRefreshLayout实现下拉刷新</item>
         <item>使用OnScrollListener实现加载更多</item>
+        <item>实现下拉刷新上拉加载侧滑菜单的ListView</item>
     </array>
 </resources>
