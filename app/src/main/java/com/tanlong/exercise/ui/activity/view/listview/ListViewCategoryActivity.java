@@ -1,4 +1,4 @@
-package com.tanlong.exercise.ui.activity.view;
+package com.tanlong.exercise.ui.activity.view.listview;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.ui.activity.view.customview.CustomViewCategoryActivity;
-import com.tanlong.exercise.ui.activity.view.customviewgroup.CustomViewGroupCategoryActivity;
-import com.tanlong.exercise.ui.activity.view.listview.ListViewCategoryActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,31 +17,29 @@ import butterknife.OnItemClick;
 
 /**
  *
- * Created by 龙 on 2016/6/24.
+ * Created by 龙 on 2016/6/28.
  */
-public class ViewCategoryActivity extends BaseActivity {
+public class ListViewCategoryActivity extends BaseActivity {
 
-    @Bind(R.id.lv_activity_category)
-    ListView mLvCategory;
     @Bind(R.id.iv_back)
     ImageView mIvBack;
     @Bind(R.id.tv_title)
     TextView mTvTitle;
+    @Bind(R.id.lv_activity_category)
+    ListView mLvCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_category);
         ButterKnife.bind(this);
 
-        initView();
-        String[] items = getResources().getStringArray(R.array.view_category);
+        mTvTitle.setText(R.string.list_view_exercise);
+
+        String[] items = getResources().getStringArray(R.array.list_view_category);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_category, items);
         mLvCategory.setAdapter(adapter);
-    }
-
-    public void initView() {
-        mTvTitle.setText(R.string.view_exercise);
     }
 
     @OnClick(R.id.iv_back)
@@ -55,15 +50,10 @@ public class ViewCategoryActivity extends BaseActivity {
     @OnItemClick(R.id.lv_activity_category)
     public void onItemClick(int position) {
         Intent intent = new Intent();
+
         switch (position) {
             case 0:
-                intent.setClass(this, CustomViewCategoryActivity.class);
-                break;
-            case 1:
-                intent.setClass(this, CustomViewGroupCategoryActivity.class);
-                break;
-            case 2:
-                intent.setClass(this, ListViewCategoryActivity.class);
+                intent.setClass(this, SwipeRefreshListViewActivity.class);
                 break;
         }
 

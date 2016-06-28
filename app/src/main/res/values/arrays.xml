@@ -7,6 +7,7 @@
     <array name="view_category">
         <item>Custom View</item>
         <item>Custom ViewGroup</item>
+        <item>ListView</item>
     </array>
 
     <array name="custom_view_category">
@@ -19,5 +20,9 @@
 
     <array name="custom_view_group_category">
         <item>VerticalLinearLayout</item>
+    </array>
+
+    <array name="list_view_category">
+        <item>使用SwipeRefreshLayout实现下拉刷新</item>
     </array>
 </resources>

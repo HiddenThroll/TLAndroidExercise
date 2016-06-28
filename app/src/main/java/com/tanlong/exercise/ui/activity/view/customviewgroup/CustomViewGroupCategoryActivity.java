@@ -2,7 +2,6 @@ package com.tanlong.exercise.ui.activity.view.customviewgroup;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -17,6 +16,7 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 /**
+ *
  * Created by Administrator on 2016/6/27.
  */
 public class CustomViewGroupCategoryActivity extends BaseActivity {
@@ -40,6 +40,11 @@ public class CustomViewGroupCategoryActivity extends BaseActivity {
         String[] items = getResources().getStringArray(R.array.custom_view_group_category);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_category, items);
         mLvCategory.setAdapter(adapter);
+    }
+
+    @OnClick(R.id.iv_back)
+    public void onBack() {
+        finish();
     }
 
     @OnItemClick(R.id.lv_activity_category)

@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.tanlong.exercise.ui.view.customviewgroup.VerticalLinearLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/vll_activity_vertical_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     >
+    <include layout="@layout/layout_toolbar"/>
 
-    <RelativeLayout
+    <com.tanlong.exercise.ui.view.customviewgroup.VerticalLinearLayout
+        android:id="@+id/vll_activity_vertical_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/ic_guide_1"
         >
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@mipmap/ic_guide_2"
-        >
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@mipmap/ic_guide_1"
+            >
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@mipmap/ic_guide_3"
-        >
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@mipmap/ic_guide_2"
+            >
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@mipmap/ic_guide_4"
-        >
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@mipmap/ic_guide_3"
+            >
+        </RelativeLayout>
 
-</com.tanlong.exercise.ui.view.customviewgroup.VerticalLinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@mipmap/ic_guide_4"
+            >
+        </RelativeLayout>
+
+    </com.tanlong.exercise.ui.view.customviewgroup.VerticalLinearLayout>
+</LinearLayout>

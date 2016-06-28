@@ -17,4 +17,9 @@
 
     <!-- CustomViewGroup练习-->
     <string name="custom_view_group_exercise">CustomViewGroup练习</string>
+    <string name="vertical_linear_layout">VerticalLinearLayout</string>
+
+    <!-- ListView练习-->
+    <string name="list_view_exercise">ListView练习</string>
+    <string name="list_view_swipe_refresh">使用SwipeRefreshLayout实现下拉刷新</string>
 </resources>
