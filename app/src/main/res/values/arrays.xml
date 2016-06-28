@@ -24,5 +24,6 @@
 
     <array name="list_view_category">
         <item>使用SwipeRefreshLayout实现下拉刷新</item>
+        <item>使用OnScrollListener实现加载更多</item>
     </array>
 </resources>
