@@ -8,6 +8,7 @@
         <item>Custom View</item>
         <item>Custom ViewGroup</item>
         <item>ListView</item>
+        <item>View Drag</item>
     </array>
 
     <array name="custom_view_category">
@@ -26,5 +27,9 @@
         <item>使用SwipeRefreshLayout实现下拉刷新</item>
         <item>使用OnScrollListener实现加载更多</item>
         <item>实现下拉刷新上拉加载侧滑菜单的ListView</item>
+    </array>
+
+    <array name="view_drag_category">
+        <item>使用ViewDragHelper实现</item>
     </array>
 </resources>

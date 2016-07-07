@@ -81,7 +81,7 @@ public class VerticalLinearLayout extends ViewGroup {
             MarginLayoutParams params = (MarginLayoutParams) getLayoutParams();
             params.height = childCount * mScreenHeight;
 
-            // 设置子View
+            // 设置子View布局位置
             for (int i = 0; i < childCount; i++) {
                 View childView = getChildAt(i);
                 if (childView.getVisibility() != View.GONE) {
@@ -101,7 +101,7 @@ public class VerticalLinearLayout extends ViewGroup {
 
         int action = event.getAction();
         int y = (int) event.getY();
-
+        // 初始化加速度检测器
         obtainVelocity(event);
 
         switch (action) {

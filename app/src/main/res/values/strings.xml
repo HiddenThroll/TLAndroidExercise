@@ -26,4 +26,8 @@
     <string name="list_view_load_more">使用OnScrollListener实现加载更多</string>
     <string name="list_view_swipe_refresh_load_more">实现下拉刷新上拉加载侧滑菜单的ListView</string>
 
+    <!-- ViewDrag练习-->
+    <string name="view_drag_exercise">ViewDrag练习</string>
+    <string name="view_drag_helper_exercise">使用ViewDragHelper实现</string>
+
 </resources>

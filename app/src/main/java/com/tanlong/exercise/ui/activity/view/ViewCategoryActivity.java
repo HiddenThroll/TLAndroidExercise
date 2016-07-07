@@ -12,6 +12,7 @@ import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.customview.CustomViewCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.customviewgroup.CustomViewGroupCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.listview.ListViewCategoryActivity;
+import com.tanlong.exercise.ui.activity.view.viewdrag.ViewDragCategoryActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -64,6 +65,9 @@ public class ViewCategoryActivity extends BaseActivity {
                 break;
             case 2:
                 intent.setClass(this, ListViewCategoryActivity.class);
+                break;
+            case 3:
+                intent.setClass(this, ViewDragCategoryActivity.class);
                 break;
         }
 
