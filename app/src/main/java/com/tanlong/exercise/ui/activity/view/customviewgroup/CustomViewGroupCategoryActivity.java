@@ -63,4 +63,5 @@ public class CustomViewGroupCategoryActivity extends BaseActivity {
             showShortMessage(R.string.no_available_activity);
         }
     }
+
 }

@@ -17,31 +17,34 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="123"
+            android:text="可以拖动View"
             android:textSize="20sp"
             android:textColor="@color/color_white"
             android:padding="16dp"
             android:background="@color/colorPrimary"
+            android:clickable="true"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="456"
+            android:text="拖动返回View"
             android:textSize="20sp"
             android:textColor="@color/color_white"
             android:padding="16dp"
             android:background="@color/colorAccent"
             android:layout_marginTop="8dp"
+            android:clickable="true"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="789"
+            android:text="边缘操作View"
             android:textSize="20sp"
             android:textColor="@color/color_white"
             android:padding="16dp"
             android:background="@color/color_86d0ab"
             android:layout_marginTop="8dp"
+            android:clickable="true"
             />
 
     </com.tanlong.exercise.ui.view.customviewgroup.VDHLayout>
