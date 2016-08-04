@@ -55,6 +55,9 @@ public class CustomViewGroupCategoryActivity extends BaseActivity {
             case 0:
                 intent.setClass(this, VerticalLinearLayoutActivity.class);
                 break;
+            case 1:
+                intent.setClass(this, LeftDrawerLayoutActivity.class);
+                break;
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {

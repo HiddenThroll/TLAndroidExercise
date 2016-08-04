@@ -19,6 +19,7 @@
     <!-- CustomViewGroup练习-->
     <string name="custom_view_group_exercise">CustomViewGroup练习</string>
     <string name="vertical_linear_layout">VerticalLinearLayout</string>
+    <string name="left_drawer_layout">LeftDrawerLayout</string>
 
     <!-- ListView练习-->
     <string name="list_view_exercise">ListView练习</string>
@@ -28,6 +29,6 @@
 
     <!-- ViewDrag练习-->
     <string name="view_drag_exercise">ViewDrag练习</string>
-    <string name="view_drag_helper_exercise">使用ViewDragHelper实现</string>
+    <string name="view_drag_helper_exercise">使用ViewDragHelper实现拖动</string>
 
 </resources>

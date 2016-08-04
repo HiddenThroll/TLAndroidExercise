@@ -21,6 +21,7 @@
 
     <array name="custom_view_group_category">
         <item>VerticalLinearLayout</item>
+        <item>LeftDrawerLayout</item>
     </array>
 
     <array name="list_view_category">
@@ -30,6 +31,6 @@
     </array>
 
     <array name="view_drag_category">
-        <item>使用ViewDragHelper实现</item>
+        <item>使用ViewDragHelper实现拖动</item>
     </array>
 </resources>
