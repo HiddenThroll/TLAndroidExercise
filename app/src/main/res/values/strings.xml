@@ -20,6 +20,7 @@
     <string name="custom_view_group_exercise">CustomViewGroup练习</string>
     <string name="vertical_linear_layout">VerticalLinearLayout</string>
     <string name="left_drawer_layout">LeftDrawerLayout</string>
+    <string name="GestureLockViewGroup">GestureLockViewGroup</string>
 
     <!-- ListView练习-->
     <string name="list_view_exercise">ListView练习</string>

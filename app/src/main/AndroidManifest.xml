@@ -84,6 +84,12 @@
             android:launchMode="singleTop"
             android:configChanges="keyboard"
             />
+        <activity
+            android:name=".ui.activity.view.customviewgroup.GestureLockActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
 
         <!-- ListView相关-->
         <activity

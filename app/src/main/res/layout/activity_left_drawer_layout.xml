@@ -9,12 +9,14 @@
     <include layout="@layout/layout_toolbar"/>
 
     <com.tanlong.exercise.ui.view.customviewgroup.LeftDrawerLayout
+        android:id="@+id/left_drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
         <!-- content -->
         <RelativeLayout
+            android:id="@+id/rl_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true"

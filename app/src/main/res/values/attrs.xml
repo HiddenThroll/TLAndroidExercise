@@ -41,4 +41,15 @@
         <attr name="custom_arc_show_text_color" format="color"/>
         <attr name="custom_arc_show_text_size" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="GestureLockViewGroup">
+        <attr name="color_no_finger_inner_circle" format="color"/>
+        <attr name="color_no_finger_outer_circle" format="color"/>
+        <attr name="color_finger_on" format="color"/>
+        <attr name="color_finger_up" format="color"/>
+        <!-- 每行/每列单元个数-->
+        <attr name="count" format="integer"/>
+        <!-- 重试次数-->
+        <attr name="try_times" format="integer"/>
+    </declare-styleable>
 </resources>

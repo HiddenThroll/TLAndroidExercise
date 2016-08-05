@@ -13,7 +13,7 @@ import com.tanlong.exercise.util.LogTool;
  * 左抽屉菜单，主要是练习ViewDragHelper的使用，项目开发用到侧滑菜单还是使用DrawerLayout
  * Created by 龙 on 2016/8/4.
  */
-public class LeftDrawerLayout extends ViewGroup{
+public class LeftDrawerLayout extends ViewGroup {
     private final String TAG = "LeftDrawerLayout";
     /**
      * drawer离父容器右边的最小外边距,单位为dp
@@ -41,66 +41,62 @@ public class LeftDrawerLayout extends ViewGroup{
     private float mLeftMenuOnScreen;
 
 
-    public LeftDrawerLayout(Context context, AttributeSet attrs)
-    {
+    public LeftDrawerLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         //setup drawer's minMargin
         final float density = getResources().getDisplayMetrics().density;
         final float minVel = MIN_FLING_VELOCITY * density;
         mMinDrawerMargin = (int) (MIN_DRAWER_MARGIN * density + 0.5f);
 
-        mHelper = ViewDragHelper.create(this, 1.0f, new ViewDragHelper.Callback()
-        {
-            @Override
-            public int clampViewPositionHorizontal(View child, int left, int dx)
-            {
-                // 水平移动距离 [-child.getWidth()，0]
-                int newLeft = Math.max(-child.getWidth(), Math.min(left, 0));
-                return newLeft;
-            }
+        mHelper = ViewDragHelper.create(this, 1.0f, new ViewDragHelper.Callback() {
 
             @Override
-            public boolean tryCaptureView(View child, int pointerId)
-            {
-                LogTool.e(TAG,"tryCaptureView");
-                // 只有mLeftMenuView可以拖动
-                return child == mLeftMenuView;
-            }
-
-            @Override
-            public void onEdgeDragStarted(int edgeFlags, int pointerId)
-            {
-                LogTool.e(TAG,"onEdgeDragStarted");
+            public void onEdgeDragStarted(int edgeFlags, int pointerId) {
+                LogTool.e(TAG, "onEdgeDragStarted");
                 // 因为开始的时候mLeftMenuView不可见，通过captureChildView对mLeftMenuView进行捕获
                 mHelper.captureChildView(mLeftMenuView, pointerId);
             }
 
             @Override
-            public void onViewReleased(View releasedChild, float xvel, float yvel)
-            {
-                LogTool.e(TAG,"onViewReleased");
+            public int clampViewPositionHorizontal(View child, int left, int dx) {
+                // 水平移动距离 [-child.getWidth()，0]
+                LogTool.e(TAG, "left is " + left);
+                return Math.max(-child.getWidth(), Math.min(left, 0));
+            }
+
+            @Override
+            public boolean tryCaptureView(View child, int pointerId) {
+                LogTool.e(TAG, "tryCaptureView");
+                // 只有mLeftMenuView可以拖动
+                return child == mLeftMenuView;
+            }
+
+            @Override
+            public int getViewHorizontalDragRange(View child) {
+                return mLeftMenuView == child ? child.getWidth() : 0;
+            }
+
+            @Override
+            public void onViewReleased(View releasedChild, float xvel, float yvel) {
+                // 点xvel的值只有大于我们设置的minVelocity才会出现大于0，如果小于我们设置的值则一直是0。
                 final int childWidth = releasedChild.getWidth();
                 float offset = (childWidth + releasedChild.getLeft()) * 1.0f / childWidth;
                 mHelper.settleCapturedViewAt(xvel > 0 || xvel == 0 && offset > 0.5f ? 0 : -childWidth, releasedChild.getTop());
+                LogTool.e(TAG, "onViewReleased offset is " + offset);
                 invalidate();
             }
 
             @Override
-            public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy)
-            {
+            public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
                 final int childWidth = changedView.getWidth();
                 float offset = (float) (childWidth + left) / childWidth;
                 mLeftMenuOnScreen = offset;
+                LogTool.e(TAG, "mLeftMenuOnScreen is " + mLeftMenuOnScreen);
                 //offset can callback here
                 changedView.setVisibility(offset == 0 ? View.INVISIBLE : View.VISIBLE);
                 invalidate();
             }
 
-            @Override
-            public int getViewHorizontalDragRange(View child)
-            {
-                return mLeftMenuView == child ? child.getWidth() : 0;
-            }
         });
         //设置edge_left track
         mHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT);
@@ -109,8 +105,8 @@ public class LeftDrawerLayout extends ViewGroup{
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        LogTool.e(TAG, "onMeasure");
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
         setMeasuredDimension(widthSize, heightSize);
@@ -151,8 +147,8 @@ public class LeftDrawerLayout extends ViewGroup{
     }
 
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b)
-    {
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        LogTool.e(TAG, "onLayout");
         View menuView = mLeftMenuView;
         View contentView = mContentView;
 
@@ -170,56 +166,47 @@ public class LeftDrawerLayout extends ViewGroup{
     }
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev)
-    {
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
         return mHelper.shouldInterceptTouchEvent(ev);
     }
 
 
     @Override
-    public boolean onTouchEvent(MotionEvent event)
-    {
+    public boolean onTouchEvent(MotionEvent event) {
         mHelper.processTouchEvent(event);
         return true;
     }
 
 
     @Override
-    public void computeScroll()
-    {
-        if (mHelper.continueSettling(true))
-        {
+    public void computeScroll() {
+        if (mHelper.continueSettling(true)) {
             invalidate();
         }
     }
 
-    public void closeDrawer()
-    {
+    public void closeDrawer() {
         View menuView = mLeftMenuView;
         mLeftMenuOnScreen = 0.f;
         mHelper.smoothSlideViewTo(menuView, -menuView.getWidth(), menuView.getTop());
     }
 
-    public void openDrawer()
-    {
+    public void openDrawer() {
         View menuView = mLeftMenuView;
         mLeftMenuOnScreen = 1.0f;
         mHelper.smoothSlideViewTo(menuView, 0, menuView.getTop());
     }
 
     @Override
-    protected LayoutParams generateDefaultLayoutParams()
-    {
+    protected LayoutParams generateDefaultLayoutParams() {
         return new MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
     }
 
-    public LayoutParams generateLayoutParams(AttributeSet attrs)
-    {
+    public LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new MarginLayoutParams(getContext(), attrs);
     }
 
-    protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p)
-    {
+    protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
         return new MarginLayoutParams(p);
     }
 }

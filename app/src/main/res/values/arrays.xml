@@ -22,6 +22,7 @@
     <array name="custom_view_group_category">
         <item>VerticalLinearLayout</item>
         <item>LeftDrawerLayout</item>
+        <item>GestureLockViewGroup</item>
     </array>
 
     <array name="list_view_category">
