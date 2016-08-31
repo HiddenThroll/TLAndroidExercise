@@ -1,8 +1,7 @@
-package com.tanlong.exercise.ui.activity;
+package com.tanlong.exercise.ui.activity.map;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -10,37 +9,46 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.ui.activity.map.MapCategoryActivity;
-import com.tanlong.exercise.ui.activity.view.ViewCategoryActivity;
+import com.tanlong.exercise.ui.activity.map.basemap.BaseMapActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemClick;
 
-public class MainActivity extends BaseActivity {
+/**
+ * 地图练习目录
+ * Created by Administrator on 2016/8/31.
+ */
+public class MapCategoryActivity extends BaseActivity {
 
-    @Bind(R.id.lv_activity_category)
-    ListView mLvCategory;
     @Bind(R.id.iv_back)
     ImageView mIvBack;
     @Bind(R.id.tv_title)
     TextView mTvTitle;
+    @Bind(R.id.lv_activity_category)
+    ListView mLvCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_category);
         ButterKnife.bind(this);
 
         initView();
-        String[] items = getResources().getStringArray(R.array.main_category);
+        String[] items = getResources().getStringArray(R.array.baidu_map_category);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_category, items);
         mLvCategory.setAdapter(adapter);
     }
 
     public void initView() {
-        mIvBack.setVisibility(View.INVISIBLE);
-        mTvTitle.setText(R.string.app_name);
+        mTvTitle.setText(R.string.baidu_map_exercise);
+    }
+
+    @OnClick(R.id.iv_back)
+    public void onBack() {
+        finish();
     }
 
     @OnItemClick(R.id.lv_activity_category)
@@ -48,10 +56,7 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent();
         switch (position) {
             case 0:
-                intent.setClass(this, ViewCategoryActivity.class);
-                break;
-            case 1:
-                intent.setClass(this, MapCategoryActivity.class);
+                intent.setClass(this, BaseMapActivity.class);
                 break;
         }
 

@@ -2,6 +2,7 @@
 <resources>
     <array name="main_category">
         <item>View</item>
+        <item>百度地图</item>
     </array>
 
     <array name="view_category">
@@ -33,5 +34,10 @@
 
     <array name="view_drag_category">
         <item>使用ViewDragHelper实现拖动</item>
+    </array>
+
+    <!-- 百度地图 -->
+    <array name="baidu_map_category">
+        <item>基础地图练习</item>
     </array>
 </resources>

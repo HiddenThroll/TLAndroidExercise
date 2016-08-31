@@ -32,4 +32,10 @@
     <string name="view_drag_exercise">ViewDrag练习</string>
     <string name="view_drag_helper_exercise">使用ViewDragHelper实现拖动</string>
 
+    <!-- 百度地图练习-->
+    <string name="baidu_map_exercise">百度地图练习</string>
+
+    <!-- 基础地图练习-->
+    <string name="base_baidu_map">基础地图练习</string>
+
 </resources>
