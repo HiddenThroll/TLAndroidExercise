@@ -70,6 +70,9 @@ public class CustomViewCategoryActivity extends BaseActivity {
             case 4:
                 intent.setClass(this, CustomArcShowActivity.class);
                 break;
+            case 5:
+                intent.setClass(this, ScheduleChartActivity.class);
+                break;
 
         }
 

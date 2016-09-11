@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customer="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_toolbar"/>
+
+
+    <RelativeLayout
+        android:layout_width="320dp"
+        android:layout_height="36dp"
+        >
+
+        <ImageView
+            android:layout_width="305dp"
+            android:layout_height="3dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_bg_schedule" />
+
+        <com.tanlong.exercise.ui.view.customview.ScheduleChart
+            android:id="@+id/schedule_chart"
+            android:layout_width="300dp"
+            android:layout_height="28dp"
+            android:layout_centerInParent="true"
+            customer:color_schedule_time="@color/color_86d0ab"
+            customer:color_use_time="@color/color_282c76"
+            customer:color_conflict_time="@color/color_fb9b10"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今日"
+            android:textColor="@color/text_color_info"
+            android:textSize="10sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="明日"
+            android:textColor="@color/text_color_info"
+            android:textSize="10sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

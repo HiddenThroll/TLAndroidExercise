@@ -10,4 +10,10 @@
     <color name="color_text_black">#333333</color>
     <color name="color_black">#000000</color>
     <color name="color_86d0ab">#86d0ab</color>
+    <color name="color_282c76">#282c76</color>
+    <color name="color_fb9b10">#fb9b10</color>
+
+    <color name="text_color_title">#333333</color>
+    <color name="text_color_info">#666666</color>
+    <color name="text_color_explain">#999999</color>
 </resources>

@@ -52,4 +52,13 @@
         <!-- 重试次数-->
         <attr name="try_times" format="integer"/>
     </declare-styleable>
+
+    <declare-styleable name="ScheduleChart">
+        <attr name="color_schedule_time" format="color"/>
+        <attr name="color_use_time" format="color"/>
+        <attr name="color_conflict_time" format="color"/>
+        <attr name="total_time_in_seconds" format="integer"/>
+        <attr name="line_height" format="dimension"/>
+        <attr name="line_width" format="dimension"/>
+    </declare-styleable>
 </resources>
