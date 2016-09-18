@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TLAndroidExercise.iml" filepath="$PROJECT_DIR$/TLAndroidExercise.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/maplibrary/maplibrary.iml" filepath="$PROJECT_DIR$/maplibrary/maplibrary.iml" />
     </modules>
   </component>
 </project>

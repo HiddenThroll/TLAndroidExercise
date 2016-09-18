@@ -19,5 +19,6 @@ public class MyApplication extends Application {
 
     private void initBaiduMap() {
         SDKInitializer.initialize(getApplicationContext());
+
     }
 }

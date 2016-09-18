@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MapLibrary</string>
+
+    <string name="location_failed">定位失败, 请检查网络连接或稍候重试</string>
+    <string name="no_baidu_map_installed">未安装百度地图</string>
+    <string name="no_a_map_installed">未安装高德地图</string>
+    <string name="no_map_app">未发现地图应用</string>
+</resources>
