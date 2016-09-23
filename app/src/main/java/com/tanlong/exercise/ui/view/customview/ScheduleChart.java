@@ -10,12 +10,10 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.google.gson.Gson;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.model.entity.OfficialCarSchedule;
 import com.tanlong.exercise.util.DateUtil;
 import com.tanlong.exercise.util.DisplayUtil;
-import com.tanlong.exercise.util.LogTool;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -58,8 +56,6 @@ public class ScheduleChart extends View {
 
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs,
                 R.styleable.ScheduleChart, defStyleAttr, 0);
-
-//        LogTool.e("ScheduleChart", new Gson().toJson(typedArray));
 
         for (int i = 0, size = typedArray.length(); i < size; i++) {
             int index = typedArray.getIndex(i);

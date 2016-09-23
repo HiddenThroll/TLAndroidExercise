@@ -7,7 +7,6 @@
 
     <include layout="@layout/layout_toolbar"/>
 
-
     <RelativeLayout
         android:layout_width="320dp"
         android:layout_height="36dp"
@@ -47,5 +46,14 @@
             android:textSize="10sp" />
 
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已分配时间"
+        android:textSize="14sp"
+        android:textColor="@color/text_color_info"
+        android:layout_marginTop="8dp"
+        />
 
 </LinearLayout>

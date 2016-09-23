@@ -16,4 +16,8 @@
     <color name="text_color_title">#333333</color>
     <color name="text_color_info">#666666</color>
     <color name="text_color_explain">#999999</color>
+
+    <!-- TimePopupWindow -->
+    <color name="wheel_timebtn_nor">#282d72</color>
+    <color name="wheel_timebtn_pre">#CCCCCC</color>
 </resources>
