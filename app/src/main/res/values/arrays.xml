@@ -25,7 +25,6 @@
         <item>VerticalLinearLayout</item>
         <item>LeftDrawerLayout</item>
         <item>GestureLockViewGroup</item>
-        <item>ScheduleChartGroup</item>
     </array>
 
     <array name="list_view_category">

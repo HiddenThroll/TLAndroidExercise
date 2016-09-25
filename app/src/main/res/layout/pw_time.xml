@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="还车时间"
+            android:text="选择时间"
             android:textSize="14sp" />
 
         <Button
