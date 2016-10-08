@@ -146,6 +146,7 @@ public class BaiduMapService {
     }
 
     /************************ 定位相关 ********************************/
+    private LocationClient mLocationClient;
     /**
      * 启动定位，定位成功后会自动调用LocationClient.stop()方法停止定位
      *
@@ -160,6 +161,57 @@ public class BaiduMapService {
         locationOption.setCoorType("bd09ll");
 
         startLocation(locationOption, onLocationListener);
+    }
+
+    public void startTimingLocation(int timeSpan, final OnLocationListener onLocationListener) {
+        if (timeSpan < 1000 ) {
+            Toast.makeText(mContext,"定位时间间隔不能小于1s", Toast.LENGTH_SHORT).show();
+            return ;
+        }
+
+        mLocationClient = new LocationClient(mContext);
+        LocationClientOption option = new LocationClientOption();
+        option.setCoorType("bd09ll");// 设置返回坐标系
+        option.setScanSpan(timeSpan);// 设置发起定位请求间隔
+        option.setIsNeedAddress(true);// 是否需要地址信息，
+        option.setOpenGps(true);// 是否使用GPS
+        option.setIgnoreKillProcess(false);// 定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，true代表不杀死
+        mLocationClient.setLocOption(option);
+
+        mLocationClient.registerLocationListener(new BDLocationListener() {
+            @Override
+            public void onReceiveLocation(BDLocation bdLocation) {
+                if (onLocationListener != null) {
+                    boolean locResult = false;
+                    switch (bdLocation.getLocType()) {
+                        case BDLocation.TypeCriteriaException:// 无法定位结果
+                        case BDLocation.TypeNetWorkException:// 网络连接失败
+                        case BDLocation.TypeNone:// 无效定位结果
+                        case BDLocation.TypeOffLineLocationFail:// 离线定位失败
+                        case BDLocation.TypeServerError:// server定位失败
+                            locResult = false;
+                            break;
+                        case BDLocation.TypeGpsLocation:// GPS定位结果
+                        case BDLocation.TypeNetWorkLocation:// 网络定位结果
+                        case BDLocation.TypeOffLineLocation:// 离线定位成功
+                            locResult = true;
+                            break;
+                    }
+                    if (locResult) {
+                        onLocationListener.onLocation(bdLocation);
+                    } else {
+                        onLocationListener.onLocationFailed();
+                    }
+                }
+            }
+        });
+        mLocationClient.start();
+    }
+
+    public void closeTimingLocation() {
+        if (mLocationClient != null) {
+            mLocationClient.stop();
+        }
     }
 
     /**

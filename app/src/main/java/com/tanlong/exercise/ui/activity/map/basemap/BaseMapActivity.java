@@ -3,6 +3,7 @@ package com.tanlong.exercise.ui.activity.map.basemap;
 import android.os.Bundle;
 
 import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
 import com.baidu.mapapi.map.MapView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
@@ -23,6 +24,8 @@ public class BaseMapActivity extends BaseActivity {
     MapView mBaiduMap;
 
     BaiduMapService mMapService;
+
+    private int locationCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,7 @@ public class BaseMapActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mMapService.closeTimingLocation();
         mBaiduMap.onDestroy();
     }
 
@@ -69,5 +73,18 @@ public class BaseMapActivity extends BaseActivity {
                 LogTool.e(TAG, "定位失败");
             }
         });
+
+        mMapService.startTimingLocation(2000, new OnLocationListener() {
+            @Override
+            public void onLocation(BDLocation bdLocation) {
+                LogTool.e(TAG, "定位成功" + bdLocation.getAddrStr());
+            }
+
+            @Override
+            public void onLocationFailed() {
+                LogTool.e(TAG, "定位失败");
+            }
+        });
+
     }
 }
