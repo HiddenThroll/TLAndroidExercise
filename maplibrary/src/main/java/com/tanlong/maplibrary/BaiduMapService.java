@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -15,7 +16,11 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.Circle;
+import com.baidu.mapapi.map.CircleOptions;
+import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
@@ -23,6 +28,12 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.Polygon;
+import com.baidu.mapapi.map.PolygonOptions;
+import com.baidu.mapapi.map.Polyline;
+import com.baidu.mapapi.map.PolylineOptions;
+import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
@@ -36,6 +47,7 @@ import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
 import com.baidu.mapapi.utils.DistanceUtil;
+import com.tanlong.maplibrary.baiduImpl.OnInfoWindowClickListener;
 import com.tanlong.maplibrary.baiduImpl.OnLocationListener;
 import com.tanlong.maplibrary.baiduImpl.OnMapClickListener;
 import com.tanlong.maplibrary.baiduImpl.OnMapStatusChangeListener;
@@ -582,6 +594,11 @@ public class BaiduMapService {
             public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
                 double distance = 5000;//便于统一处理
                 PoiInfo nearPoiInfo = null;
+                if (reverseGeoCodeResult == null) {// 请求中断网时，reverseGeoCodeResult有可能返回空
+                    geoCoder.destroy();
+                    return;
+                }
+
                 for (PoiInfo poiInfo : reverseGeoCodeResult.getPoiList()) {
                     LatLng bdTarget = mMapUtils.changeCoordinateToBaidu(target);
                     double temp = Math.abs(DistanceUtil.getDistance(bdTarget, poiInfo.location));
@@ -728,5 +745,22 @@ public class BaiduMapService {
             result.add(data);
         }
         return result;
+    }
+
+    /**
+     * 显示弹出窗，一个地图中只会存在一个弹出窗，弹出窗会透传事件
+     * @param latLngData -- 弹出窗坐标
+     * @param view -- 弹出窗内容View
+     * @param yOff -- 弹出窗针对坐标的Y轴偏移，像素为单位，负数上移，正数下移
+     */
+    public void showInfoWindow(LatLngData latLngData, View view, int yOff) {
+        hideInfoWindow();
+        LatLng latLng = mMapUtils.changeCoordinateToBaidu(latLngData);
+        InfoWindow infoWindow = new InfoWindow(view, latLng, yOff);
+        mBaiduMap.showInfoWindow(infoWindow);
+    }
+
+    public void hideInfoWindow() {
+        mBaiduMap.hideInfoWindow();
     }
 }
