@@ -168,6 +168,12 @@
             android:launchMode="singleTop"
             android:configChanges="keyboard"
             />
+        <activity
+            android:name=".ui.activity.map.basemap.RoutePlanActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
     </application>
 
 </manifest>

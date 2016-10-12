@@ -73,9 +73,6 @@ public class BaseMapActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         mBaiduMap.onResume();
-        drawLines(points, colors, 50, true, null);
-        drawTextureLines();
-
     }
 
     @Override
@@ -124,8 +121,6 @@ public class BaseMapActivity extends BaseActivity {
                 LatLngData center = new LatLngData(bdLocation.getLatitude(), bdLocation.getLongitude(),
                         LatLngData.LatLngType.BAIDU);
                 mMapService.addMarker(locationView, center, null);
-
-                showInfoWindow(center, -50);
             }
 
             @Override
@@ -142,7 +137,11 @@ public class BaseMapActivity extends BaseActivity {
 
     private void drawLines(List<LatLngData> points, List<Integer> colors, int width,
                            boolean isDottedLine, Bundle bundle) {
-        Polyline polyline = geometryService.drawLines(points, colors, width, isDottedLine, bundle);
+        try {
+            Polyline polyline = geometryService.drawLines(points, colors, width, isDottedLine, bundle);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void drawTextureLines() {
@@ -157,7 +156,11 @@ public class BaseMapActivity extends BaseActivity {
         index.add(1);
         index.add(2);
 
-        Polyline polyline = geometryService.drawTextureLines(points, drawables, index, 12, null);
+        try {
+            Polyline polyline = geometryService.drawTextureLines(points, drawables, index, 12, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void showInfoWindow(LatLngData tar, int yOff) {

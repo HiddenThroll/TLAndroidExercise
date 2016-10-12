@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.map.basemap.BaseMapActivity;
+import com.tanlong.exercise.ui.activity.map.basemap.RoutePlanActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -57,6 +58,9 @@ public class MapCategoryActivity extends BaseActivity {
         switch (position) {
             case 0:
                 intent.setClass(this, BaseMapActivity.class);
+                break;
+            case 1:
+                intent.setClass(this, RoutePlanActivity.class);
                 break;
         }
 

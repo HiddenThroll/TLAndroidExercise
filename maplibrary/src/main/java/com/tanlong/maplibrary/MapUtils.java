@@ -1,8 +1,14 @@
 package com.tanlong.maplibrary;
 
+import android.graphics.Point;
+
+import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.CoordinateConverter;
 import com.tanlong.maplibrary.model.LatLngData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -11,6 +17,12 @@ import com.tanlong.maplibrary.model.LatLngData;
 public class MapUtils {
 
     private final double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+
+    private BaiduMap mBaiduMap;
+
+    public MapUtils(BaiduMap baiduMap) {
+        this.mBaiduMap = baiduMap;
+    }
 
     /**
      * 国测局GCJ-02坐标体系（谷歌、高德、腾讯）到百度坐标BD-09体系的转换
@@ -109,5 +121,69 @@ public class MapUtils {
         return gpsLatLng;
     }
 
+    /**
+     * 扩充坐标
+     * @param srcLatLng -- 源坐标
+     * @param srcTime -- 获取源坐标的时间
+     * @param tarLatLng -- 目的地坐标
+     * @param tarTime -- 获取目的地坐标的时间
+     * @param timeBase -- 分解坐标的时间基数，以毫秒为单位
+     * @return -- 扩充后的坐标数据
+     * @throws Exception
+     */
+    public List<LatLngData> fillLatLng(LatLngData srcLatLng, long srcTime, LatLngData tarLatLng, long tarTime,
+                                       long timeBase) throws Exception {
+        long timeDifference = tarTime - srcTime;// 时间差，毫秒为单位
+        if (timeDifference <= 0) {
+            throw new Exception("tarTime不能小于srcTime!");
+        }
+        int count = 1;// 坐标扩展次数
+        if (timeDifference <= timeBase) {
+            count = 1;
+        } else {
+            count = (int) (timeDifference / timeBase);
+            if (timeDifference % timeBase >= timeBase / 2) {
+                count++;
+            }
+        }
+        double latDiff = (tarLatLng.getmLatitude() - srcLatLng.getmLatitude()) / count;
+        double longDiff = (tarLatLng.getmLongitude() - srcLatLng.getmLongitude()) / count;
+        float dirDiff = (tarLatLng.getDirection() - srcLatLng.getDirection()) / count;
+        List<LatLngData> result = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            LatLngData data = new LatLngData();
+            data.setmLatitude(srcLatLng.getmLatitude() + i * latDiff);
+            data.setmLongitude(srcLatLng.getmLongitude() + i * longDiff);
+            data.setDirection(srcLatLng.getDirection() + i * dirDiff);
+            data.setmType(LatLngData.LatLngType.BAIDU);
+            result.add(data);
+        }
+        return result;
+    }
 
+    /**
+     * 将屏幕坐标转换成地理坐标
+     *
+     * @param point -- 屏幕坐标
+     * @return
+     */
+    public LatLngData changePointToLatLng(Point point) {
+        LatLngData latLngData = new LatLngData();
+        LatLng temp = mBaiduMap.getProjection().fromScreenLocation(point);
+        latLngData.setmLatitude(temp.latitude);
+        latLngData.setmLongitude(temp.longitude);
+        latLngData.setmType(LatLngData.LatLngType.BAIDU);
+        return latLngData;
+    }
+
+    /**
+     * 将地理坐标转换为屏幕坐标
+     *
+     * @param srcLatLng -- 地理坐标
+     * @return
+     */
+    public Point changeLatLngToPoint(LatLngData srcLatLng) {
+        LatLng temp = changeCoordinateToBaidu(srcLatLng);
+        return mBaiduMap.getProjection().toScreenLocation(temp);
+    }
 }

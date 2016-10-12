@@ -40,5 +40,6 @@
     <!-- 百度地图 -->
     <array name="baidu_map_category">
         <item>基础地图练习</item>
+        <item>路径规划练习</item>
     </array>
 </resources>

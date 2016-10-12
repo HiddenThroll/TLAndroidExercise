@@ -16,10 +16,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.Circle;
-import com.baidu.mapapi.map.CircleOptions;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
@@ -28,14 +25,9 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.OverlayOptions;
-import com.baidu.mapapi.map.Polygon;
-import com.baidu.mapapi.map.PolygonOptions;
-import com.baidu.mapapi.map.Polyline;
-import com.baidu.mapapi.map.PolylineOptions;
-import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.PoiInfo;
+import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
 import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
@@ -46,17 +38,26 @@ import com.baidu.mapapi.search.poi.PoiCitySearchOption;
 import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
+import com.baidu.mapapi.search.route.BikingRouteResult;
+import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
+import com.baidu.mapapi.search.route.DrivingRouteResult;
+import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
+import com.baidu.mapapi.search.route.PlanNode;
+import com.baidu.mapapi.search.route.RoutePlanSearch;
+import com.baidu.mapapi.search.route.TransitRouteResult;
+import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.baidu.mapapi.utils.DistanceUtil;
-import com.tanlong.maplibrary.baiduImpl.OnInfoWindowClickListener;
 import com.tanlong.maplibrary.baiduImpl.OnLocationListener;
 import com.tanlong.maplibrary.baiduImpl.OnMapClickListener;
 import com.tanlong.maplibrary.baiduImpl.OnMapStatusChangeListener;
 import com.tanlong.maplibrary.baiduImpl.OnMarkerClickListener;
 import com.tanlong.maplibrary.baiduImpl.OnRequestAddressListener;
 import com.tanlong.maplibrary.baiduImpl.OnRequestNearPoiListener;
+import com.tanlong.maplibrary.baiduImpl.OnSearchDrivingRouteListener;
 import com.tanlong.maplibrary.baiduImpl.PoiSearchListener;
 import com.tanlong.maplibrary.model.LatLngData;
 import com.tanlong.maplibrary.model.MarkDataBase;
+import com.tanlong.maplibrary.overlay.CustomDrivingRouteOverlay;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -86,13 +87,13 @@ public class BaiduMapService {
 
     public BaiduMapService(Context mContext) {
         this.mContext = mContext;
-        mMapUtils = new MapUtils();
         mErrorPic = R.mipmap.ic_marker_error;
     }
 
     public BaiduMapService initMapService(MapView mapView) {
         mMapView = mapView;
         mBaiduMap = mapView.getMap();
+        mMapUtils = new MapUtils(mBaiduMap);
         return this;
     }
 
@@ -708,46 +709,6 @@ public class BaiduMapService {
     }
 
     /**
-     * 扩充坐标
-     * @param srcLatLng -- 源坐标
-     * @param srcTime -- 获取源坐标的时间
-     * @param tarLatLng -- 目的地坐标
-     * @param tarTime -- 获取目的地坐标的时间
-     * @param timeBase -- 分解坐标的时间基数，以毫秒为单位
-     * @return -- 扩充后的坐标数据
-     * @throws Exception
-     */
-    public List<LatLngData> fillLatLng(LatLngData srcLatLng, long srcTime, LatLngData tarLatLng, long tarTime,
-                            long timeBase) throws Exception {
-        long timeDifference = tarTime - srcTime;// 时间差，毫秒为单位
-        if (timeDifference <= 0) {
-            throw new Exception("tarTime不能小于srcTime!");
-        }
-        int count = 1;// 坐标扩展次数
-        if (timeDifference <= timeBase) {
-            count = 1;
-        } else {
-            count = (int) (timeDifference / timeBase);
-            if (timeDifference % timeBase >= timeBase / 2) {
-                count++;
-            }
-        }
-        double latDiff = (tarLatLng.getmLatitude() - srcLatLng.getmLatitude()) / count;
-        double longDiff = (tarLatLng.getmLongitude() - srcLatLng.getmLongitude()) / count;
-        float dirDiff = (tarLatLng.getDirection() - srcLatLng.getDirection()) / count;
-        List<LatLngData> result = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            LatLngData data = new LatLngData();
-            data.setmLatitude(srcLatLng.getmLatitude() + i * latDiff);
-            data.setmLongitude(srcLatLng.getmLongitude() + i * longDiff);
-            data.setDirection(srcLatLng.getDirection() + i * dirDiff);
-            data.setmType(LatLngData.LatLngType.BAIDU);
-            result.add(data);
-        }
-        return result;
-    }
-
-    /**
      * 显示弹出窗，一个地图中只会存在一个弹出窗，弹出窗会透传事件
      * @param latLngData -- 弹出窗坐标
      * @param view -- 弹出窗内容View
@@ -763,4 +724,135 @@ public class BaiduMapService {
     public void hideInfoWindow() {
         mBaiduMap.hideInfoWindow();
     }
+
+    /************************ 路径规划相关 ********************************/
+    private int mStartMarkRes = 0;
+    private int mEndMarkRes = 0;
+
+    public void setStartMarkRes(int startMarkRes) {
+        this.mStartMarkRes = startMarkRes;
+    }
+
+    public void setEndMarkRes(int endMarkRes) {
+        this.mEndMarkRes = endMarkRes;
+    }
+
+    /**
+     * 搜索驾车路线，并将路线绘制在地图上
+     * @param src -- 起点坐标
+     * @param tar -- 终点坐标
+     * @param searchListener -- 搜索驾车路线监听器
+     */
+    public void searchDrivingPlanByLayLng(LatLngData src, LatLngData tar,
+                                          final OnSearchDrivingRouteListener searchListener) {
+        searchDrivingPlanByLayLng(src, tar, -1, searchListener);
+    }
+
+    /**
+     * 搜索驾车路线，并将路线绘制在地图上
+     * @param src -- 起点坐标
+     * @param tar -- 终点坐标
+     * @param policy -- 路径规划策略，-1代表躲避拥堵，0代表时间优先，1代表距离最短，2代表费用较少
+     * @param searchListener -- 搜索驾车路线监听器
+     */
+    public void searchDrivingPlanByLayLng(LatLngData src, LatLngData tar, int policy,
+                                          final OnSearchDrivingRouteListener searchListener) {
+        searchDrivingPlanByLayLng(src, tar, policy, 0, 0, searchListener);
+    }
+
+    /**
+     * 搜索驾车路线，并将路线绘制在地图上
+     * @param src -- 起点坐标
+     * @param tar -- 终点坐标
+     * @param policy -- 路径规划策略，-1代表躲避拥堵，0代表时间优先，1代表距离最短，2代表费用较少
+     * @param startMarkRes -- 起点图标，R.mipmap.XXX形式，默认为0，使用系统提供图标
+     * @param endMarkRes -- 终点图标，R.mipmap.XXX形式，默认为0，使用系统提供图标
+     * @param searchListener -- 搜索驾车路线监听器
+     */
+    public void searchDrivingPlanByLayLng(LatLngData src, LatLngData tar, int policy,
+                                          int startMarkRes, int endMarkRes,
+                                          final OnSearchDrivingRouteListener searchListener) {
+        RoutePlanSearch planSearch = RoutePlanSearch.newInstance();
+        PlanNode startNode = PlanNode.withLocation(mMapUtils.changeCoordinateToBaidu(src));
+        PlanNode endNode = PlanNode.withLocation(mMapUtils.changeCoordinateToBaidu(tar));
+
+        mStartMarkRes = startMarkRes;
+        mEndMarkRes = endMarkRes;
+
+        planSearch.setOnGetRoutePlanResultListener(new OnGetRoutePlanResultListener() {
+            @Override
+            public void onGetWalkingRouteResult(WalkingRouteResult walkingRouteResult) {
+
+            }
+
+            @Override
+            public void onGetTransitRouteResult(TransitRouteResult transitRouteResult) {
+
+            }
+
+            @Override
+            public void onGetDrivingRouteResult(DrivingRouteResult result) {
+                // 驾车路线结果回调
+                if (result == null) {
+                    //未找到结果
+                    searchListener.onNoResult();
+                } else {
+                    if (result.error == SearchResult.ERRORNO.NO_ERROR) {
+                        int routeSize = result.getRouteLines().size();
+                        Log.e("BaiduMapService", "规划有" + routeSize + "条路线");
+                        if (routeSize > 0) {
+                            CustomDrivingRouteOverlay overlay = new CustomDrivingRouteOverlay(mBaiduMap);
+                            overlay.setStartMarkerRes(mStartMarkRes);
+                            overlay.setEndMarkerRes(mEndMarkRes);
+                            overlay.setData(result.getRouteLines().get(0));
+                            overlay.addToMap();
+                            overlay.zoomToSpan();
+
+                            searchListener.onDrawRoute(result, overlay);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onGetBikingRouteResult(BikingRouteResult bikingRouteResult) {
+
+            }
+        });
+
+        DrivingRoutePlanOption option = new DrivingRoutePlanOption()
+                .from(startNode).to(endNode)
+                .trafficPolicy(DrivingRoutePlanOption.DrivingTrafficPolicy.ROUTE_PATH_AND_TRAFFIC)// 默认返回路况信息
+                .policy(getDrivingPolicy(policy));// 设置搜索策略
+
+        planSearch.drivingSearch(option);
+    }
+
+    /**
+     * 获得搜索驾车路线的策略
+     * @param index -- 策略索引
+     * @return 搜索驾车路线的策略
+     */
+    private DrivingRoutePlanOption.DrivingPolicy getDrivingPolicy(int index) {
+        DrivingRoutePlanOption.DrivingPolicy policy;
+        switch (index) {
+            case -1:
+                policy = DrivingRoutePlanOption.DrivingPolicy.ECAR_AVOID_JAM;
+                break;
+            case 0:
+                policy = DrivingRoutePlanOption.DrivingPolicy.ECAR_TIME_FIRST;
+                break;
+            case 1:
+                policy = DrivingRoutePlanOption.DrivingPolicy.ECAR_DIS_FIRST;
+                break;
+            case 2:
+                policy = DrivingRoutePlanOption.DrivingPolicy.ECAR_FEE_FIRST;
+                break;
+            default:
+                policy = DrivingRoutePlanOption.DrivingPolicy.ECAR_AVOID_JAM;
+        }
+        return policy;
+    }
+
+
 }

@@ -34,10 +34,10 @@ public class BDGeometryService {
     private Context mContext;
 
     public BDGeometryService(Context context, MapView mapView) {
-        mMapUtils = new MapUtils();
+        mContext = context;
         mMapView = mapView;
         mBaiduMap = mMapView.getMap();
-        mContext = context;
+        mMapUtils = new MapUtils(mBaiduMap);
     }
 
     /**
@@ -92,7 +92,10 @@ public class BDGeometryService {
      * @param bundle -- 携带数据，可以为null
      */
     public Polyline drawLines(List<LatLngData> points, List<Integer> fillColor, int width, boolean isDottedLine,
-                              Bundle bundle) {
+                              Bundle bundle) throws Exception {
+        if (points == null || points.size() < 2) {
+            throw new Exception("传入坐标点不能少于2个");
+        }
         List<LatLng> latlngList = new ArrayList<>();
         for (LatLngData point : points) {
             latlngList.add(mMapUtils.changeCoordinateToBaidu(point));
@@ -163,7 +166,10 @@ public class BDGeometryService {
      * @return
      */
     public Polyline drawTextureLines(List<LatLngData> points, List<String> drawables,
-                                     List<Integer> index, int width, Bundle bundle) {
+                                     List<Integer> index, int width, Bundle bundle) throws Exception {
+        if (points == null || points.size() < 2) {
+            throw new Exception("传入坐标点不能少于2个");
+        }
         List<LatLng> latlngList = new ArrayList<>();
         for (LatLngData point : points) {
             latlngList.add(mMapUtils.changeCoordinateToBaidu(point));

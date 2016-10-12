@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="起点："
+            android:textSize="18sp"
+            />
+
+        <EditText
+            android:id="@+id/et_start_point"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="终点："
+            android:textSize="18sp"
+            />
+
+        <EditText
+            android:id="@+id/et_end_point"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        >
+        <Button
+            android:id="@+id/btn_drive_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="驾车搜索"
+            />
+    </LinearLayout>
+    
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/mv_baidu_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
