@@ -24,10 +24,7 @@ import java.util.List;
  * 用于显示一条驾车路线的overlay，自3.4.0版本起可实例化多个添加在地图中显示，当数据中包含路况数据时，则默认使用路况纹理分段绘制
  */
 public class DrivingRouteOverlay extends OverlayManager {
-    private final String TAG = getClass().getSimpleName();
-    /**
-     * 驾车路线
-     */
+
     private DrivingRouteLine mRouteLine = null;
     boolean focus = false;
 
@@ -46,20 +43,20 @@ public class DrivingRouteOverlay extends OverlayManager {
             return null;
         }
 
-        List<OverlayOptions> overlayOptionses = new ArrayList<>();
-        // 绘制路段节点
+        List<OverlayOptions> overlayOptionses = new ArrayList<OverlayOptions>();
+        // 绘制路口
         if (mRouteLine.getAllStep() != null
                 && mRouteLine.getAllStep().size() > 0) {
 
-            for (DrivingStep step : mRouteLine.getAllStep()) {// 获取路线中的所有路段
+            for (DrivingStep step : mRouteLine.getAllStep()) {
                 Bundle b = new Bundle();
-                b.putInt("index", mRouteLine.getAllStep().indexOf(step));//第几个路段
-                if (step.getEntrance() != null) {//路段入口信息
+                b.putInt("index", mRouteLine.getAllStep().indexOf(step));
+                if (step.getEntrance() != null) {
                     overlayOptionses.add((new MarkerOptions())
-                            .position(step.getEntrance().getLocation())// 路段入口位置信息
-                            .anchor(0.5f, 0.5f)//设置 marker 覆盖物的锚点比例，默认（0.5f, 1.0f）水平居中，垂直下对齐
+                            .position(step.getEntrance().getLocation())
+                            .anchor(0.5f, 0.5f)
                             .zIndex(10)
-                            .rotate((360 - step.getDirection()))// 旋转角度，逆时针
+                            .rotate((360 - step.getDirection()))
                             .extraInfo(b)
                             .icon(BitmapDescriptorFactory
                                     .fromAssetWithDpi("Icon_line_node.png")));
@@ -68,7 +65,7 @@ public class DrivingRouteOverlay extends OverlayManager {
                 if (mRouteLine.getAllStep().indexOf(step) == (mRouteLine
                         .getAllStep().size() - 1) && step.getExit() != null) {
                     overlayOptionses.add((new MarkerOptions())
-                            .position(step.getExit().getLocation())// 路段出口位置信息
+                            .position(step.getExit().getLocation())
                             .anchor(0.5f, 0.5f)
                             .zIndex(10)
                             .icon(BitmapDescriptorFactory
@@ -77,43 +74,49 @@ public class DrivingRouteOverlay extends OverlayManager {
                 }
             }
         }
-        // 绘制路线起点
+        // 绘制起点
         if (mRouteLine.getStarting() != null) {
-            overlayOptionses.add((new MarkerOptions())
-                    .position(mRouteLine.getStarting().getLocation())
-                    .icon(getStartMarker() != null ? getStartMarker() :
-                            BitmapDescriptorFactory
-                                    .fromAssetWithDpi("Icon_start.png")).zIndex(10));
+            if (getStartMarker() == null) {//不绘制起点
+
+            } else {
+                overlayOptionses.add((new MarkerOptions())
+                        .position(mRouteLine.getStarting().getLocation())
+                        .icon(getStartMarker())
+                        .zIndex(10));
+            }
+
         }
-        // 绘制路线终点
+        // 绘制终点
         if (mRouteLine.getTerminal() != null) {
-            overlayOptionses
-                    .add((new MarkerOptions())
-                            .position(mRouteLine.getTerminal().getLocation())
-                            .icon(getTerminalMarker() != null ? getTerminalMarker() :
-                                    BitmapDescriptorFactory
-                                            .fromAssetWithDpi("Icon_end.png"))
-                            .zIndex(10));
+            if (getTerminalMarker() == null) {//不绘制终点
+
+            } else {
+                overlayOptionses
+                        .add((new MarkerOptions())
+                                .position(mRouteLine.getTerminal().getLocation())
+                                .icon(getTerminalMarker())
+                                .zIndex(10));
+            }
+
         }
-        // 绘制路段
+        // 绘制路线
         if (mRouteLine.getAllStep() != null
                 && mRouteLine.getAllStep().size() > 0) {
-            // 获得所有路段
+
             List<DrivingStep> steps = mRouteLine.getAllStep();
             int stepNum = steps.size();
 
-            List<LatLng> points = new ArrayList<>();
-            ArrayList<Integer> traffics = new ArrayList<>();
+
+            List<LatLng> points = new ArrayList<LatLng>();
+            ArrayList<Integer> traffics = new ArrayList<Integer>();
             int totalTraffic = 0;
             for (int i = 0; i < stepNum; i++) {
-                // getWayPoints()获取途经点信息
-                if (i == stepNum - 1) {//最后一个路段
+                if (i == stepNum - 1) {
                     points.addAll(steps.get(i).getWayPoints());
                 } else {
                     points.addAll(steps.get(i).getWayPoints().subList(0, steps.get(i).getWayPoints().size() - 1));
                 }
 
-                // 	getTrafficList()获取路况数据数组
                 totalTraffic += steps.get(i).getWayPoints().size() - 1;
                 if (steps.get(i).getTrafficList() != null && steps.get(i).getTrafficList().length > 0) {
                     for (int j = 0; j < steps.get(i).getTrafficList().length; j++) {
@@ -122,28 +125,18 @@ public class DrivingRouteOverlay extends OverlayManager {
                 }
             }
 
-//            Bundle indexList = new Bundle();
-//            if (traffics.size() > 0) {
-//                int raffic[] = new int[traffics.size()];
-//                int index = 0;
-//                for (Integer tempTraff : traffics) {
-//                    raffic[index] = tempTraff.intValue();
-//                    index++;
-//                }
-//                indexList.putIntArray("indexs", raffic);
-//            }
             boolean isDotLine = false;
 
             if (traffics != null && traffics.size() > 0) {
                 isDotLine = true;
             }
             PolylineOptions option = new PolylineOptions().points(points).textureIndex(traffics)
-                    .width(7).dottedLine(isDotLine).focus(true)
+                    .width(12).dottedLine(isDotLine).focus(true)
                     .color(getLineColor() != 0 ? getLineColor() : Color.argb(178, 0, 78, 255)).zIndex(0);
             if (isDotLine) {
                 option.customTextureList(getCustomTextureList());
             }
-            overlayOptionses.add(option);// 绘制折线
+            overlayOptionses.add(option);
         }
         return overlayOptionses;
     }
@@ -158,7 +151,7 @@ public class DrivingRouteOverlay extends OverlayManager {
     }
 
     /**
-     * 覆写此方法以改变默认起点图标
+     * 覆写此方法以设置起点图标
      *
      * @return 起点图标
      */
@@ -175,10 +168,6 @@ public class DrivingRouteOverlay extends OverlayManager {
         return 0;
     }
 
-    /**
-     * 获取纹理折线资源
-     * @return
-     */
     public List<BitmapDescriptor> getCustomTextureList() {
         ArrayList<BitmapDescriptor> list = new ArrayList<BitmapDescriptor>();
         list.add(BitmapDescriptorFactory.fromAsset("Icon_road_blue_arrow.png"));
@@ -190,7 +179,7 @@ public class DrivingRouteOverlay extends OverlayManager {
     }
 
     /**
-     * 覆写此方法以改变默认终点图标
+     * 覆写此方法以设置终点图标
      *
      * @return 终点图标
      */

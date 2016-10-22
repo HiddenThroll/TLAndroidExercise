@@ -69,7 +69,7 @@ public class RoutePlanActivity extends BaseActivity implements View.OnClickListe
             public void onLocation(BDLocation bdLocation) {
                 LatLngData src = new LatLngData(bdLocation.getLatitude(), bdLocation.getLongitude(),
                         LatLngData.LatLngType.BAIDU);
-                LatLngData tar = new LatLngData(29.5634950000,106.5834740000,
+                LatLngData tar = new LatLngData(29.6195630000,106.5032380000,
                         LatLngData.LatLngType.BAIDU);
                 mapService.searchDrivingPlanByLayLng(src, tar, -1,new OnSearchDrivingRouteListener() {
                     @Override
@@ -78,10 +78,10 @@ public class RoutePlanActivity extends BaseActivity implements View.OnClickListe
                     }
 
                     @Override
-                    public void onDrawRoute(DrivingRouteResult result, DrivingRouteOverlay overlay) {
+                    public void onGetResult(DrivingRouteResult result) {
                         LogTool.e(TAG, "route line size is " + result.getRouteLines().size());
                         drivingRouteResult = result;
-                        drivingRouteOverlay = overlay;
+                        drivingRouteOverlay = mapService.drawDrivingRouteLine(result.getRouteLines().get(0));
                     }
                 });
             }

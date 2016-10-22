@@ -15,9 +15,8 @@ public interface OnSearchDrivingRouteListener {
     void onNoResult();
 
     /**
-     * 绘制驾车路线
+     * 获得驾车路线
      * @param result -- 搜索到的驾车路线结果
-     * @param overlay  -- 已默认绘制的驾车路线
      */
-    void onDrawRoute(DrivingRouteResult result, DrivingRouteOverlay overlay);
+    void onGetResult(DrivingRouteResult result);
 }

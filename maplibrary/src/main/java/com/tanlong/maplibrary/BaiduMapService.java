@@ -39,6 +39,7 @@ import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
 import com.baidu.mapapi.search.route.BikingRouteResult;
+import com.baidu.mapapi.search.route.DrivingRouteLine;
 import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
 import com.baidu.mapapi.search.route.DrivingRouteResult;
 import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
@@ -58,6 +59,7 @@ import com.tanlong.maplibrary.baiduImpl.PoiSearchListener;
 import com.tanlong.maplibrary.model.LatLngData;
 import com.tanlong.maplibrary.model.MarkDataBase;
 import com.tanlong.maplibrary.overlay.CustomDrivingRouteOverlay;
+import com.tanlong.maplibrary.overlay.DrivingRouteOverlay;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -745,7 +747,7 @@ public class BaiduMapService {
      */
     public void searchDrivingPlanByLayLng(LatLngData src, LatLngData tar,
                                           final OnSearchDrivingRouteListener searchListener) {
-        searchDrivingPlanByLayLng(src, tar, -1, searchListener);
+        searchDrivingPlanByLayLng(src, tar, 1, searchListener);
     }
 
     /**
@@ -801,14 +803,9 @@ public class BaiduMapService {
                         int routeSize = result.getRouteLines().size();
                         Log.e("BaiduMapService", "规划有" + routeSize + "条路线");
                         if (routeSize > 0) {
-                            CustomDrivingRouteOverlay overlay = new CustomDrivingRouteOverlay(mBaiduMap);
-                            overlay.setStartMarkerRes(mStartMarkRes);
-                            overlay.setEndMarkerRes(mEndMarkRes);
-                            overlay.setData(result.getRouteLines().get(0));
-                            overlay.addToMap();
-                            overlay.zoomToSpan();
-
-                            searchListener.onDrawRoute(result, overlay);
+                            searchListener.onGetResult(result);
+                        } else {
+                            searchListener.onNoResult();
                         }
                     }
                 }
@@ -854,5 +851,30 @@ public class BaiduMapService {
         return policy;
     }
 
+    /**
+     * 绘制规划驾车路线
+     * @param routeLine -- 驾车路线
+     * @return 绘制的驾车路线
+     */
+    public DrivingRouteOverlay drawDrivingRouteLine(DrivingRouteLine routeLine) {
+        return drawDrivingRouteLine(routeLine, 0, 0);
+    }
 
+    /**
+     * 绘制规划驾车路线
+     * @param routeLine -- 驾车路线
+     * @param startMarkerRes -- 起点图标
+     * @param endMarkerRes -- 终点图标
+     * @return 绘制的驾车路线
+     */
+    public DrivingRouteOverlay drawDrivingRouteLine(DrivingRouteLine routeLine, int startMarkerRes,
+                                                    int endMarkerRes) {
+        CustomDrivingRouteOverlay routeOverlay = new CustomDrivingRouteOverlay(mBaiduMap);
+        routeOverlay.setStartMarkerRes(startMarkerRes);
+        routeOverlay.setEndMarkerRes(endMarkerRes);
+        routeOverlay.setData(routeLine);
+        routeOverlay.addToMap();
+        routeOverlay.zoomToSpan();
+        return routeOverlay;
+    }
 }
