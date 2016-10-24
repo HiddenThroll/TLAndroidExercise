@@ -10,6 +10,7 @@
         <item>Custom ViewGroup</item>
         <item>ListView</item>
         <item>View Drag</item>
+        <item>效果合集</item>
     </array>
 
     <array name="custom_view_category">
@@ -35,6 +36,10 @@
 
     <array name="view_drag_category">
         <item>使用ViewDragHelper实现拖动</item>
+    </array>
+
+    <array name="view_effect_category">
+        <item>蒙版效果</item>
     </array>
 
     <!-- 百度地图 -->

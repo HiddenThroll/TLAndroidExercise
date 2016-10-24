@@ -13,6 +13,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
+    <!-- 蒙版效果需要-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
@@ -150,6 +153,19 @@
             />
         <activity
             android:name=".ui.activity.view.viewdrag.ViewDragHelperActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
+        <!-- View效果相关-->
+        <activity
+            android:name=".ui.activity.view.vieweffect.ViewEffectCategory"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
+        <activity
+            android:name=".ui.activity.view.vieweffect.MaskEffectActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:configChanges="keyboard"

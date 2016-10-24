@@ -33,6 +33,10 @@
     <string name="view_drag_exercise">ViewDrag练习</string>
     <string name="view_drag_helper_exercise">使用ViewDragHelper实现拖动</string>
 
+    <!-- View效果练习-->
+    <string name="view_effect_exercise">View效果练习</string>
+    <string name="view_effect_mask">蒙版效果</string>
+
     <!-- 百度地图练习-->
     <string name="baidu_map_exercise">百度地图练习</string>
 
