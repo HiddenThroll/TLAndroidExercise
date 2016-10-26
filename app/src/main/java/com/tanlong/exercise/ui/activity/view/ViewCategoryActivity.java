@@ -11,6 +11,7 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.customview.CustomViewCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.customviewgroup.CustomViewGroupCategoryActivity;
+import com.tanlong.exercise.ui.activity.view.fragment.FragmentCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.listview.ListViewCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.viewdrag.ViewDragCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.vieweffect.ViewEffectCategory;
@@ -72,6 +73,9 @@ public class ViewCategoryActivity extends BaseActivity {
                 break;
             case 4:
                 intent.setClass(this, ViewEffectCategory.class);
+                break;
+            case 5:
+                intent.setClass(this, FragmentCategoryActivity.class);
                 break;
         }
 

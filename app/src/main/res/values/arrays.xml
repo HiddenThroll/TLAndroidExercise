@@ -11,6 +11,7 @@
         <item>ListView</item>
         <item>View Drag</item>
         <item>效果合集</item>
+        <item>Fragment练习</item>
     </array>
 
     <array name="custom_view_category">
@@ -40,6 +41,12 @@
 
     <array name="view_effect_category">
         <item>蒙版效果</item>
+    </array>
+
+    <array name="fragment_category">
+        <item>DialogFragment练习</item>
+        <item>Fragment之间数据传递</item>
+        <item>屏幕旋转时处理网络加载数据</item>
     </array>
 
     <!-- 百度地图 -->
