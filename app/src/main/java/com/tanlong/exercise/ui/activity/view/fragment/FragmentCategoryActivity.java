@@ -49,6 +49,9 @@ public class FragmentCategoryActivity extends BaseActivity {
                     case 0:
                         intent.setClass(FragmentCategoryActivity.this, DialogFragmentActivity.class);
                         break;
+                    case 1:
+                        intent.setClass(FragmentCategoryActivity.this, ListTitleActivity.class);
+                        break;
                 }
 
                 if (intent.resolveActivity(getPackageManager()) != null) {
