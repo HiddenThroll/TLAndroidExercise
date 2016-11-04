@@ -24,8 +24,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-import static com.baidu.location.h.i.m;
-
 /**
  * 文章列表Fragment
  * Created by 龙 on 2016/11/3.
@@ -38,6 +36,8 @@ public class ListArticleFragment extends BaseFragment implements AdapterView.OnI
     List<String> titles = Arrays.asList("Hello", "World", "Peace");
     ArrayAdapter<String> adapter;
     private int mCurPosition;
+
+    public static final int REQUEST_CONTENT = 1;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,7 +67,7 @@ public class ListArticleFragment extends BaseFragment implements AdapterView.OnI
 
         ToastHelp.showShortMsg(mFragmentContext, "Fragment可以通过startActivityForResult()启动Activity");
 
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, REQUEST_CONTENT);
     }
 
     @Override
@@ -75,9 +75,9 @@ public class ListArticleFragment extends BaseFragment implements AdapterView.OnI
         super.onActivityResult(requestCode, resultCode, data);
         LogTool.e(TAG, "onActivityResult requestCode is " + requestCode + " resultCode is " + resultCode);
         ToastHelp.showShortMsg(mFragmentContext, "Fragment也可以在onActivityResult()中接收返回结果");
-        if (requestCode == 1) {
+        if (requestCode == REQUEST_CONTENT) {
             if (resultCode == Activity.RESULT_OK) {
-                String response = data.getStringExtra(ArticleContentFragment.ARGUMENT_RESPONSE);
+                String response = data.getStringExtra(ArticleContentFragment.RESPONSE_EVALUATE);
                 if (!TextUtils.isEmpty(response)){
                     titles.set(mCurPosition, titles.get(mCurPosition) + " -- " + response);
                     adapter.notifyDataSetChanged();

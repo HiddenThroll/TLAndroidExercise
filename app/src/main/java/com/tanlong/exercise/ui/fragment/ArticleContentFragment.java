@@ -27,9 +27,12 @@ public class ArticleContentFragment extends BaseFragment {
 
     @Bind(R.id.tv_article_content)
     TextView tvArticleContent;
-
+    // 显示内容
     public static final String ARGUMENT_CONTENT = "argument_content";
-    public static final String ARGUMENT_RESPONSE = "argument_response";
+    // 内容回复
+    public static final String RESPONSE_EVALUATE = "argument_response";
+
+    public static final int REQUEST_EVALUATE = 1;
 
     public static ArticleContentFragment newInstance(String content) {
         Bundle bundle = new Bundle();
@@ -63,14 +66,26 @@ public class ArticleContentFragment extends BaseFragment {
 
     @OnClick(R.id.tv_article_content)
     public void onClick() {
-        String response = "good";
+        // 显示评价对话框
+        EvaluateDialog evaluateDialog = new EvaluateDialog();
+        evaluateDialog.setTargetFragment(this, REQUEST_EVALUATE);
+        ToastHelp.showShortMsg(mFragmentContext, "通过setTargetFragment()设置启动的Fragment");
+        evaluateDialog.show(getFragmentManager(), "Evaluate");
+    }
 
-        if (mFragmentContext != null) {
-            ToastHelp.showShortMsg(mFragmentContext, "Fragment需要通过getActivity().setResult()设置返回结果");
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_EVALUATE) {
+            String response = data.getStringExtra(EvaluateDialog.EVALUATE_RESPONSE);
+            if (mFragmentContext != null) {
+                ToastHelp.showShortMsg(mFragmentContext, "Fragment需要通过getActivity().setResult()设置返回结果");
+            }
+            Intent intent = new Intent();
+            intent.putExtra(RESPONSE_EVALUATE, response);
+            getActivity().setResult(Activity.RESULT_OK, intent);
+            getActivity().finish();
         }
-        Intent intent = new Intent();
-        intent.putExtra(ARGUMENT_RESPONSE, response);
-        getActivity().setResult(Activity.RESULT_OK, intent);
-        getActivity().finish();
     }
 }
