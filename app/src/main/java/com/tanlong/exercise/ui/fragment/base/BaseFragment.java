@@ -1,5 +1,6 @@
 package com.tanlong.exercise.ui.fragment.base;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
@@ -8,6 +9,24 @@ import android.widget.Toast;
  */
 
 public class BaseFragment extends Fragment {
+    /**
+     * Fragment统一使用的Context，避免getActivity()方法返回null引起的错误
+     */
+    protected Context mFragmentContext;
+
+    protected final String TAG = getClass().getSimpleName();
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mFragmentContext = context;
+    }
+
+    @Override
+    public void onDetach() {
+        mFragmentContext = null;
+        super.onDetach();
+    }
 
     public void showShortMessage(String msg) {
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();

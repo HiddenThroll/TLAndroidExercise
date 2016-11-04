@@ -50,7 +50,7 @@ public class FragmentCategoryActivity extends BaseActivity {
                         intent.setClass(FragmentCategoryActivity.this, DialogFragmentActivity.class);
                         break;
                     case 1:
-                        intent.setClass(FragmentCategoryActivity.this, ListTitleActivity.class);
+                        intent.setClass(FragmentCategoryActivity.this, ListArticleActivity.class);
                         break;
                 }
 

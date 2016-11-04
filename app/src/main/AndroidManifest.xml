@@ -183,7 +183,13 @@
             android:configChanges="keyboard"
             />
         <activity
-            android:name=".ui.activity.view.fragment.ListTitleActivity"
+            android:name=".ui.activity.view.fragment.ListArticleActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
+        <activity
+            android:name=".ui.activity.view.fragment.ArticleContentActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:configChanges="keyboard"
