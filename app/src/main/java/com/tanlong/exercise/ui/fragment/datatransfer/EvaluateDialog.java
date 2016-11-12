@@ -1,4 +1,4 @@
-package com.tanlong.exercise.ui.fragment;
+package com.tanlong.exercise.ui.fragment.datatransfer;
 
 import android.app.Activity;
 import android.content.Intent;

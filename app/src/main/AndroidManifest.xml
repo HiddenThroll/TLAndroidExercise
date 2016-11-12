@@ -194,6 +194,11 @@
             android:launchMode="singleTop"
             android:configChanges="keyboard"
             />
+        <activity
+            android:name=".ui.activity.view.fragment.LoadDataActivity"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
 
         <!-- 百度地图相关 -->
         <activity

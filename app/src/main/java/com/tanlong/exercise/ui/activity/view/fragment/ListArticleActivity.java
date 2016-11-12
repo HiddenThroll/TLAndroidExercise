@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.tanlong.exercise.ui.activity.base.SingleFragmentActivity;
-import com.tanlong.exercise.ui.fragment.ListArticleFragment;
+import com.tanlong.exercise.ui.fragment.datatransfer.ListArticleFragment;
 import com.tanlong.exercise.util.LogTool;
 
 /**

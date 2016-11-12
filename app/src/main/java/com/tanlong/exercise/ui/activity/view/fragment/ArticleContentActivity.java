@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 import com.tanlong.exercise.ui.activity.base.SingleFragmentActivity;
-import com.tanlong.exercise.ui.fragment.ArticleContentFragment;
+import com.tanlong.exercise.ui.fragment.datatransfer.ArticleContentFragment;
 
 /**
  * 文章内容Activity
