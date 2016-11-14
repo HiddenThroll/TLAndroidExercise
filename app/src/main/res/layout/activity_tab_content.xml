@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/tb_toolbar"
+        layout="@layout/layout_toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/ll_tab_select"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="消息"
+            android:textColor="@color/color_white"
+            android:textSize="20sp"
+            />
+        <TextView
+            android:id="@+id/tv_phonebook"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="通讯录"
+            android:textColor="@color/color_282c76"
+            android:textSize="20sp"
+            />
+        <TextView
+            android:id="@+id/tv_discovery"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="发现"
+            android:textColor="@color/color_282c76"
+            android:textSize="20sp"
+            />
+        <TextView
+            android:id="@+id/tv_personal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="我"
+            android:textColor="@color/color_282c76"
+            android:textSize="20sp"
+            />
+        <TextView
+            android:id="@+id/tv_setting"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="设置"
+            android:textColor="@color/color_282c76"
+            android:textSize="20sp"
+            />
+
+    </LinearLayout>
+    
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_tab_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_86d0ab"
+        android:layout_below="@id/tb_toolbar"
+        android:layout_above="@id/ll_tab_select"
+        />
+
+
+</RelativeLayout>

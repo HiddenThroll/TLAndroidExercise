@@ -47,6 +47,7 @@
         <item>DialogFragment练习</item>
         <item>Fragment之间数据传递</item>
         <item>屏幕旋转时处理网络加载数据</item>
+        <item>Fragment+ViewPager</item>
     </array>
 
     <!-- 百度地图 -->
