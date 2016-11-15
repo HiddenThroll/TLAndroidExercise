@@ -13,7 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.tanlong.exercise.R;
-import com.tanlong.exercise.ui.activity.view.fragment.ArticleContentActivity;
+import com.tanlong.exercise.ui.activity.view.fragment.datatransfer.ArticleContentActivity;
 import com.tanlong.exercise.ui.fragment.base.BaseFragment;
 import com.tanlong.exercise.util.LogTool;
 import com.tanlong.exercise.util.ToastHelp;

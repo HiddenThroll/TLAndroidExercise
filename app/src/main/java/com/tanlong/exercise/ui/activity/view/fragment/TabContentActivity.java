@@ -4,19 +4,23 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
+import com.tanlong.exercise.ui.fragment.base.BaseFragment;
 import com.tanlong.exercise.ui.fragment.tabcontent.ContentFiveFragment;
 import com.tanlong.exercise.ui.fragment.tabcontent.ContentFourFragment;
 import com.tanlong.exercise.ui.fragment.tabcontent.ContentOneFragment;
 import com.tanlong.exercise.ui.fragment.tabcontent.ContentThreeFragment;
 import com.tanlong.exercise.ui.fragment.tabcontent.ContentTwoFragment;
+import com.tanlong.exercise.util.LogTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * Fragment + ViewPager 练习
  * Created by 龙 on 2016/11/14.
  */
 
@@ -51,7 +56,7 @@ public class TabContentActivity extends BaseActivity implements View.OnClickList
     TextView tvSetting;
 
     List<TextView> itemViews;
-    List<Fragment> itemFragments;
+    List<BaseFragment> itemFragments;
     FragmentPagerAdapter mAdapter;
     int curPosition;
 
@@ -66,6 +71,8 @@ public class TabContentActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initView() {
+        tvTitle.setText(R.string.fragment_viewpager);
+
         itemViews = new ArrayList<>();
         itemViews.add(tvMessage);
         itemViews.add(tvPhonebook);
@@ -80,11 +87,10 @@ public class TabContentActivity extends BaseActivity implements View.OnClickList
         itemFragments.add(ContentFourFragment.newInstance());
         itemFragments.add(ContentFiveFragment.newInstance());
 
-        setItemSelect(0);
-
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
+                //生成 新的 Fragment 对象时调用，可用于设置静态数据
                 return itemFragments.get(position);
             }
 
@@ -92,7 +98,27 @@ public class TabContentActivity extends BaseActivity implements View.OnClickList
             public int getCount() {
                 return itemFragments.size();
             }
+
+            @Override
+            public Object instantiateItem(ViewGroup container, int position) {
+                // 判断要生成的Fragment是否已经生成过
+                // 如果生成过了，通过FragmentTransaction.attach()使用旧的Fragment
+                // 如果没有生成，调用getItem()方法生成新的Fragment，并调用FragmentTransaction.add()添加Fragment
+                // 可以在这里设置更新数据
+                BaseFragment fragment = (BaseFragment) super.instantiateItem(container, position);
+                LogTool.e(TAG, "instantiateItem position is " + position + " update time is " + fragment.getUpdateContent());
+                return fragment;
+            }
+
+            @Override
+            public int getItemPosition(Object object) {
+                // 返回POSITION_UNCHANGED代表位置没有改变，不会做任何事
+                // 返回POSITION_NONE代表Adapter中没有Item，这会导致 PagerAdapter.destroyItem() 来去掉该对象，
+                // 并设置为需要刷新 (needPopulate = true) 以便触发 PagerAdapter.instantiateItem() 来生成新的对象
+                return PagerAdapter.POSITION_NONE;
+            }
         };
+
         vpTabContent.setAdapter(mAdapter);
         vpTabContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -104,6 +130,14 @@ public class TabContentActivity extends BaseActivity implements View.OnClickList
             public void onPageSelected(int position) {
                 resetItemSelect();
                 setItemSelect(position);
+                // 刷新Fragment UI
+                int times = Integer.valueOf(itemFragments.get(position).getUpdateContent());
+                times++;
+                itemFragments.get(position).setUpdateContent(String.valueOf(times));
+                LogTool.e(TAG, "onPageSelected position is " + position + " times is " + times);
+                mAdapter.notifyDataSetChanged();// 通过观察者模式，触发ViewPager.dataSetChanged()方法,
+                                                // dataSetChanged()方法中会判断PagerAdapter.getItemPosition()的返回值
+
             }
 
             @Override
@@ -111,6 +145,8 @@ public class TabContentActivity extends BaseActivity implements View.OnClickList
 
             }
         });
+
+        setItemSelect(0);
     }
 
     private void resetItemSelect() {
@@ -120,6 +156,7 @@ public class TabContentActivity extends BaseActivity implements View.OnClickList
     }
 
     private void setItemSelect(int position) {
+        // 改变文字颜色
         itemViews.get(position).setTextColor(ContextCompat.getColor(this, R.color.color_white));
     }
 
@@ -133,7 +170,7 @@ public class TabContentActivity extends BaseActivity implements View.OnClickList
                 if (curPosition != 0) {
                     resetItemSelect();
                     setItemSelect(0);
-                    vpTabContent.setCurrentItem(0);
+                    vpTabContent.setCurrentItem(0);//也会触发ViewPager的onPageSelected()回调
                     curPosition = 0;
                 }
                 break;

@@ -1,4 +1,4 @@
-package com.tanlong.exercise.ui.activity.view.fragment;
+package com.tanlong.exercise.ui.activity.view.fragment.dataload;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;

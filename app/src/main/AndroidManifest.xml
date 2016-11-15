@@ -183,19 +183,19 @@
             android:configChanges="keyboard"
             />
         <activity
-            android:name=".ui.activity.view.fragment.ListArticleActivity"
+            android:name=".ui.activity.view.fragment.datatransfer.ListArticleActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:configChanges="keyboard"
             />
         <activity
-            android:name=".ui.activity.view.fragment.ArticleContentActivity"
+            android:name=".ui.activity.view.fragment.datatransfer.ArticleContentActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:configChanges="keyboard"
             />
         <activity
-            android:name=".ui.activity.view.fragment.LoadDataActivity"
+            android:name=".ui.activity.view.fragment.dataload.LoadDataActivity"
             android:launchMode="singleTop"
             android:configChanges="keyboard"
             />

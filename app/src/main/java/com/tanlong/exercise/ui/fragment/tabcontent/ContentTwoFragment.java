@@ -6,16 +6,23 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.fragment.base.BaseFragment;
 import com.tanlong.exercise.util.LogTool;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by 龙 on 2016/11/14.
  */
 
 public class ContentTwoFragment extends BaseFragment {
+
+    @Bind(R.id.tv_update_content)
+    TextView tvUpdateContent;
 
     public static ContentTwoFragment newInstance() {
         return new ContentTwoFragment();
@@ -24,7 +31,12 @@ public class ContentTwoFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_two, container, false);
+        LogTool.e(TAG, "onCreateView");
+        View view = inflater.inflate(R.layout.fragment_two, container, false);
+        ButterKnife.bind(this, view);
+
+        tvUpdateContent.setText(mFragmentContext.getString(R.string.fragment_update_content, getUpdateContent()));
+        return view;
     }
 
     @Override
@@ -73,6 +85,7 @@ public class ContentTwoFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         LogTool.e(TAG, "onDestroyView");
+        ButterKnife.unbind(this);
     }
 
     @Override

@@ -15,7 +15,8 @@ public class BaseFragment extends Fragment {
     protected Context mFragmentContext;
 
     protected final String TAG = getClass().getSimpleName();
-
+    // Fragment + ViewPager练习使用
+    private String updateContent = "0";
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -42,5 +43,13 @@ public class BaseFragment extends Fragment {
 
     public void showLongMessage(int msg) {
         Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
+    }
+
+    public String getUpdateContent() {
+        return updateContent;
+    }
+
+    public void setUpdateContent(String updateContent) {
+        this.updateContent = updateContent;
     }
 }

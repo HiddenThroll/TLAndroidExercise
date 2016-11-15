@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
+import com.tanlong.exercise.ui.activity.view.fragment.dataload.LoadDataActivity;
+import com.tanlong.exercise.ui.activity.view.fragment.datatransfer.ListArticleActivity;
 import com.tanlong.exercise.util.ToastHelp;
 
 import butterknife.Bind;
