@@ -26,7 +26,7 @@ import java.util.List;
  * 百度地图几何覆盖物服务
  * Created by 龙 on 2016/10/9.
  */
-public class BDGeometryService {
+public class BDGeometryService extends BDBaseService{
 
     private MapUtils mMapUtils;
     private BaiduMap mBaiduMap;

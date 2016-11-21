@@ -26,7 +26,7 @@ import java.util.List;
  * 百度POI服务
  * Created by 龙 on 2016/10/10.
  */
-public class BDPoiService {
+public class BDPoiService extends BDBaseService{
 
     private MapUtils mMapUtils;
     private BaiduMap mBaiduMap;

@@ -89,7 +89,8 @@ public class BaseMapActivity extends BaseActivity {
     }
 
     private void initData() {
-        mMapService = new BaiduMapService(this).initMapService(mBaiduMap);
+        mMapService = new BaiduMapService(this);
+        mMapService.initBaiduMap(mBaiduMap);
         geometryService = new BDGeometryService(this, mBaiduMap);
 
         fillColor = ContextCompat.getColor(BaseMapActivity.this, R.color.color_282c76);
