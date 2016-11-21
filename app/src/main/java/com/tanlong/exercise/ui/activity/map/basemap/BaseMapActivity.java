@@ -30,6 +30,7 @@ import com.tanlong.maplibrary.baiduImpl.OnMarkerClickListener;
 import com.tanlong.maplibrary.model.LatLngData;
 import com.tanlong.maplibrary.model.MarkDataBase;
 import com.tanlong.maplibrary.service.BDGeometryService;
+import com.tanlong.maplibrary.service.BDMarkerService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,7 @@ public class BaseMapActivity extends BaseActivity {
 
     BaiduMapService mMapService;
     BDGeometryService geometryService;
+    BDMarkerService markerService;
     int fillColor;
     int strokeColor;
     int tempColor;
@@ -92,6 +94,7 @@ public class BaseMapActivity extends BaseActivity {
         mMapService = new BaiduMapService(this);
         mMapService.initBaiduMap(mBaiduMap);
         geometryService = new BDGeometryService(this, mBaiduMap);
+        markerService = new BDMarkerService(this, mBaiduMap);
 
         fillColor = ContextCompat.getColor(BaseMapActivity.this, R.color.color_282c76);
         strokeColor = ContextCompat.getColor(BaseMapActivity.this, R.color.color_86d0ab);
@@ -121,7 +124,7 @@ public class BaseMapActivity extends BaseActivity {
             public void onLocation(BDLocation bdLocation) {
                 LatLngData center = new LatLngData(bdLocation.getLatitude(), bdLocation.getLongitude(),
                         LatLngData.LatLngType.BAIDU);
-                mMapService.addMarker(locationView, center, null);
+                markerService.addMarker(locationView, center, null);
             }
 
             @Override
