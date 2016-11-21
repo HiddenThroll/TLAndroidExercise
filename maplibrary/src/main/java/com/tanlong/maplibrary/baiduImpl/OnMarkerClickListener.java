@@ -1,6 +1,7 @@
 package com.tanlong.maplibrary.baiduImpl;
 
 
+import com.baidu.mapapi.map.Marker;
 import com.tanlong.maplibrary.model.MarkDataBase;
 
 /**
@@ -8,6 +9,6 @@ import com.tanlong.maplibrary.model.MarkDataBase;
  */
 public interface OnMarkerClickListener<T> {
 
-   void onMarkerClick(MarkDataBase<T> markDataBase);
+   void onMarkerClick(MarkDataBase<T> markDataBase, Marker marker);
 
 }

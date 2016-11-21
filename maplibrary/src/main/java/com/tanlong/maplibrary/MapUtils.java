@@ -1,17 +1,20 @@
 package com.tanlong.maplibrary;
 
 import android.graphics.Point;
+import android.util.Log;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.route.DrivingRouteLine;
 import com.baidu.mapapi.utils.CoordinateConverter;
+import com.baidu.mapapi.utils.DistanceUtil;
 import com.tanlong.maplibrary.model.LatLngData;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * 地图工具类
  * Created by 龙 on 2016/9/12.
  */
 public class MapUtils {
@@ -23,6 +26,11 @@ public class MapUtils {
     public MapUtils(BaiduMap baiduMap) {
         this.mBaiduMap = baiduMap;
     }
+
+    public MapUtils() {
+    }
+
+    /************************ 坐标相关 ********************************/
 
     /**
      * 国测局GCJ-02坐标体系（谷歌、高德、腾讯）到百度坐标BD-09体系的转换
@@ -79,6 +87,29 @@ public class MapUtils {
     }
 
     /**
+     * 将传入坐标转换为百度坐标系坐标, 返回数据为LatLngData格式
+     *
+     * @param latLngData -- 传入坐标数据
+     * @return 对应的百度坐标数据
+     */
+    public LatLngData changeCoordinateToBDLatLngData(LatLngData latLngData) {
+        LatLng latLng = changeCoordinateToBaidu(latLngData);
+        LatLngData result = null;
+        if (latLng != null) {
+            result = new LatLngData(latLng.latitude, latLng.longitude, LatLngData.LatLngType.BAIDU);
+            if (latLngData.getmType().equals(LatLngData.LatLngType.GPS)) {
+                // 添加方向转变，GPS定义为 正北为0°，按顺时针方向增加
+                result.setDirection(360 - latLngData.getDirection());
+            } else if (latLngData.getmType().equals(LatLngData.LatLngType.BAIDU)) {
+                // 添加方向转变，百度坐标定义为 正北为0°，按逆时针方向增加
+                result.setDirection(latLngData.getDirection());
+            }
+            result.setTimeStamp(latLngData.getTimeStamp());
+        }
+        return result;
+    }
+
+    /**
      * 将传入坐标转换为GCJ02坐标系坐标
      *
      * @param latLngData -- 传入坐标数据
@@ -97,7 +128,7 @@ public class MapUtils {
         } else if (LatLngData.LatLngType.GCJ_02.equals(latLngData.getmType())) {// 已是GCJ坐标，无需转换
             gcjLatLng = latLngData;
         }
-
+        gcjLatLng.setTimeStamp(latLngData.getTimeStamp());
         return gcjLatLng;
     }
 
@@ -118,22 +149,56 @@ public class MapUtils {
         double latitude = srcLatLng.getmLatitude() * 2 - temp.latitude;
         double longitude = srcLatLng.getmLongitude() * 2 - temp.longitude;
         LatLngData gpsLatLng = new LatLngData(latitude, longitude, LatLngData.LatLngType.GPS);
+
+        if (srcLatLng.getmType().equals(LatLngData.LatLngType.GPS)) {
+            // 添加方向转变，GPS定义为 正北为0°，按顺时针方向增加
+            gpsLatLng.setDirection(360 - srcLatLng.getDirection());
+        } else if (srcLatLng.getmType().equals(LatLngData.LatLngType.BAIDU)) {
+            // 添加方向转变，百度坐标定义为 正北为0°，按逆时针方向增加
+            gpsLatLng.setDirection(srcLatLng.getDirection());
+        }
+        gpsLatLng.setTimeStamp(srcLatLng.getTimeStamp());
         return gpsLatLng;
     }
 
     /**
+     * 将屏幕坐标转换成地理坐标
+     *
+     * @param point -- 屏幕坐标
+     * @return
+     */
+    public LatLngData changePointToLatLng(Point point,BaiduMap mBaiduMap) {
+        LatLngData latLngData = new LatLngData();
+        LatLng temp = mBaiduMap.getProjection().fromScreenLocation(point);
+        latLngData.setmLatitude(temp.latitude);
+        latLngData.setmLongitude(temp.longitude);
+        latLngData.setmType(LatLngData.LatLngType.BAIDU);
+        return latLngData;
+    }
+
+    /**
+     * 将地理坐标转换为屏幕坐标
+     *
+     * @param srcLatLng -- 地理坐标
+     * @return
+     */
+    public Point changeLatLngToPoint(LatLngData srcLatLng,BaiduMap mBaiduMap) {
+        LatLng temp = changeCoordinateToBaidu(srcLatLng);
+        return mBaiduMap.getProjection().toScreenLocation(temp);
+    }
+
+    /**
      * 扩充坐标
+     *
      * @param srcLatLng -- 源坐标
-     * @param srcTime -- 获取源坐标的时间
      * @param tarLatLng -- 目的地坐标
-     * @param tarTime -- 获取目的地坐标的时间
-     * @param timeBase -- 分解坐标的时间基数，以毫秒为单位
+     * @param timeBase  -- 分解坐标的时间基数，以毫秒为单位
      * @return -- 扩充后的坐标数据
      * @throws Exception
      */
-    public List<LatLngData> fillLatLng(LatLngData srcLatLng, long srcTime, LatLngData tarLatLng, long tarTime,
-                                       long timeBase) throws Exception {
-        long timeDifference = tarTime - srcTime;// 时间差，毫秒为单位
+    public List<LatLngData> fillLatLng(LatLngData srcLatLng, LatLngData tarLatLng, long timeBase)
+            throws Exception {
+        long timeDifference = tarLatLng.getTimeStamp() - srcLatLng.getTimeStamp();// 时间差，毫秒为单位
         if (timeDifference <= 0) {
             throw new Exception("tarTime不能小于srcTime!");
         }
@@ -161,29 +226,112 @@ public class MapUtils {
         return result;
     }
 
-    /**
-     * 将屏幕坐标转换成地理坐标
-     *
-     * @param point -- 屏幕坐标
-     * @return
-     */
-    public LatLngData changePointToLatLng(Point point) {
-        LatLngData latLngData = new LatLngData();
-        LatLng temp = mBaiduMap.getProjection().fromScreenLocation(point);
-        latLngData.setmLatitude(temp.latitude);
-        latLngData.setmLongitude(temp.longitude);
-        latLngData.setmType(LatLngData.LatLngType.BAIDU);
-        return latLngData;
+    public List<LatLngData> fillLatLngByDistance(LatLngData srcLatLng, LatLngData tarLatLng,
+                                                 int disBase) {
+        double distance = DistanceUtil.getDistance(changeCoordinateToBaidu(srcLatLng),
+                changeCoordinateToBaidu(tarLatLng));
+        int count = 0;
+        if (distance <= disBase) {
+            count = 1;
+        } else {
+            count = (int) (distance / disBase);
+        }
+        double latDiff = (tarLatLng.getmLatitude() - srcLatLng.getmLatitude()) / count;
+        double longDiff = (tarLatLng.getmLongitude() - srcLatLng.getmLongitude()) / count;
+        float dirDiff = (tarLatLng.getDirection() - srcLatLng.getDirection()) / count;
+        List<LatLngData> result = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            LatLngData data = new LatLngData();
+            data.setmLatitude(srcLatLng.getmLatitude() + i * latDiff);
+            data.setmLongitude(srcLatLng.getmLongitude() + i * longDiff);
+            data.setDirection(srcLatLng.getDirection() + i * dirDiff);
+            data.setmType(LatLngData.LatLngType.BAIDU);
+            result.add(data);
+        }
+        return result;
     }
 
     /**
-     * 将地理坐标转换为屏幕坐标
-     *
-     * @param srcLatLng -- 地理坐标
+     * 根据路径填充坐标
+     * @param routeLine -- 规划路径
+     * @param timeInterval -- 获得起点终点数据时间差
+     * @param isNeedDirection -- 是否需要设置方向，false默认方向为0
      * @return
      */
-    public Point changeLatLngToPoint(LatLngData srcLatLng) {
-        LatLng temp = changeCoordinateToBaidu(srcLatLng);
-        return mBaiduMap.getProjection().toScreenLocation(temp);
+    public List<LatLngData> fillLatLngByRoute(DrivingRouteLine routeLine, long timeInterval,
+                                              boolean isNeedDirection) {
+        List<LatLngData> srcResult = new ArrayList<>();
+        List<LatLngData> finalResult = new ArrayList<>();
+
+        // 获得路径坐标，还需进一步扩充
+        for (DrivingRouteLine.DrivingStep step : routeLine.getAllStep()) {
+            for (LatLng latLng : step.getWayPoints()) {
+                srcResult.add(new LatLngData(latLng.latitude, latLng.longitude, LatLngData.LatLngType.BAIDU));
+            }
+        }
+
+        int count = (int) (timeInterval / 80 / srcResult.size());
+        Log.e("MapUtils","fillLatLngByRoute() count is "+ count );
+        for (int i = 0, size = srcResult.size(); i < size - 1; i++) {
+            LatLngData startPoint = srcResult.get(i);
+            LatLngData endPoint = srcResult.get(i + 1);
+            LatLng fromPoint = new LatLng(startPoint.getmLatitude(), startPoint.getmLongitude());
+            LatLng toPoint = new LatLng(endPoint.getmLatitude(), endPoint.getmLongitude());
+            double angle = 0;
+            if (isNeedDirection) {
+                angle = getAngle(fromPoint, toPoint);
+            }
+            // 判断前后点的距离坐标，小于5米，不扩充
+            if (DistanceUtil.getDistance(fromPoint, toPoint) < 5) {
+                startPoint.setDirection((float) angle);
+                finalResult.add(startPoint);
+                continue;
+            }
+
+            double latDiff = (endPoint.getmLatitude() - startPoint.getmLatitude()) / count;
+            double longDiff = (endPoint.getmLongitude() - startPoint.getmLongitude()) / count;
+            for (int j = 0; j < count; j++) {// 扩充坐标
+                LatLngData data = new LatLngData();
+                data.setmLatitude(startPoint.getmLatitude() + j * latDiff);
+                data.setmLongitude(startPoint.getmLongitude() + j * longDiff);
+                data.setmType(LatLngData.LatLngType.BAIDU);
+                data.setDirection((float) angle);
+                finalResult.add(data);
+            }
+        }
+        return finalResult;
+    }
+
+    /**
+     * 根据两点算取图标转的角度
+     */
+    private double getAngle(LatLng fromPoint, LatLng toPoint) {
+        double slope = getSlope(fromPoint, toPoint);
+        if (slope == Double.MAX_VALUE) {
+            if (toPoint.latitude > fromPoint.latitude) {
+                return 0;
+            } else {
+                return 180;
+            }
+        }
+        float deltAngle = 0;
+        if ((toPoint.latitude - fromPoint.latitude) * slope < 0) {
+            deltAngle = 180;
+        }
+        double radio = Math.atan(slope);
+        double angle = 180 * (radio / Math.PI) + deltAngle - 90;
+        return angle;
+    }
+
+    /**
+     * 算斜率
+     */
+    private double getSlope(LatLng fromPoint, LatLng toPoint) {
+        if (toPoint.longitude == fromPoint.longitude) {
+            return Double.MAX_VALUE;
+        }
+        double slope = ((toPoint.latitude - fromPoint.latitude) / (toPoint.longitude - fromPoint.longitude));
+        return slope;
+
     }
 }

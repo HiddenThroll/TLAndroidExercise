@@ -1,11 +1,16 @@
 package com.tanlong.maplibrary;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +21,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
@@ -48,6 +54,8 @@ import com.baidu.mapapi.search.route.RoutePlanSearch;
 import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.baidu.mapapi.utils.DistanceUtil;
+import com.baidu.navisdk.adapter.BNRoutePlanNode;
+import com.baidu.navisdk.adapter.BaiduNaviManager;
 import com.tanlong.maplibrary.baiduImpl.OnLocationListener;
 import com.tanlong.maplibrary.baiduImpl.OnMapClickListener;
 import com.tanlong.maplibrary.baiduImpl.OnMapStatusChangeListener;
@@ -61,9 +69,12 @@ import com.tanlong.maplibrary.model.MarkDataBase;
 import com.tanlong.maplibrary.overlay.CustomDrivingRouteOverlay;
 import com.tanlong.maplibrary.overlay.DrivingRouteOverlay;
 
+import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 百度地图服务
@@ -71,11 +82,12 @@ import java.util.List;
  */
 public class BaiduMapService {
 
+    private final String TAG = getClass().getSimpleName();
     private Context mContext;
     private BaiduMap mBaiduMap;
     private MapView mMapView;
 
-    private MapUtils mMapUtils;
+    private MapUtils mMapUtils=new MapUtils();
 
     private MapStatus mOldMapStatus;
     /**
@@ -87,16 +99,21 @@ public class BaiduMapService {
     public static final String MARKER_DATA = "marker_data";
     private int mErrorPic;
 
+    private OnMarkerClickListener mOnMarkerClickListener;
+    //    private OnMapClickListener mOnMapClickListener;
+//    private OnLocationListener mOnLocationListener;
+    //导航权限
+    private final static String authBaseArr[] =
+            {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION};
+
     public BaiduMapService(Context mContext) {
         this.mContext = mContext;
         mErrorPic = R.mipmap.ic_marker_error;
     }
-
-    public BaiduMapService initMapService(MapView mapView) {
+    public void initBaiduMap(MapView mapView) {
         mMapView = mapView;
         mBaiduMap = mapView.getMap();
-        mMapUtils = new MapUtils(mBaiduMap);
-        return this;
+
     }
 
     public BaiduMap getmBaiduMap() {
@@ -116,7 +133,11 @@ public class BaiduMapService {
      * @param lng -- 经度
      */
     public void moveMapToLatLng(double lat, double lng) {
-        mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(lat, lng)));
+        try {
+            mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(lat, lng)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -137,20 +158,33 @@ public class BaiduMapService {
      * @return -- 缩放级别
      */
     public float getMapZoom() {
-        return mBaiduMap.getMapStatus().zoom;
+        return getMapZoom(15);
+    }
+
+    public float getMapZoom(float def) {
+        try {
+            def = mBaiduMap.getMapStatus().zoom;//根据Bugtags日志，有时无法获取地图状态
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return def;
     }
 
     /**
      * 地图点击
+     *
      * @param onMapClickListener -- 地图点击监听
      */
-    public void setMapClickListener(final OnMapClickListener onMapClickListener) {
+    public void setOnMapClickListener(final OnMapClickListener onMapClickListener) {
+//        mOnMapClickListener = onMapClickListener;
         mBaiduMap.setOnMapClickListener(new BaiduMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                LatLngData latLngData = new LatLngData(latLng.latitude, latLng.longitude,
-                        LatLngData.LatLngType.BAIDU);
-                onMapClickListener.onMapClick(latLngData);
+                if (onMapClickListener != null) {
+                    LatLngData latLngData = new LatLngData(latLng.latitude, latLng.longitude,
+                            LatLngData.LatLngType.BAIDU);
+                    onMapClickListener.onMapClick(latLngData);
+                }
             }
 
             @Override
@@ -161,72 +195,32 @@ public class BaiduMapService {
     }
 
     /************************ 定位相关 ********************************/
+    /**
+     * 实时定位Client
+     */
     private LocationClient mLocationClient;
     /**
      * 启动定位，定位成功后会自动调用LocationClient.stop()方法停止定位
      *
      * @param onLocationListener -- 定位监听器
      */
-    public void startLocation(final OnLocationListener onLocationListener) {
+    public void startLocation(OnLocationListener onLocationListener) {
         // 设置定位参数
+        startLocation(getNormalLocationOption(), onLocationListener);
+    }
+
+    /**
+     * 获取常用的百度地图定位参数，即需要地址信息，使用gps，返回坐标类型为bd09ll
+     * @return 百度地图定位参数
+     */
+    public LocationClientOption getNormalLocationOption() {
         LocationClientOption locationOption = new LocationClientOption();
-        locationOption.setIsNeedAddress(true);
-        locationOption.setOpenGps(true);
-        locationOption.setIgnoreKillProcess(false);
-        locationOption.setCoorType("bd09ll");
+        locationOption.setIsNeedAddress(true);// 是否需要地址信息
+        locationOption.setOpenGps(true);// 是否使用gps
+        locationOption.setIgnoreKillProcess(false);//定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程
+        locationOption.setCoorType("bd09ll");// 返回坐标类型
 
-        startLocation(locationOption, onLocationListener);
-    }
-
-    public void startTimingLocation(int timeSpan, final OnLocationListener onLocationListener) {
-        if (timeSpan < 1000 ) {
-            Toast.makeText(mContext,"定位时间间隔不能小于1s", Toast.LENGTH_SHORT).show();
-            return ;
-        }
-
-        mLocationClient = new LocationClient(mContext);
-        LocationClientOption option = new LocationClientOption();
-        option.setCoorType("bd09ll");// 设置返回坐标系
-        option.setScanSpan(timeSpan);// 设置发起定位请求间隔
-        option.setIsNeedAddress(true);// 是否需要地址信息，
-        option.setOpenGps(true);// 是否使用GPS
-        option.setIgnoreKillProcess(false);// 定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，true代表不杀死
-        mLocationClient.setLocOption(option);
-
-        mLocationClient.registerLocationListener(new BDLocationListener() {
-            @Override
-            public void onReceiveLocation(BDLocation bdLocation) {
-                if (onLocationListener != null) {
-                    boolean locResult = false;
-                    switch (bdLocation.getLocType()) {
-                        case BDLocation.TypeCriteriaException:// 无法定位结果
-                        case BDLocation.TypeNetWorkException:// 网络连接失败
-                        case BDLocation.TypeNone:// 无效定位结果
-                        case BDLocation.TypeOffLineLocationFail:// 离线定位失败
-                        case BDLocation.TypeServerError:// server定位失败
-                            locResult = false;
-                            break;
-                        case BDLocation.TypeGpsLocation:// GPS定位结果
-                        case BDLocation.TypeNetWorkLocation:// 网络定位结果
-                        case BDLocation.TypeOffLineLocation:// 离线定位成功
-                            locResult = true;
-                            break;
-                    }
-                    if (locResult) {
-                        onLocationListener.onLocation(bdLocation);
-                    } else {
-                        onLocationListener.onLocationFailed();
-                    }
-                }
-            }
-        });
-        mLocationClient.start();
-    }
-
-    public void closeTimingLocation() {
-        if (mLocationClient != null) {
-            mLocationClient.stop();
-        }
+        return locationOption;
     }
 
     /**
@@ -236,6 +230,7 @@ public class BaiduMapService {
      * @param onLocationListener -- 定位监听器
      */
     public void startLocation(LocationClientOption option, final OnLocationListener onLocationListener) {
+//        mOnLocationListener = onLocationListener;
         final LocationClient locationClient = new LocationClient(mContext);
         locationClient.setLocOption(option);
 
@@ -277,6 +272,7 @@ public class BaiduMapService {
      * @param onLocationListener -- 定位监听器
      */
     public void startLocationAndMoveCenter(final OnLocationListener onLocationListener) {
+//        mOnLocationListener = onLocationListener;
         startLocation(new OnLocationListener() {
             @Override
             public void onLocation(BDLocation bdLocation) {
@@ -285,14 +281,69 @@ public class BaiduMapService {
                 if (getMapZoom() < 15) {
                     setMapZoom(15);
                 }
-                onLocationListener.onLocation(bdLocation);
+                if (onLocationListener != null) {
+                    onLocationListener.onLocation(bdLocation);
+                }
             }
 
             @Override
             public void onLocationFailed() {
+
                 onLocationListener.onLocationFailed();
             }
         });
+    }
+
+    /**
+     * 启动定时定位，通过closeTimingLocation方法停止定时定位
+     * @param timeSpan -- 定位间隔，单位为ms，不能小于1000，否则无效
+     * @param onLocationListener -- 定位监听器
+     */
+    public void startTimingLocation(int timeSpan, final OnLocationListener onLocationListener) {
+        if (timeSpan < 1000 ) {
+            Toast.makeText(mContext,"定位时间间隔不能小于1s", Toast.LENGTH_SHORT).show();
+            return ;
+        }
+
+        mLocationClient = new LocationClient(mContext);
+        LocationClientOption option = getNormalLocationOption();
+        option.setScanSpan(timeSpan);// 设置发起定位请求间隔
+        mLocationClient.setLocOption(option);
+
+        mLocationClient.registerLocationListener(new BDLocationListener() {
+            @Override
+            public void onReceiveLocation(BDLocation bdLocation) {
+                if (onLocationListener != null) {
+                    boolean locResult = false;
+                    switch (bdLocation.getLocType()) {
+                        case BDLocation.TypeCriteriaException:// 无法定位结果
+                        case BDLocation.TypeNetWorkException:// 网络连接失败
+                        case BDLocation.TypeNone:// 无效定位结果
+                        case BDLocation.TypeOffLineLocationFail:// 离线定位失败
+                        case BDLocation.TypeServerError:// server定位失败
+                            locResult = false;
+                            break;
+                        case BDLocation.TypeGpsLocation:// GPS定位结果
+                        case BDLocation.TypeNetWorkLocation:// 网络定位结果
+                        case BDLocation.TypeOffLineLocation:// 离线定位成功
+                            locResult = true;
+                            break;
+                    }
+                    if (locResult) {
+                        onLocationListener.onLocation(bdLocation);
+                    } else {
+                        onLocationListener.onLocationFailed();
+                    }
+                }
+            }
+        });
+        mLocationClient.start();
+    }
+
+    public void closeTimingLocation() {
+        if (mLocationClient != null) {
+            mLocationClient.stop();
+        }
     }
 
     /**
@@ -345,8 +396,7 @@ public class BaiduMapService {
      * @param srcContent -- 调用来源，规则：companyName|appName
      */
     public void useBaiduNavigation(final LatLngData latLng, final String srcContent) {
-        if (!isAppInstalled(mContext, "com.baidu.BaiduMap")) {
-            Toast.makeText(mContext, R.string.no_baidu_map_installed, Toast.LENGTH_SHORT).show();
+        if (!isBaiduMapInstall()) {
             return;
         }
 
@@ -361,8 +411,9 @@ public class BaiduMapService {
                 try {
                     Intent intent = Intent.parseUri(url, 0);
                     mContext.startActivity(intent);
-                } catch (URISyntaxException e) {
+                } catch (Exception e) {// 根据Bugtags记录，有时找不到百度地图
                     e.printStackTrace();
+                    Toast.makeText(mContext, "启动百度地图失败", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -379,8 +430,7 @@ public class BaiduMapService {
      * @param latLng -- 终点坐标
      */
     public void useAMapNavigation(LatLngData latLng) {
-        if (!isAppInstalled(mContext, "com.autonavi.minimap")) {
-            Toast.makeText(mContext, R.string.no_a_map_installed, Toast.LENGTH_SHORT).show();
+        if (!isAMapInstall()) {
             return;
         }
 
@@ -396,15 +446,70 @@ public class BaiduMapService {
             dev = 0;
         }
 
-        Intent intent = new Intent("com.autonavi.minimap");
-        intent.setAction("android.intent.action.VIEW");
-        intent.addCategory("android.intent.category.DEFAULT");
-        // dev是否偏移(0:lat 和 lon 是已经加密后的,不需要国测加密; 1:需要国测加密)
-        // style指定导航方式，2代表路程短
-        intent.setData(Uri.parse("androidamap://navi?sourceApplication=amap&poiname=fangheng&lat="
-                + endLatLng.getmLatitude() + "&lon=" + endLatLng.getmLongitude() + "&dev=" + dev +
-                "&style=2"));
-        mContext.startActivity(intent);
+        try {
+            Intent intent = new Intent("com.autonavi.minimap");
+            intent.setAction("android.intent.action.VIEW");
+            intent.addCategory("android.intent.category.DEFAULT");
+            // dev是否偏移(0:lat 和 lon 是已经加密后的,不需要国测加密; 1:需要国测加密)
+            // style指定导航方式，2代表路程短
+            intent.setData(Uri.parse("androidamap://navi?sourceApplication=amap&poiname=fangheng&lat="
+                    + endLatLng.getmLatitude() + "&lon=" + endLatLng.getmLongitude() + "&dev=" + dev +
+                    "&style=2"));
+            mContext.startActivity(intent);
+        } catch (Exception e) {// 根据Bugtags记录，有时找不到高德地图
+            Toast.makeText(mContext, "启动高德地图失败", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 是否已安装百度地图
+     *
+     * @return
+     */
+    public boolean isBaiduMapInstall() {
+        boolean result = isAppInstalled(mContext, "com.baidu.BaiduMap");
+        if (!result) {
+            Toast.makeText(mContext, R.string.no_baidu_map_installed, Toast.LENGTH_SHORT).show();
+        }
+        return result;
+    }
+
+    /**
+     * 是否已安装高德地图
+     *
+     * @return
+     */
+    public boolean isAMapInstall() {
+        boolean result = isAppInstalled(mContext, "com.autonavi.minimap");
+        if (!result) {
+            Toast.makeText(mContext, R.string.no_a_map_installed, Toast.LENGTH_SHORT).show();
+        }
+        return result;
+    }
+
+    public void openBaiduMap() {
+        if (!isBaiduMapInstall()) {
+            return;
+        }
+        try {
+            Intent intent = Intent.getIntent("baidumap://map");
+            mContext.startActivity(intent);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openAMap() {
+        if (!isAMapInstall()) {
+            return;
+        }
+        try {
+            Intent intent = Intent.getIntent("androidamap://viewMap");
+            mContext.startActivity(intent);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -601,7 +706,10 @@ public class BaiduMapService {
                     geoCoder.destroy();
                     return;
                 }
-
+                if (reverseGeoCodeResult.getPoiList()==null||reverseGeoCodeResult.getPoiList().size()<1){
+                    geoCoder.destroy();
+                    return;
+                }
                 for (PoiInfo poiInfo : reverseGeoCodeResult.getPoiList()) {
                     LatLng bdTarget = mMapUtils.changeCoordinateToBaidu(target);
                     double temp = Math.abs(DistanceUtil.getDistance(bdTarget, poiInfo.location));
@@ -625,7 +733,9 @@ public class BaiduMapService {
         geoCoder.reverseGeoCode(geoCodeOption);
     }
 
-    /************************ Marker相关 ********************************/
+    /************************
+     * Marker相关
+     ********************************/
 
     public int getmErrorPic() {
         return mErrorPic;
@@ -646,12 +756,13 @@ public class BaiduMapService {
         return addMarker(view, latLng, t, 0);
     }
 
+
     /**
      * 在地图上添加Marker并设置点击事件
      *
-     * @param view   -- Marker使用的View
-     * @param latLng -- Marker坐标
-     * @param t      -- Marker携带的数据，用于业务处理
+     * @param view     -- Marker使用的View
+     * @param latLng   -- Marker坐标
+     * @param t        -- Marker携带的数据，用于业务处理
      * @param errorPic -- 添加Marker出错时，使用的默认图片
      */
     public Marker addMarker(View view, LatLngData latLng, MarkDataBase t, int errorPic) {
@@ -671,6 +782,7 @@ public class BaiduMapService {
         }
 
         Marker marker = (Marker) mBaiduMap.addOverlay(markerOptions);
+        marker.setRotate(latLng.getDirection());
         // 设置mark携带的数据，点击时调用
         Bundle bundle = new Bundle();
         bundle.putSerializable(MARKER_DATA, t);
@@ -680,41 +792,289 @@ public class BaiduMapService {
     }
 
     /**
+     * 添加Marker
+     * @param drawable -- Marker图片资源
+     * @param latLng -- Marker坐标
+     * @param t -- Marker携带的数据，用于业务处理
+     * @return
+     * @throws Exception
+     */
+    public Marker addMarker(int drawable, LatLngData latLng, MarkDataBase t, int errorPic) {
+        MarkerOptions markerOptions = new MarkerOptions();
+        LatLng positionLatLng = mMapUtils.changeCoordinateToBaidu(latLng);
+        markerOptions.position(positionLatLng);
+        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(drawable);
+        if (bitmapDescriptor == null) {
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(mErrorPic));
+            Toast.makeText(mContext, "addMarker(int drawable, LatLngData latLng, MarkDataBase t)传入图片资源无法解析",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            markerOptions.icon(bitmapDescriptor);
+        }
+        Marker marker = (Marker) mBaiduMap.addOverlay(markerOptions);
+
+        // 设置mark携带的数据，点击时调用
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(MARKER_DATA, t);
+        marker.setExtraInfo(bundle);
+        return marker;
+    }
+
+    /**
      * 设置Marker点击响应
+     *
      * @param onMarkerClickListener -- Marker点击响应监听器
      */
-    public void setOnMarkerClickListener(final OnMarkerClickListener onMarkerClickListener) {
+    public void setMarkerClickListener(OnMarkerClickListener onMarkerClickListener) {
+        mOnMarkerClickListener = onMarkerClickListener;
         mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 MarkDataBase markDataBase = (MarkDataBase) marker.getExtraInfo().getSerializable(MARKER_DATA);
-                if (onMarkerClickListener != null) {
-                    onMarkerClickListener.onMarkerClick(markDataBase);
+                if (mOnMarkerClickListener != null) {
+                    mOnMarkerClickListener.onMarkerClick(markDataBase, marker);
                 }
                 return false;
             }
         });
     }
 
+    public void changeMarker(Marker marker, View view) {
+        changeMarker(marker, view, null);
+    }
+
+    public void changeMarker(Marker marker, LatLngData latLng) {
+        changeMarker(marker, null, latLng);
+    }
+
     /**
      * 改变Marker的View和位置
+     *
      * @param marker -- 改变的Marker
-     * @param view -- 改变后的View
+     * @param view   -- 改变后的View
      * @param latLng -- 改变后的地址
      */
     public void changeMarker(Marker marker, View view, LatLngData latLng) {
-        LatLng positionLatLng = mMapUtils.changeCoordinateToBaidu(latLng);
-        wrapMarkerView(view);
-        marker.setIcon(BitmapDescriptorFactory.fromView(view));
-        marker.setPosition(positionLatLng);
-        marker.setRotate(latLng.getDirection());
+        if (view != null) {
+            wrapMarkerView(view);
+            marker.setIcon(BitmapDescriptorFactory.fromView(view));
+        }
+        if (latLng != null) {
+            LatLng positionLatLng = mMapUtils.changeCoordinateToBaidu(latLng);
+            marker.setPosition(positionLatLng);
+            marker.setRotate(latLng.getDirection());
+        }
+    }
+
+    public void clearMarker() {
+        if (mBaiduMap == null) {
+            return;
+        }
+        mBaiduMap.clear();
+    }
+
+    /**
+     * 改变Marker的间隔时间, 单位为ms
+     */
+    private int mShowTimeInterval = 20;
+    /**
+     * 扩展坐标的间隔时间, 单位为ms
+     */
+    private int mHandleTimeInterval = 200;
+    /**
+     * 检测Marker的间隔时间, 单位为ms
+     */
+    private int mCheckMarkerTimeInterval = 30 * 1000;
+    /**
+     * Marker最长存在时间，单位为ms
+     */
+    private int mMarkerExistMaxTime = 30 * 1000;
+
+    private Map<String, ChangeMarkerHandler> markerHandlerMap;
+    private CheckMarkerHandler mCheckMarkerHandler;
+
+    /**
+     * 改变Marker的Handler
+     */
+    private class ChangeMarkerHandler extends Handler {
+        private List<LatLngData> dataList;
+        private Marker marker;
+        private View view;
+        private int count;
+        private String index;
+
+        public ChangeMarkerHandler(List<LatLngData> dataList, Marker marker, View view, String index) {
+            this.dataList = dataList;
+            this.marker = marker;
+            this.view = view;
+            this.count = 0;
+            this.index = index;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            if (msg.what == 1) {// 改变Marker
+                if (count >= dataList.size()) {
+                    // 已完成该次改变
+                } else {
+                    changeMarker(marker, view, dataList.get(count));
+                    count++;
+                    sendEmptyMessageDelayed(1, mShowTimeInterval);
+                }
+            } else if (msg.what == -1) {// 将Marker从地图上移除
+                marker.remove();
+                markerHandlerMap.remove(index);
+            }
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
+
+        public void setDataList(List<LatLngData> dataList) {
+            this.dataList = dataList;
+        }
+
+        public void setMarker(Marker marker) {
+            this.marker = marker;
+        }
+
+        public void setView(View view) {
+            this.view = view;
+        }
+
+        public List<LatLngData> getDataList() {
+            return dataList;
+        }
+    }
+
+    private class CheckMarkerHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                long curTime = System.currentTimeMillis();
+                if (markerHandlerMap == null) {
+                    sendEmptyMessageDelayed(1, mCheckMarkerTimeInterval);
+                } else {
+                    // 检测markerHandlerMap中的Marker的坐标数据是否已超过规定时间
+                    for (Map.Entry<String, ChangeMarkerHandler> entry : markerHandlerMap.entrySet()) {
+                        List<LatLngData> latLngDataList = entry.getValue().getDataList();
+                        long latLngTime = latLngDataList.get(latLngDataList.size() - 1).getTimeStamp();
+                        if (curTime - latLngTime > mMarkerExistMaxTime) {// 最后一个坐标的获取时间
+                            //移除该Marker
+                            entry.getValue().sendEmptyMessage(-1);
+                        }
+                    }
+                    sendEmptyMessageDelayed(1, mCheckMarkerTimeInterval);
+                }
+            } else if (msg.what == -1) {
+                removeMessages(1);
+            }
+        }
+    }
+
+    /**
+     * 启动Marker改变任务
+     *
+     * @param index  -- 改变Marker的Tag
+     * @param marker -- 改变的Marker
+     * @param view   -- Marker使用的View
+     * @param src    -- 起始坐标
+     * @param tar    -- 目的地坐标
+     */
+    public void startChangeMarker(String index, Marker marker, View view, LatLngData src,
+                                  LatLngData tar) {
+        if (markerHandlerMap == null) {
+            markerHandlerMap = new HashMap<>();
+        }
+
+        if (mCheckMarkerHandler == null) {
+            mCheckMarkerHandler = new CheckMarkerHandler();
+            mCheckMarkerHandler.sendEmptyMessage(1);
+        }
+        try {
+            List<LatLngData> dataList = mMapUtils.fillLatLng(src, tar, mHandleTimeInterval);
+            if (markerHandlerMap.containsKey(index)) {//已有该Marker
+                // 取消原Marker改变，开始新marker改变
+                ChangeMarkerHandler handler = markerHandlerMap.get(index);
+                handler.removeMessages(1);//取消原Marker改变
+                // 重置参数
+                handler.setCount(0);
+                handler.setDataList(dataList);
+                handler.sendEmptyMessage(1);
+                handler.setMarker(marker);
+                handler.setView(view);
+            } else {
+                ChangeMarkerHandler handler = new ChangeMarkerHandler(dataList, marker, view, index);
+                markerHandlerMap.put(index, handler);
+                handler.sendEmptyMessage(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
+    /**
+     * 启动Marker改变任务
+     * @param index  -- 改变Marker的Tag
+     * @param marker -- 改变的Marker
+     * @param routeLine -- 起点坐标和终点坐标之间的规划路径
+     * @param timeInterval -- 获取起点坐标与终点坐标之间的时间差值
+     * @param isNeedDirection -- 是否需要方向信息，false默认方向为0；
+     */
+    public void startChangeMarker(String index, Marker marker, DrivingRouteLine routeLine,
+                                  boolean isNeedDirection, int timeInterval) {
+        startChangeMarker(index, marker, null, routeLine, isNeedDirection, timeInterval);
+    }
+
+    /**
+     * 启动Marker改变任务
+     * @param index  -- 改变Marker的Tag
+     * @param marker -- 改变的Marker
+     * @param view   -- Marker使用的View
+     * @param routeLine -- 起点坐标和终点坐标之间的规划路径
+     * @param timeInterval -- 获取起点坐标与终点坐标之间的时间差值
+     * @param isNeedDirection -- 是否需要方向信息，false默认方向为0；
+     */
+    public void startChangeMarker(String index, Marker marker, View view, DrivingRouteLine routeLine,
+                                  boolean isNeedDirection, int timeInterval) {
+        if (markerHandlerMap == null) {
+            markerHandlerMap = new HashMap<>();
+        }
+
+        if (mCheckMarkerHandler == null) {
+            mCheckMarkerHandler = new CheckMarkerHandler();
+            mCheckMarkerHandler.sendEmptyMessage(1);
+        }
+
+        List<LatLngData> dataList = mMapUtils.fillLatLngByRoute(routeLine, timeInterval * 1000, isNeedDirection);
+        if (markerHandlerMap.containsKey(index)) {//已有该Marker
+            // 取消原Marker改变，开始新marker改变
+            ChangeMarkerHandler handler = markerHandlerMap.get(index);
+            handler.removeMessages(1);//取消原Marker改变
+            // 重置参数
+            handler.setCount(0);
+            handler.setDataList(dataList);
+            handler.sendEmptyMessage(1);
+            handler.setMarker(marker);
+            handler.setView(view);
+        } else {
+            ChangeMarkerHandler handler = new ChangeMarkerHandler(dataList, marker, view, index);
+            mShowTimeInterval = 200;
+            markerHandlerMap.put(index, handler);
+            handler.sendEmptyMessage(1);
+        }
     }
 
     /**
      * 显示弹出窗，一个地图中只会存在一个弹出窗，弹出窗会透传事件
+     *
      * @param latLngData -- 弹出窗坐标
-     * @param view -- 弹出窗内容View
-     * @param yOff -- 弹出窗针对坐标的Y轴偏移，像素为单位，负数上移，正数下移
+     * @param view       -- 弹出窗内容View
+     * @param yOff       -- 弹出窗针对坐标的Y轴偏移，像素为单位，负数上移，正数下移
      */
     public void showInfoWindow(LatLngData latLngData, View view, int yOff) {
         hideInfoWindow();
@@ -727,22 +1087,13 @@ public class BaiduMapService {
         mBaiduMap.hideInfoWindow();
     }
 
-    /************************ 路径规划相关 ********************************/
-    private int mStartMarkRes = 0;
-    private int mEndMarkRes = 0;
-
-    public void setStartMarkRes(int startMarkRes) {
-        this.mStartMarkRes = startMarkRes;
-    }
-
-    public void setEndMarkRes(int endMarkRes) {
-        this.mEndMarkRes = endMarkRes;
-    }
+    /************************* 路径规划相关 ********************************/
 
     /**
      * 搜索驾车路线，并将路线绘制在地图上
-     * @param src -- 起点坐标
-     * @param tar -- 终点坐标
+     *
+     * @param src            -- 起点坐标
+     * @param tar            -- 终点坐标
      * @param searchListener -- 搜索驾车路线监听器
      */
     public void searchDrivingPlanByLayLng(LatLngData src, LatLngData tar,
@@ -752,34 +1103,17 @@ public class BaiduMapService {
 
     /**
      * 搜索驾车路线，并将路线绘制在地图上
-     * @param src -- 起点坐标
-     * @param tar -- 终点坐标
-     * @param policy -- 路径规划策略，-1代表躲避拥堵，0代表时间优先，1代表距离最短，2代表费用较少
+     *
+     * @param src            -- 起点坐标
+     * @param tar            -- 终点坐标
+     * @param policy         -- 路径规划策略，-1代表躲避拥堵，0代表时间优先，1代表距离最短，2代表费用较少
      * @param searchListener -- 搜索驾车路线监听器
      */
     public void searchDrivingPlanByLayLng(LatLngData src, LatLngData tar, int policy,
-                                          final OnSearchDrivingRouteListener searchListener) {
-        searchDrivingPlanByLayLng(src, tar, policy, 0, 0, searchListener);
-    }
-
-    /**
-     * 搜索驾车路线，并将路线绘制在地图上
-     * @param src -- 起点坐标
-     * @param tar -- 终点坐标
-     * @param policy -- 路径规划策略，-1代表躲避拥堵，0代表时间优先，1代表距离最短，2代表费用较少
-     * @param startMarkRes -- 起点图标，R.mipmap.XXX形式，默认为0，使用系统提供图标
-     * @param endMarkRes -- 终点图标，R.mipmap.XXX形式，默认为0，使用系统提供图标
-     * @param searchListener -- 搜索驾车路线监听器
-     */
-    public void searchDrivingPlanByLayLng(LatLngData src, LatLngData tar, int policy,
-                                          int startMarkRes, int endMarkRes,
                                           final OnSearchDrivingRouteListener searchListener) {
         RoutePlanSearch planSearch = RoutePlanSearch.newInstance();
         PlanNode startNode = PlanNode.withLocation(mMapUtils.changeCoordinateToBaidu(src));
         PlanNode endNode = PlanNode.withLocation(mMapUtils.changeCoordinateToBaidu(tar));
-
-        mStartMarkRes = startMarkRes;
-        mEndMarkRes = endMarkRes;
 
         planSearch.setOnGetRoutePlanResultListener(new OnGetRoutePlanResultListener() {
             @Override
@@ -801,7 +1135,6 @@ public class BaiduMapService {
                 } else {
                     if (result.error == SearchResult.ERRORNO.NO_ERROR) {
                         int routeSize = result.getRouteLines().size();
-                        Log.e("BaiduMapService", "规划有" + routeSize + "条路线");
                         if (routeSize > 0) {
                             searchListener.onGetResult(result);
                         } else {
@@ -827,6 +1160,7 @@ public class BaiduMapService {
 
     /**
      * 获得搜索驾车路线的策略
+     *
      * @param index -- 策略索引
      * @return 搜索驾车路线的策略
      */
@@ -853,6 +1187,7 @@ public class BaiduMapService {
 
     /**
      * 绘制规划驾车路线
+     *
      * @param routeLine -- 驾车路线
      * @return 绘制的驾车路线
      */
@@ -862,9 +1197,10 @@ public class BaiduMapService {
 
     /**
      * 绘制规划驾车路线
-     * @param routeLine -- 驾车路线
+     *
+     * @param routeLine      -- 驾车路线
      * @param startMarkerRes -- 起点图标
-     * @param endMarkerRes -- 终点图标
+     * @param endMarkerRes   -- 终点图标
      * @return 绘制的驾车路线
      */
     public DrivingRouteOverlay drawDrivingRouteLine(DrivingRouteLine routeLine, int startMarkerRes,
@@ -877,4 +1213,101 @@ public class BaiduMapService {
         routeOverlay.zoomToSpan();
         return routeOverlay;
     }
+
+    /**
+     * 路径规划
+     *
+     * @return
+     */
+    public boolean planSearch(Activity activity, LatLngData srcLatLng, LatLngData desLatLng) {
+        initNavgation(activity);
+        List<BNRoutePlanNode> list = new ArrayList<BNRoutePlanNode>();
+        if (srcLatLng != null && desLatLng != null) {
+            BNRoutePlanNode sNode = new BNRoutePlanNode(srcLatLng.getmLongitude(), srcLatLng.getmLatitude(), "", null, BNRoutePlanNode.CoordinateType.BD09LL);
+            BNRoutePlanNode eNode = new BNRoutePlanNode(desLatLng.getmLongitude(), desLatLng.getmLatitude(), "", null, BNRoutePlanNode.CoordinateType.BD09LL);
+            list.add(sNode);
+            list.add(eNode);
+            Log.d(TAG, "planSearch() returned: " + "路径地点正确");
+            BaiduNaviManager.getInstance().launchNavigator(activity, list, 1, true, new BaiduNaviManager.RoutePlanListener() {
+                @Override
+                public void onJumpToNavigator() {
+                    Log.d(TAG, "onJumpToNavigator() returned: " + "路径规划成功");
+
+
+                }
+
+                @Override
+                public void onRoutePlanFailed() {
+                    Log.d(TAG, "onJumpToNavigator() returned: " + "路径规划失败");
+
+                }
+            });
+        }
+
+
+        return true;
+    }
+
+    String mSDCardPath;
+    String APP_FOLDER_NAME = "woasissmp";
+
+
+    /**
+     * 初始化导航
+     *
+     * @param activity
+     */
+    public void initNavgation(Activity activity) {
+        //初始化导航无ttS处理
+        if (initDirs()) {
+            BaiduNaviManager.getInstance().init(activity, mSDCardPath, APP_FOLDER_NAME, null, null, null, null);
+        }
+
+
+    }
+
+    private boolean initDirs() {
+        //设置导航存储路径
+        mSDCardPath = getSdcardDir();
+        if (mSDCardPath == null) {
+            return false;
+        }
+        File f = new File(mSDCardPath, APP_FOLDER_NAME);
+        if (!f.exists()) {
+            try {
+                f.mkdir();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 获取sd卡路径
+     *
+     * @return
+     */
+    private String getSdcardDir() {
+        if (Environment.getExternalStorageState().equalsIgnoreCase(Environment.MEDIA_MOUNTED)) {
+            return Environment.getExternalStorageDirectory().toString();
+        }
+
+
+        return null;
+    }
+
+    private boolean hasBasePhoneAuth(Context context) {
+        // TODO Auto-generated method stub
+
+        PackageManager pm = context.getPackageManager();
+        for (String auth : authBaseArr) {
+            if (pm.checkPermission(auth, context.getPackageName()) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
