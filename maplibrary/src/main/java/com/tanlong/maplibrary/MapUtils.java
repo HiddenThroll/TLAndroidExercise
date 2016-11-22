@@ -21,12 +21,6 @@ public class MapUtils {
 
     private final double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
 
-    private BaiduMap mBaiduMap;
-
-    public MapUtils(BaiduMap baiduMap) {
-        this.mBaiduMap = baiduMap;
-    }
-
     public MapUtils() {
     }
 

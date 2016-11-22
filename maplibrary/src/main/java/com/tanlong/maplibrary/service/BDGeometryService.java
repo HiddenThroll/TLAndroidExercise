@@ -37,7 +37,7 @@ public class BDGeometryService extends BDBaseService{
         mContext = context;
         mMapView = mapView;
         mBaiduMap = mMapView.getMap();
-        mMapUtils = new MapUtils(mBaiduMap);
+        mMapUtils = new MapUtils();
     }
 
     /**

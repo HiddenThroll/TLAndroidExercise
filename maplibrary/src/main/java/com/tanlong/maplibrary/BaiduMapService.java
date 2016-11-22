@@ -1,17 +1,11 @@
 package com.tanlong.maplibrary;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -21,19 +15,14 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.Marker;
-import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.PoiInfo;
-import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
 import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
@@ -44,39 +33,19 @@ import com.baidu.mapapi.search.poi.PoiCitySearchOption;
 import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
-import com.baidu.mapapi.search.route.BikingRouteResult;
-import com.baidu.mapapi.search.route.DrivingRouteLine;
-import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
-import com.baidu.mapapi.search.route.DrivingRouteResult;
-import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
-import com.baidu.mapapi.search.route.PlanNode;
-import com.baidu.mapapi.search.route.RoutePlanSearch;
-import com.baidu.mapapi.search.route.TransitRouteResult;
-import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.baidu.mapapi.utils.DistanceUtil;
-import com.baidu.navisdk.adapter.BNRoutePlanNode;
-import com.baidu.navisdk.adapter.BaiduNaviManager;
 import com.tanlong.maplibrary.baiduImpl.OnLocationListener;
 import com.tanlong.maplibrary.baiduImpl.OnMapClickListener;
 import com.tanlong.maplibrary.baiduImpl.OnMapStatusChangeListener;
 import com.tanlong.maplibrary.baiduImpl.OnMarkerClickListener;
 import com.tanlong.maplibrary.baiduImpl.OnRequestAddressListener;
 import com.tanlong.maplibrary.baiduImpl.OnRequestNearPoiListener;
-import com.tanlong.maplibrary.baiduImpl.OnSearchDrivingRouteListener;
 import com.tanlong.maplibrary.baiduImpl.PoiSearchListener;
 import com.tanlong.maplibrary.model.LatLngData;
-import com.tanlong.maplibrary.model.MarkDataBase;
-import com.tanlong.maplibrary.overlay.CustomDrivingRouteOverlay;
-import com.tanlong.maplibrary.overlay.DrivingRouteOverlay;
 
-import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static com.baidu.navisdk.adapter.PackageUtil.getSdcardDir;
 
 /**
  * 百度地图服务
@@ -391,189 +360,7 @@ public class BaiduMapService {
     }
 
     /************************* 地图导航相关  ********************************/
-    /**
-     * 使用百度地图进行导航
-     *
-     * @param latLng     -- 终点坐标
-     * @param srcContent -- 调用来源，规则：companyName|appName
-     */
-    public void useBaiduNavigation(final LatLngData latLng, final String srcContent) {
-        if (!isBaiduMapInstall()) {
-            return;
-        }
 
-        final LatLng bdLatLng = mMapUtils.changeCoordinateToBaidu(latLng);
-        startLocation(new OnLocationListener() {
-            @Override
-            public void onLocation(BDLocation bdLocation) {
-                String url = "intent://map/direction?origin=latlng:" + bdLocation.getLatitude()
-                        + "," + bdLocation.getLongitude() + "|name:我的位置&destination="
-                        + bdLatLng.latitude + "," + bdLatLng.longitude
-                        + "&mode=driving&src=" + srcContent + "#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end";
-                try {
-                    Intent intent = Intent.parseUri(url, 0);
-                    mContext.startActivity(intent);
-                } catch (Exception e) {// 根据Bugtags记录，有时找不到百度地图
-                    e.printStackTrace();
-                    Toast.makeText(mContext, "启动百度地图失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onLocationFailed() {
-                Toast.makeText(mContext, R.string.location_failed, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    /**
-     * 使用高德地图进行导航
-     *
-     * @param latLng -- 终点坐标
-     */
-    public void useAMapNavigation(LatLngData latLng) {
-        if (!isAMapInstall()) {
-            return;
-        }
-
-        // 将终点坐标转换为GCJ-02坐标
-        LatLngData endLatLng = mMapUtils.changeCoordinateToGCJ02(latLng);
-
-        // 判断坐标是否已偏移
-        int dev = 0;
-        if (latLng.getmType().equals(LatLngData.LatLngType.GPS)) {//GPS坐标，需要加密
-            dev = 1;
-        } else if (latLng.getmType().equals(LatLngData.LatLngType.BAIDU) ||
-                latLng.getmType().equals(LatLngData.LatLngType.GCJ_02)) {// 百度坐标和国测局坐标已经加密
-            dev = 0;
-        }
-
-        try {
-            Intent intent = new Intent("com.autonavi.minimap");
-            intent.setAction("android.intent.action.VIEW");
-            intent.addCategory("android.intent.category.DEFAULT");
-            // dev是否偏移(0:lat 和 lon 是已经加密后的,不需要国测加密; 1:需要国测加密)
-            // style指定导航方式，2代表路程短
-            intent.setData(Uri.parse("androidamap://navi?sourceApplication=amap&poiname=fangheng&lat="
-                    + endLatLng.getmLatitude() + "&lon=" + endLatLng.getmLongitude() + "&dev=" + dev +
-                    "&style=2"));
-            mContext.startActivity(intent);
-        } catch (Exception e) {// 根据Bugtags记录，有时找不到高德地图
-            Toast.makeText(mContext, "启动高德地图失败", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * 是否已安装百度地图
-     *
-     * @return
-     */
-    public boolean isBaiduMapInstall() {
-        boolean result = isAppInstalled(mContext, "com.baidu.BaiduMap");
-        if (!result) {
-            Toast.makeText(mContext, R.string.no_baidu_map_installed, Toast.LENGTH_SHORT).show();
-        }
-        return result;
-    }
-
-    /**
-     * 是否已安装高德地图
-     *
-     * @return
-     */
-    public boolean isAMapInstall() {
-        boolean result = isAppInstalled(mContext, "com.autonavi.minimap");
-        if (!result) {
-            Toast.makeText(mContext, R.string.no_a_map_installed, Toast.LENGTH_SHORT).show();
-        }
-        return result;
-    }
-
-    public void openBaiduMap() {
-        if (!isBaiduMapInstall()) {
-            return;
-        }
-        try {
-            Intent intent = Intent.getIntent("baidumap://map");
-            mContext.startActivity(intent);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void openAMap() {
-        if (!isAMapInstall()) {
-            return;
-        }
-        try {
-            Intent intent = Intent.getIntent("androidamap://viewMap");
-            mContext.startActivity(intent);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /**
-     * 检测传入包名对应的APP是否已安装
-     *
-     * @param context     -- 上下文
-     * @param packagename -- 要检测APP的包名
-     * @return true -- 已安装 false -- 未安装
-     */
-    private boolean isAppInstalled(Context context, String packagename) {
-        PackageInfo packageInfo;
-        try {
-            packageInfo = context.getPackageManager().getPackageInfo(packagename, 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            packageInfo = null;
-            e.printStackTrace();
-        }
-        if (packageInfo == null) {
-            //System.out.println("没有安装");
-            return false;
-        } else {
-            //System.out.println("已经安装");
-            return true;
-        }
-    }
-
-    /**
-     * 启动地图显示用户当前位置
-     */
-    public void startMapShowCurPosition() {
-        startLocation(new OnLocationListener() {
-            @Override
-            public void onLocation(BDLocation bdLocation) {
-                LatLngData latLngData = new LatLngData(bdLocation.getLatitude(),
-                        bdLocation.getLongitude(), LatLngData.LatLngType.BAIDU);
-                startMapShowPosition(latLngData);
-            }
-
-            @Override
-            public void onLocationFailed() {
-                Toast.makeText(mContext, R.string.location_failed, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    /**
-     * 启动地图显示指定位置
-     *
-     * @param target -- 指定位置坐标
-     */
-    public void startMapShowPosition(LatLngData target) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        //TODO 这里要接收的是GPS坐标
-        LatLngData temp = mMapUtils.changeCoordinateToGPS(target);
-        Uri uri = Uri.parse("geo:" + temp.getmLatitude() + "," + temp.getmLongitude());
-        intent.setData(uri);
-        if (intent.resolveActivity(mContext.getPackageManager()) != null) {
-            mContext.startActivity(intent);
-        } else {
-            Toast.makeText(mContext, R.string.no_map_app, Toast.LENGTH_SHORT).show();
-        }
-    }
 
     /************************* 地图状态变化相关  ********************************/
     /**

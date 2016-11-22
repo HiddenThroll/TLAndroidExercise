@@ -33,7 +33,7 @@ public class BDPoiService extends BDBaseService{
 
     public BDPoiService(BaiduMap baiduMap) {
         mBaiduMap = baiduMap;
-        mMapUtils = new MapUtils(baiduMap);
+        mMapUtils = new MapUtils();
     }
 
     /**

@@ -10,25 +10,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
-import com.baidu.location.LocationClient;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.Marker;
-import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
-import com.baidu.mapapi.map.PolylineOptions;
-import com.baidu.mapapi.map.Stroke;
-import com.baidu.mapapi.model.LatLng;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.util.LogTool;
 import com.tanlong.exercise.util.ToastHelp;
 import com.tanlong.maplibrary.BaiduMapService;
 import com.tanlong.maplibrary.baiduImpl.OnLocationListener;
-import com.tanlong.maplibrary.baiduImpl.OnMarkerClickListener;
 import com.tanlong.maplibrary.model.LatLngData;
-import com.tanlong.maplibrary.model.MarkDataBase;
 import com.tanlong.maplibrary.service.BDGeometryService;
 import com.tanlong.maplibrary.service.BDMarkerService;
 
