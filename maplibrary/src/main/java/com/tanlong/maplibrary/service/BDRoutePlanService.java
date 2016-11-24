@@ -7,6 +7,8 @@ import com.baidu.mapapi.search.route.BikingRouteResult;
 import com.baidu.mapapi.search.route.DrivingRouteLine;
 import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
 import com.baidu.mapapi.search.route.DrivingRouteResult;
+import com.baidu.mapapi.search.route.IndoorRouteResult;
+import com.baidu.mapapi.search.route.MassTransitRouteResult;
 import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
 import com.baidu.mapapi.search.route.PlanNode;
 import com.baidu.mapapi.search.route.RoutePlanSearch;
@@ -92,6 +94,11 @@ public class BDRoutePlanService extends BDBaseService {
             }
 
             @Override
+            public void onGetMassTransitRouteResult(MassTransitRouteResult massTransitRouteResult) {
+
+            }
+
+            @Override
             public void onGetDrivingRouteResult(DrivingRouteResult result) {
                 // 驾车路线结果回调
                 if (result == null) {
@@ -107,6 +114,11 @@ public class BDRoutePlanService extends BDBaseService {
                         }
                     }
                 }
+            }
+
+            @Override
+            public void onGetIndoorRouteResult(IndoorRouteResult indoorRouteResult) {
+
             }
 
             @Override
