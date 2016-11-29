@@ -27,4 +27,13 @@
         android:layout_gravity="center"
         />
 
+    <Button
+        android:id="@+id/btn_help"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@android:drawable/ic_menu_help"
+        android:layout_gravity="right"
+        android:visibility="gone"
+        />
+
 </android.support.v7.widget.Toolbar>
