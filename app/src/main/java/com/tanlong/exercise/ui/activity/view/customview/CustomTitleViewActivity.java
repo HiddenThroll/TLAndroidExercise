@@ -14,6 +14,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.R.attr.fragment;
+
 
 /**
  * Created by Administrator on 2016/5/15.
@@ -48,7 +50,10 @@ public class CustomTitleViewActivity extends BaseActivity {
 
     @OnClick(R.id.btn_help)
     public void onClick() {
-        ShowTipsFragment fragment = ShowTipsFragment.newInstance("测试");
+        StringBuilder sb = new StringBuilder();
+        sb.append("1. Paint.getTextBounds(String text, int start, int end, Rect bounds)返回能够包裹绘制内容的最小矩形\n")
+                .append("2. Canvas.drawText()方法文字绘制起点在其左下角");
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(sb.toString());
         fragment.show(getSupportFragmentManager(), "");
     }
 }
