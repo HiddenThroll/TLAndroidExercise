@@ -3,6 +3,7 @@ package com.tanlong.exercise.ui.activity.view.customview;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
+import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 import com.tanlong.exercise.ui.view.customview.CustomArcShowView;
 import com.tanlong.exercise.util.LogTool;
 
@@ -36,6 +38,8 @@ public class CustomArcShowActivity extends BaseActivity {
     ImageView mIvBack;
     @Bind(R.id.tv_title)
     TextView mTvTitle;
+    @Bind(R.id.btn_help)
+    Button btnHelp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,7 @@ public class CustomArcShowActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         mTvTitle.setText(R.string.custom_arc_show_view);
+        btnHelp.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.btn_activity_custom_arc_show_Add)
@@ -80,5 +85,16 @@ public class CustomArcShowActivity extends BaseActivity {
     @OnClick(R.id.iv_back)
     public void onBack() {
         finish();
+    }
+
+    @OnClick(R.id.btn_help)
+    public void onClick() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("1. 使用属性动画来实现动态改变效果\n")
+                .append("2. 对当前数据（currentCount）设置ObjectAnimator, 即ObjectAnimator objectAnimator = ObjectAnimator.ofInt(Object, \"currentCount\", oldCount, currentCount);\n")
+                .append("3. 调用setCurrentCount(int currentCount)方法时，该方法内部调用invalidate()方法触发View重绘，实现动态改变效果\n")
+                .append("4. 要使用属性动画,属性前不要加m");
+        ShowTipsFragment showTipsFragment = ShowTipsFragment.newInstance(sb.toString());
+        showTipsFragment.show(getSupportFragmentManager(), "");
     }
 }

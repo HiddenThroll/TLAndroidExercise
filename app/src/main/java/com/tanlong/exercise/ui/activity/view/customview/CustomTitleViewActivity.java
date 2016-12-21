@@ -52,7 +52,8 @@ public class CustomTitleViewActivity extends BaseActivity {
     public void onClick() {
         StringBuilder sb = new StringBuilder();
         sb.append("1. Paint.getTextBounds(String text, int start, int end, Rect bounds)返回能够包裹绘制内容的最小矩形\n")
-                .append("2. Canvas.drawText()方法文字绘制起点在其左下角");
+                .append("2. 先设置Paint大小,再计算包裹text的最小矩形大小")
+                .append("3. Canvas.drawText()方法文字绘制起点在其左下角");
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(sb.toString());
         fragment.show(getSupportFragmentManager(), "");
     }
