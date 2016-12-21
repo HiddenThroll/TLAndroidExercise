@@ -89,7 +89,6 @@ public class CustomVolumeBar extends View {
         mPaint.setAntiAlias(true); // 消除锯齿
         mPaint.setStrokeWidth(mCircleWidth); // 设置圆环的宽度
         mPaint.setStrokeCap(Paint.Cap.ROUND); // 定义线段断点形状为圆头
-        mPaint.setAntiAlias(true); // 消除锯齿
         mPaint.setStyle(Paint.Style.STROKE); // 设置空心
         int center = getWidth() / 2; // 获取圆心的x坐标
         int radius = (int) (center - mCircleWidth / 2);// 半径

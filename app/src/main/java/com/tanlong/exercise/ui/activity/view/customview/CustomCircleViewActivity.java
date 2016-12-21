@@ -52,7 +52,7 @@ public class CustomCircleViewActivity extends BaseActivity {
                 .append("RectF -- 绘制图形的外接矩形\n")
                 .append("startAngle -- 绘制起始角度，X正半轴为0度\n")
                 .append("sweepAngle -- 绘制扫过的角度\n")
-                .append("useCenter -- 是否绘制弧形的椭圆中心\n")
+                .append("useCenter -- 是否绘制(连接)弧形的椭圆中心\n")
                 .append("paint -- 使用的画笔");
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(sb.toString());
         fragment.show(getSupportFragmentManager(), "");
