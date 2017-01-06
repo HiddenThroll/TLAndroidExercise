@@ -19,7 +19,9 @@ import com.tanlong.exercise.util.LogTool;
 public class VerticalLinearLayout extends ViewGroup {
 
     private final String TAG = "VerticalLinearLayout";
-
+    /**
+     * 屏幕高度
+     */
     private int mScreenHeight;
     private Scroller mScroller;
     /**
