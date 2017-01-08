@@ -106,6 +106,12 @@
             android:configChanges="keyboard"
             />
         <activity
+            android:name=".ui.activity.view.customviewgroup.ViewDragHelperActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
+        <activity
             android:name=".ui.activity.view.customviewgroup.LeftDrawerLayoutActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
@@ -144,19 +150,6 @@
             android:configChanges="keyboard"
             />
 
-        <!-- ViewDrag相关-->
-        <activity
-            android:name=".ui.activity.view.viewdrag.ViewDragCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
-            android:configChanges="keyboard"
-            />
-        <activity
-            android:name=".ui.activity.view.viewdrag.ViewDragHelperActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
-            android:configChanges="keyboard"
-            />
         <!-- View效果相关-->
         <activity
             android:name=".ui.activity.view.vieweffect.ViewEffectCategory"

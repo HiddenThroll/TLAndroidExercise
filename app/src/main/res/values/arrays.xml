@@ -9,7 +9,6 @@
         <item>Custom View</item>
         <item>Custom ViewGroup</item>
         <item>ListView</item>
-        <item>View Drag</item>
         <item>效果合集</item>
         <item>Fragment练习</item>
     </array>
@@ -25,6 +24,7 @@
 
     <array name="custom_view_group_category">
         <item>VerticalLinearLayout</item>
+        <item>使用ViewDragHelper实现拖动</item>
         <item>LeftDrawerLayout</item>
         <item>GestureLockViewGroup</item>
     </array>

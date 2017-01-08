@@ -1,4 +1,4 @@
-package com.tanlong.exercise.ui.activity.view.viewdrag;
+package com.tanlong.exercise.ui.activity.view.customviewgroup;
 
 import android.os.Bundle;
 import android.widget.ImageView;

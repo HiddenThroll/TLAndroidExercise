@@ -56,9 +56,12 @@ public class CustomViewGroupCategoryActivity extends BaseActivity {
                 intent.setClass(this, VerticalLinearLayoutActivity.class);
                 break;
             case 1:
-                intent.setClass(this, LeftDrawerLayoutActivity.class);
+                intent.setClass(this, ViewDragHelperActivity.class);
                 break;
             case 2:
+                intent.setClass(this, LeftDrawerLayoutActivity.class);
+                break;
+            case 3:
                 intent.setClass(this, GestureLockActivity.class);
                 break;
         }
