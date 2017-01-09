@@ -68,6 +68,7 @@ public class ScheduleChartActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initListener() {
+        ivBack.setOnClickListener(this);
         tvScheduleTimeStart.setOnClickListener(this);
         tvScheduleTimeEnd.setOnClickListener(this);
         tvSelectTimeStart.setOnClickListener(this);

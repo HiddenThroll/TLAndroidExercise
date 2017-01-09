@@ -64,7 +64,7 @@ public class CustomVolumeBarActivity extends BaseActivity {
         StringBuilder sb = new StringBuilder();
         sb.append("1. 非UI线程, 使用postInvalidate()方法更新View\n")
                 .append("2. Paint.setStrokeCap(Paint.Cap.ROUND)方法定义线段断点形状为圆头\n")
-                .append("3. 这里的画块其实是有宽度的弧形)\n")
+                .append("3. 这里的画块其实是有宽度的弧形\n")
                 .append("4. 和绘制CustomCircleView思路一样，先画背景块，再画当前块\n");
 
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(sb.toString());

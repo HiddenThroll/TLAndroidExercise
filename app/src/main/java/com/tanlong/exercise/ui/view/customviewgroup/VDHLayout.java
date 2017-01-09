@@ -53,7 +53,7 @@ public class VDHLayout extends LinearLayout {
                     @Override
                     public int clampViewPositionHorizontal(View child, int left, int dx) {
                         /**
-                         * 对child移动的边界进行控制，left为水平方向即将移动到的位置
+                         * 对child移动的边界进行控制，left为水平方向期望移动到的位置, 返回值为子View在最终位置时的left值
                          */
                         int leftBounds = getPaddingLeft();
                         int rightBounds = getWidth() - getPaddingRight() - child.getWidth();
@@ -105,7 +105,7 @@ public class VDHLayout extends LinearLayout {
                     }
                 }
         );
-        // 让ViewDragger可以响应左边缘拖动
+        // 让ViewDragHelper可以响应左边缘拖动
         mDragger.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT);
         LogTool.e(TAG, "让ViewDragger可以响应左边缘拖动");
     }
