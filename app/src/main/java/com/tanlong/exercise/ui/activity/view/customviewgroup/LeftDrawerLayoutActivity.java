@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.view.customviewgroup.LeftDrawerLayout;
+import com.tanlong.exercise.ui.view.customviewgroup.LeftDrawerLayout2;
 import com.tanlong.exercise.util.LogTool;
 
 import butterknife.Bind;
@@ -26,7 +27,7 @@ public class LeftDrawerLayoutActivity extends BaseActivity {
     @Bind(R.id.tv_title)
     TextView mTvTitle;
     @Bind(R.id.left_drawer_layout)
-    LeftDrawerLayout mLeftDrawerLayout;
+    LeftDrawerLayout2 mLeftDrawerLayout;
     @Bind(R.id.rl_container)
     RelativeLayout rlContainer;
 
@@ -34,7 +35,7 @@ public class LeftDrawerLayoutActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_left_drawer_layout);
+        setContentView(R.layout.activity_left_drawer_layout_2);
         ButterKnife.bind(this);
 
         mTvTitle.setText(R.string.left_drawer_layout);
@@ -48,7 +49,7 @@ public class LeftDrawerLayoutActivity extends BaseActivity {
                 break;
             case R.id.rl_container:
                 LogTool.e(TAG, "关闭抽屉");
-                mLeftDrawerLayout.closeDrawer();
+//                mLeftDrawerLayout.closeDrawer();
                 break;
         }
     }
