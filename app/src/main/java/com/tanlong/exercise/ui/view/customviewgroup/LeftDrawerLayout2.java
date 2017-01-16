@@ -118,11 +118,47 @@ public class LeftDrawerLayout2 extends ViewGroup {
                 // 因为开始的时候mMenuView不可见，通过captureChildView对mMenuView进行捕获
                 mDragerHelper.captureChildView(mMenuView, pointerId);
             }
+
+            @Override
+            public void onViewReleased(View releasedChild, float xvel, float yvel) {
+                if (releasedChild == mMenuView) {
+                    int childWidth = releasedChild.getWidth();
+                    float offset = (childWidth + releasedChild.getLeft()) * 1.0f / childWidth;
+                    if (offset >= 0.5) {
+                        openDrawer();
+                    } else {
+                        closeDrawer();
+                    }
+                }
+            }
         });
         mDragerHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT);
     }
 
+    /**
+     * 打开抽屉
+     */
+    public void openDrawer() {
+        View menuView = mMenuView;
+        mDragerHelper.smoothSlideViewTo(menuView, 0, menuView.getTop());
+        invalidate();
+    }
 
+    /**
+     * 关闭抽屉
+     */
+    public void closeDrawer() {
+        View menuView = mMenuView;
+        mDragerHelper.smoothSlideViewTo(menuView, -menuView.getWidth(), menuView.getTop());
+        invalidate();
+    }
+
+    @Override
+    public void computeScroll() {
+        if (mDragerHelper.continueSettling(true)) {
+            invalidate();
+        }
+    }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {

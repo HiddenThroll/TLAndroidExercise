@@ -49,7 +49,7 @@ public class LeftDrawerLayoutActivity extends BaseActivity {
                 break;
             case R.id.rl_container:
                 LogTool.e(TAG, "关闭抽屉");
-//                mLeftDrawerLayout.closeDrawer();
+                mLeftDrawerLayout.closeDrawer();
                 break;
         }
     }
