@@ -7,12 +7,14 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
+import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 import com.tanlong.exercise.util.LogTool;
 
 import java.util.ArrayList;
@@ -33,6 +35,8 @@ public class LoadMoreListViewActivity extends BaseActivity {
     TextView mTvTitle;
     @Bind(R.id.lv_activity_category)
     ListView mLvCategory;
+    @Bind(R.id.btn_help)
+    Button btnHelp;
 
     private List<String> mItems;
     private ArrayAdapter<String> mAdapter;
@@ -48,6 +52,7 @@ public class LoadMoreListViewActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         mTvTitle.setText(R.string.list_view_load_more);
+        btnHelp.setVisibility(View.VISIBLE);
 
         mIsLoadingMore = false;
 
@@ -102,6 +107,14 @@ public class LoadMoreListViewActivity extends BaseActivity {
         finish();
     }
 
+    /**
+     * 获取ListV指定Item之间的高度
+     * @param listView -- 获取的ListView
+     * @param firstVisibleItem -- 当前ListView的第一个可见Item的index(包含未完全显示的Item)
+     * @param visibleItemCount -- 当前ListView可见Item的个数(包含未完全显示的Item)
+     * @param totalItemCount -- 当前ListView的Item总个数
+     * @return
+     */
     public int getSelectItemHeight(ListView listView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         Adapter adapter = listView.getAdapter();
         if (adapter == null || adapter.getCount() == 0) {
@@ -122,5 +135,17 @@ public class LoadMoreListViewActivity extends BaseActivity {
             allDividerHeight = 0;
         }
         return allItemHeight + allDividerHeight;
+    }
+
+    @OnClick(R.id.btn_help)
+    public void onClick() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("1. ListView.setOnScrollListener()设置滚动监听实现上滑加载更多\n")
+                .append("2. 到达底部的判断条件为\n")
+                .append("2.1 firstVisibleItem + visibleItemCount == totalItemCount\n")
+                .append("2.2 第firstVisibleItem个Item 到第firstVisibleItem + visibleItemCount个Item的高度大于ListView的规定高度\n")
+                .append("2.3 以上两个条件同时满足，才可以进行加载更多操作");
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
+        fragment.show(getSupportFragmentManager(), "");
     }
 }
