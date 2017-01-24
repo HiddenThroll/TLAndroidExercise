@@ -1,15 +1,18 @@
 package com.tanlong.exercise.ui.activity.view.listview;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.os.Handler;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
+import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +35,12 @@ public class SwipeRefreshListViewActivity extends BaseActivity {
     ListView mLvSwipeRefresh;
     @Bind(R.id.srl_swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @Bind(R.id.btn_help)
+    Button btnHelp;
 
     private List<String> mItems;
     ArrayAdapter<String> mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +49,7 @@ public class SwipeRefreshListViewActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         mTvTitle.setText(R.string.list_view_swipe_refresh);
+        btnHelp.setVisibility(View.VISIBLE);
 
         mItems = new ArrayList<>();
         mItems.add("item 0");
@@ -73,5 +80,17 @@ public class SwipeRefreshListViewActivity extends BaseActivity {
     @OnClick(R.id.iv_back)
     public void onBack() {
         finish();
+    }
+
+    @OnClick(R.id.btn_help)
+    public void onClick() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("1. 使用SwipeRefreshLayout实现下拉刷新\n")
+                .append("2. SwipeRefreshLayout.setColorSchemeResources(int... colors)设置刷新效果颜色\n")
+                .append("3. SwipeRefreshLayout.setOnRefreshListener设置刷新监听\n")
+                .append("4. SwipeRefreshLayout.setRefreshing(boolean)设置显示/隐藏刷新效果");
+
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
+        fragment.show(getSupportFragmentManager(), "");
     }
 }
