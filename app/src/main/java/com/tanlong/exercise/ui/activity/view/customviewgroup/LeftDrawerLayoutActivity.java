@@ -10,14 +10,12 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
-import com.tanlong.exercise.ui.view.customviewgroup.LeftDrawerLayout2;
+import com.tanlong.exercise.ui.view.customviewgroup.LeftDrawerLayout;
 import com.tanlong.exercise.util.LogTool;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.R.attr.fragment;
 
 /**
  * LeftDrawerLayout测试Activity
@@ -30,7 +28,7 @@ public class LeftDrawerLayoutActivity extends BaseActivity {
     @Bind(R.id.tv_title)
     TextView mTvTitle;
     @Bind(R.id.left_drawer_layout)
-    LeftDrawerLayout2 mLeftDrawerLayout;
+    LeftDrawerLayout mLeftDrawerLayout;
     @Bind(R.id.rl_container)
     RelativeLayout rlContainer;
     @Bind(R.id.btn_help)

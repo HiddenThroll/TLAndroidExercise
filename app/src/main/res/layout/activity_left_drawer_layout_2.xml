@@ -8,7 +8,7 @@
 
     <include layout="@layout/layout_toolbar"/>
 
-    <com.tanlong.exercise.ui.view.customviewgroup.LeftDrawerLayout2
+    <com.tanlong.exercise.ui.view.customviewgroup.LeftDrawerLayout
         android:id="@+id/left_drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -49,6 +49,6 @@
                 />
         </RelativeLayout>
 
-    </com.tanlong.exercise.ui.view.customviewgroup.LeftDrawerLayout2>
+    </com.tanlong.exercise.ui.view.customviewgroup.LeftDrawerLayout>
 
 </LinearLayout>
