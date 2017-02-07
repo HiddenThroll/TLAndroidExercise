@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.model.entity.IMenuItem;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.adapter.MenuAdapter;
+import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 import com.tanlong.exercise.ui.view.swiperefresh.CustomSwipeRefreshLayout;
 import com.tanlong.exercise.util.DisplayUtil;
 import com.tanlong.exercise.util.LogTool;
@@ -43,6 +45,8 @@ public class SwipeRefreshLoadMoreListViewActivity extends BaseActivity {
     SwipeMenuListView mSwipeMenuListView;
     @Bind(R.id.srl_custom_swipe_refresh)
     CustomSwipeRefreshLayout mCustomSwipeRefresh;
+    @Bind(R.id.btn_help)
+    Button btnHelp;
 
     private List<IMenuItem> mListItems;
     private MenuAdapter mAdapter;
@@ -70,7 +74,7 @@ public class SwipeRefreshLoadMoreListViewActivity extends BaseActivity {
 
     private void initView() {
         mTvTitle.setText(R.string.list_view_swipe_refresh_load_more);
-
+        btnHelp.setVisibility(View.VISIBLE);
         //TODO 设置CustomSwipeRefresh
         mCustomSwipeRefresh.initColor();
 
@@ -194,5 +198,15 @@ public class SwipeRefreshLoadMoreListViewActivity extends BaseActivity {
     @OnClick(R.id.iv_back)
     public void onBack() {
         finish();
+    }
+
+    @OnClick(R.id.btn_help)
+    public void onClick() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("1. ListView.setOnScrollListener()设置滚动监听实现上滑加载更多，详见上一小节\n")
+                .append("2. 使用SwipeRefreshLayout实现下拉刷新\n")
+                .append("3. 使用SwipeMenuListView实现侧滑菜单\n");
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
+        fragment.show(getSupportFragmentManager(), "");
     }
 }

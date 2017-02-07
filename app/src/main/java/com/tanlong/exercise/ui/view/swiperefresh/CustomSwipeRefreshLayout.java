@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.AbsListView;
+import android.widget.Adapter;
 import android.widget.ListView;
 
 import com.tanlong.exercise.R;
@@ -118,7 +119,9 @@ public class CustomSwipeRefreshLayout extends SwipeRefreshLayout implements AbsL
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         if (!isLoading && mCanLoadMore) {// 没有加载 且 可以加载
-            if (firstVisibleItem + visibleItemCount == totalItemCount) {// 已经到达底部
+            int selectItemHeight = getSelectItemHeight(mListView, firstVisibleItem, visibleItemCount, totalItemCount);
+            if (firstVisibleItem + visibleItemCount == totalItemCount &&
+                    selectItemHeight > view.getHeight()) {// 已经到达底部
                 loadData();
             }
         }
@@ -167,5 +170,35 @@ public class CustomSwipeRefreshLayout extends SwipeRefreshLayout implements AbsL
         setColorSchemeResources(android.R.color.holo_red_light,
                 android.R.color.holo_green_light, android.R.color.holo_blue_light,
                 android.R.color.holo_orange_light);
+    }
+
+    /**
+     * 获取ListV指定Item之间的高度
+     * @param listView -- 获取的ListView
+     * @param firstVisibleItem -- 当前ListView的第一个可见Item的index(包含未完全显示的Item)
+     * @param visibleItemCount -- 当前ListView可见Item的个数(包含未完全显示的Item)
+     * @param totalItemCount -- 当前ListView的Item总个数
+     * @return
+     */
+    private int getSelectItemHeight(ListView listView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        Adapter adapter = listView.getAdapter();
+        if (adapter == null || adapter.getCount() == 0) {
+            return 0;
+        }
+        int allItemHeight = 0;
+        for (int i = firstVisibleItem; i < firstVisibleItem + visibleItemCount; i++) {
+            if (i >= totalItemCount) {
+                break;
+            }
+            View itemView = adapter.getView(i, null, listView);
+            itemView.measure(0, 0);
+            allItemHeight += itemView.getMeasuredHeight();
+        }
+
+        int allDividerHeight = listView.getDividerHeight() * (visibleItemCount - 1);
+        if (allDividerHeight < 0) {
+            allDividerHeight = 0;
+        }
+        return allItemHeight + allDividerHeight;
     }
 }
