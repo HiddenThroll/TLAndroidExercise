@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,12 +15,14 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.util.DisplayUtil;
 import com.tanlong.exercise.util.LogTool;
+import com.tanlong.exercise.util.VersionUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * 蒙版效果
  * Created by 龙 on 2016/10/24.
  */
 
@@ -47,18 +50,6 @@ public class MaskEffectActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    showMask();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }, 1000);//延迟一段时间显示，避免要显示弹框时，父View还没创建完毕，
-                 // 抛出android.view.WindowManager$BadTokenException异常
     }
 
     private void initView() {
@@ -74,6 +65,18 @@ public class MaskEffectActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 windowManager.removeView(ivMask);
+            }
+        });
+
+        tvTitle.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (VersionUtil.hasJellyBean()) {
+                    tvTitle.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                } else {
+                    tvTitle.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                }
+                showMask();
             }
         });
     }
