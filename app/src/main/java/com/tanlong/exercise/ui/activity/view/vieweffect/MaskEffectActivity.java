@@ -2,17 +2,18 @@ package com.tanlong.exercise.ui.activity.view.vieweffect;
 
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
+import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 import com.tanlong.exercise.util.DisplayUtil;
 import com.tanlong.exercise.util.LogTool;
 import com.tanlong.exercise.util.VersionUtil;
@@ -35,6 +36,8 @@ public class MaskEffectActivity extends BaseActivity {
 
     ImageView ivMask;
     WindowManager windowManager;
+    @Bind(R.id.btn_help)
+    Button btnHelp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class MaskEffectActivity extends BaseActivity {
 
     private void initView() {
         tvTitle.setText(R.string.view_effect_mask);
+        btnHelp.setVisibility(View.VISIBLE);
 
         ivMask = new ImageView(MaskEffectActivity.this);
         ivMask.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -93,14 +97,36 @@ public class MaskEffectActivity extends BaseActivity {
         params.width = DisplayUtil.getDisplay(this).x;
         params.height = DisplayUtil.getDisplay(this).y;
         params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                        | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
-                        | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+                | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 
         windowManager.addView(ivMask, params);
     }
 
-    @OnClick(R.id.iv_back)
-    public void onClick() {
-        finish();
+    @OnClick({R.id.iv_back, R.id.btn_help})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.btn_help:
+                showTips();
+                break;
+        }
+    }
+
+    private void showTips() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("1. 使用WindowManager.addView(View, WindowManager.LayoutParams)方法在当前窗口之上显示ImageView实现蒙版效果\n")
+                .append("2. WindowManager.LayoutParams重点配置为：\n")
+                .append("2.1 LayoutParams.type设置为TYPE_APPLICATION_PANEL，表示添加的Window在当前附着Window之上\n")
+                .append("2.2 LayoutParams.format设置为RGBA_8888，设置显示格式\n")
+                .append("2.3 LayoutParams.gravity设置对齐方式\n")
+                .append("2.4 LayoutParams.flags设置为FLAG_NOT_TOUCH_MODAL|FLAG_WATCH_OUTSIDE_TOUCH|FLAG_NOT_FOCUSABLE\n")
+                .append("2.4.1 FLAG_NOT_TOUCH_MODAL表示任何该窗口外的指针事件由该窗口之后（下）的窗口处理\n")
+                .append("2.4.2 FLAG_WATCH_OUTSIDE_TOUCH表示当设置FLAG_NOT_TOUCH_MODAL后，当窗口外有触摸事件发生时，会接收到一个单独的事件，MotionEvent.ACTION_OUTSIDE\n")
+                .append("2.4.3 FLAG_NOT_FOCUSABLE表示该窗口不接收键盘输入焦点，键盘输入焦点由该窗口之后（下）的窗口处理\n");
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
+        fragment.show(getSupportFragmentManager(), "");
     }
 }
