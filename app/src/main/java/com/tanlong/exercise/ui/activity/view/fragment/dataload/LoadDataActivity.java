@@ -2,18 +2,26 @@ package com.tanlong.exercise.ui.activity.view.fragment.dataload;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.fragment.DataRetainFragment;
+import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 import com.tanlong.exercise.util.LogTool;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static android.R.attr.fragment;
 
 /**
  * 数据加载Activity, 加载数据显示对话框时不停旋转屏幕
@@ -24,12 +32,19 @@ public class LoadDataActivity extends BaseActivity {
 
     @Bind(R.id.lv_data)
     ListView lvData;
+    @Bind(R.id.iv_back)
+    ImageView ivBack;
+    @Bind(R.id.tv_title)
+    TextView tvTitle;
+    @Bind(R.id.btn_help)
+    Button btnHelp;
 
     private ArrayAdapter mAdapter;
     private List<String> mDatas;
     private DataRetainFragment<LoadDataTask> dataRetainFragment;
     private FragmentManager fragmentManager;
     private LoadDataTask loadDataTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +52,11 @@ public class LoadDataActivity extends BaseActivity {
         setContentView(R.layout.activity_load_data);
         ButterKnife.bind(this);
 
+        tvTitle.setText("屏幕旋转时处理网络加载数据");
+        btnHelp.setVisibility(View.VISIBLE);
+
         fragmentManager = getSupportFragmentManager();
-        dataRetainFragment = (DataRetainFragment<LoadDataTask>)fragmentManager.findFragmentByTag(DataRetainFragment.TAG);
+        dataRetainFragment = (DataRetainFragment<LoadDataTask>) fragmentManager.findFragmentByTag(DataRetainFragment.TAG);
         if (dataRetainFragment == null) {//第一次创建, 添加到Activity
             dataRetainFragment = new DataRetainFragment<>();
             fragmentManager.beginTransaction().add(dataRetainFragment, DataRetainFragment.TAG).commit();
@@ -86,4 +104,25 @@ public class LoadDataActivity extends BaseActivity {
     }
 
 
+    @OnClick({R.id.iv_back, R.id.btn_help})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.btn_help:
+                showTips();
+                break;
+        }
+    }
+
+    private void showTips() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("1. 无UI的Fragment可以用来保存数据: \n")
+                .append("1.1 覆写onCreate()方法，调用setRetainInstance(true)方法表示Activity重建时保存Fragment实例\n")
+                .append("2. 使用无UI的Fragment保存AsyncTask，实现Activity重建时继续加载网络数据\n");
+
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
+        fragment.show(getSupportFragmentManager(), "");
+    }
 }
