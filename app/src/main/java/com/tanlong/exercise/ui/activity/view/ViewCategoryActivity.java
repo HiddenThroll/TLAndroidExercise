@@ -14,6 +14,7 @@ import com.tanlong.exercise.ui.activity.view.customviewgroup.CustomViewGroupCate
 import com.tanlong.exercise.ui.activity.view.fragment.FragmentCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.listview.ListViewCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.vieweffect.ViewEffectCategory;
+import com.tanlong.exercise.ui.activity.view.viewpager.ViewPagerCategoryActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -73,6 +74,10 @@ public class ViewCategoryActivity extends BaseActivity {
             case 4:
                 intent.setClass(this, FragmentCategoryActivity.class);
                 break;
+            case 5:
+                intent.setClass(this, ViewPagerCategoryActivity.class);
+                break;
+
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {

@@ -43,6 +43,11 @@
     <string name="fragment_viewpager">Fragment + ViewPager练习</string>
     <string name="fragment_update_content">第%s次更新</string>
 
+    <string name="viewpager_exercise">ViewPager练习</string>
+
+
+    <string name="recyclerview_exercise">RecyclerView练习</string>
+
     <!-- 百度地图练习-->
     <string name="baidu_map_exercise">百度地图练习</string>
 

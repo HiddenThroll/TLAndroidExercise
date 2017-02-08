@@ -11,6 +11,7 @@
         <item>ListView</item>
         <item>效果合集</item>
         <item>Fragment练习</item>
+        <item>ViewPager练习</item>
     </array>
 
     <array name="custom_view_category">
@@ -48,6 +49,10 @@
         <item>Fragment之间数据传递</item>
         <item>屏幕旋转时处理网络加载数据</item>
         <item>Fragment+ViewPager</item>
+    </array>
+
+    <array name="viewpager_category">
+        <item>ViewPager+Fragment实现APP首页Tab效果</item>
     </array>
 
     <!-- 百度地图 -->
