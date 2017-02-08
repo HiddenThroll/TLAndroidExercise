@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.fragment.LoginDialogFragment;
+import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,6 +33,8 @@ public class DialogFragmentActivity extends BaseActivity {
     Button btnNormalDialog;
     @Bind(R.id.btn_fragment_dialog)
     Button btnFragmentDialog;
+    @Bind(R.id.btn_help)
+    Button btnHelp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +43,10 @@ public class DialogFragmentActivity extends BaseActivity {
         setContentView(R.layout.activity_dialog_fragment);
         ButterKnife.bind(this);
         tvTitle.setText(R.string.fragment_dialog);
+        btnHelp.setVisibility(View.VISIBLE);
     }
 
-    @OnClick({R.id.iv_back, R.id.btn_normal_dialog, R.id.btn_fragment_dialog})
+    @OnClick({R.id.iv_back, R.id.btn_normal_dialog, R.id.btn_fragment_dialog, R.id.btn_help})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -53,6 +57,9 @@ public class DialogFragmentActivity extends BaseActivity {
                 break;
             case R.id.btn_fragment_dialog:
                 showFragmentDialog();
+                break;
+            case R.id.btn_help:
+                showTips();
                 break;
         }
     }
@@ -77,5 +84,16 @@ public class DialogFragmentActivity extends BaseActivity {
     private void showFragmentDialog() {
         LoginDialogFragment dialogFragment = new LoginDialogFragment();
         dialogFragment.show(getSupportFragmentManager(), "LoginDialogFragment");
+    }
+
+    private void showTips() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("1. 官方推荐使用DialogFragment实现对话框\n")
+                .append("2. 当发生屏幕旋转等操作时，DialogFragment可以保存状态，AlertDialog不能\n")
+                .append("3. 在onCreateView()方法中，调用getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE)方法去除对话框标题\n")
+                .append("4. 在onStart()方法中，调用dialog.getWindow().setLayout(int width, int height)方法设置对话框宽高\n");
+
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
+        fragment.show(getSupportFragmentManager(), "");
     }
 }
