@@ -69,7 +69,7 @@ public class ArticleContentFragment extends BaseFragment {
         // 显示评价对话框
         EvaluateDialog evaluateDialog = new EvaluateDialog();
         evaluateDialog.setTargetFragment(this, REQUEST_EVALUATE);
-        ToastHelp.showShortMsg(mFragmentContext, "通过setTargetFragment()设置启动的Fragment");
+//        ToastHelp.showShortMsg(mFragmentContext, "通过setTargetFragment()设置启动的Fragment");
         evaluateDialog.show(getFragmentManager(), "Evaluate");
     }
 
@@ -80,7 +80,7 @@ public class ArticleContentFragment extends BaseFragment {
         if (requestCode == REQUEST_EVALUATE) {
             String response = data.getStringExtra(EvaluateDialog.EVALUATE_RESPONSE);
             if (mFragmentContext != null) {
-                ToastHelp.showShortMsg(mFragmentContext, "Fragment需要通过getActivity().setResult()设置返回结果");
+//                ToastHelp.showShortMsg(mFragmentContext, "Fragment需要通过getActivity().setResult()设置返回结果");
             }
             Intent intent = new Intent();
             intent.putExtra(RESPONSE_EVALUATE, response);

@@ -56,8 +56,8 @@ public class EvaluateDialog extends DialogFragment {
         }
 
         if (getActivity() != null) {
-            ToastHelp.showShortMsg(getActivity(), "通过getTargetFragment().onActivityResult()直接" +
-                    "调用启动Fragment的onActivityResult()方法");
+//            ToastHelp.showShortMsg(getActivity(), "通过getTargetFragment().onActivityResult()直接" +
+//                    "调用启动Fragment的onActivityResult()方法");
         }
 
         String response = etEvaluate.getText().toString();

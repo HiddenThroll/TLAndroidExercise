@@ -33,6 +33,16 @@ public class ListArticleActivity extends SingleFragmentActivity {
     }
 
     @Override
+    protected String getTips() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("1. Fragment可以通过startActivityForResult()启动Activity\n")
+                .append("2. Fragment在onActivityResult()中接收返回结果: \n")
+                .append("2.1 启动的Activity/Fragment中，调用Activity.setResult(int resultCode, Intent data)方法设置返回结果\n")
+                .append("2.2 本Fragment覆写onActivityResult()方法接收返回结果");
+        return stringBuilder.toString();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         LogTool.e(TAG, "onActivityResult requestCode is " + requestCode + " resultCode is " + resultCode);

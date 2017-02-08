@@ -45,7 +45,7 @@ public class ListArticleFragment extends BaseFragment implements AdapterView.OnI
         ButterKnife.bind(this, rootView);
 
 
-        adapter = new ArrayAdapter<String>(mFragmentContext, R.layout.item_category,
+        adapter = new ArrayAdapter<>(mFragmentContext, R.layout.item_category,
                 titles);
         lvListTitle.setAdapter(adapter);
 
@@ -65,7 +65,7 @@ public class ListArticleFragment extends BaseFragment implements AdapterView.OnI
         Intent intent = new Intent(mFragmentContext, ArticleContentActivity.class);
         intent.putExtra(ArticleContentFragment.ARGUMENT_CONTENT, "内容是" + titles.get(position));
 
-        ToastHelp.showShortMsg(mFragmentContext, "Fragment可以通过startActivityForResult()启动Activity");
+//        ToastHelp.showShortMsg(mFragmentContext, "Fragment可以通过startActivityForResult()启动Activity");
 
         startActivityForResult(intent, REQUEST_CONTENT);
     }
@@ -74,7 +74,7 @@ public class ListArticleFragment extends BaseFragment implements AdapterView.OnI
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         LogTool.e(TAG, "onActivityResult requestCode is " + requestCode + " resultCode is " + resultCode);
-        ToastHelp.showShortMsg(mFragmentContext, "Fragment也可以在onActivityResult()中接收返回结果");
+//        ToastHelp.showShortMsg(mFragmentContext, "Fragment也可以在onActivityResult()中接收返回结果");
         if (requestCode == REQUEST_CONTENT) {
             if (resultCode == Activity.RESULT_OK) {
                 String response = data.getStringExtra(ArticleContentFragment.RESPONSE_EVALUATE);
