@@ -54,7 +54,7 @@ public class ViewPagerRealUnlimitedScrollActivity extends BaseActivity implement
     }
 
     private void initView() {
-        tvTitle.setText(R.string.viewpager_unlimited_scroll);
+        tvTitle.setText(R.string.viewpager_real_unlimited_scroll);
         btnHelp.setVisibility(View.VISIBLE);
 
         LayoutInflater inflater = LayoutInflater.from(this);

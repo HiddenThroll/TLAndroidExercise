@@ -46,7 +46,8 @@
     <!-- ViewPager练习-->
     <string name="viewpager_exercise">ViewPager练习</string>
     <string name="viewpager_welcome">ViewPager实现引导页</string>
-    <string name="viewpager_unlimited_scroll">ViewPager实现真无限循环滚动</string>
+    <string name="viewpager_fake_unlimited_scroll">ViewPager实现伪无限循环滚动</string>
+    <string name="viewpager_real_unlimited_scroll">ViewPager实现真无限循环滚动</string>
 
 
     <string name="recyclerview_exercise">RecyclerView练习</string>
