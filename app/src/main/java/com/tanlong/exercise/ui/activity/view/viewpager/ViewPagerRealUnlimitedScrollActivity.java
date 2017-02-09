@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.adapter.pageradapter.RealUnlimitedScrollPagerAdapter;
+import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 import com.tanlong.exercise.util.LogTool;
 
 import java.util.ArrayList;
@@ -87,7 +88,15 @@ public class ViewPagerRealUnlimitedScrollActivity extends BaseActivity implement
     }
 
     private void showTips() {
-
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("ViewPager实现真无限循环滚动原理：\n")
+                .append("1. 若需显示4个View，则ViewPager共显示6个View，排列顺序为“4,1,2,3,4,1”\n")
+                .append("2. 初始化时，调用ViewPager.setCurrentItem(1)方法显示View_1\n")
+                .append("3. ViewPager添加PageChangeListener: \n")
+                .append("3.1 当移动到第一个位置(position = 0)时，显示第二个View_4,即ViewPager.setCurrentItem(4)\n")
+                .append("3.2 当移动到最后一个位置(position = 5)时，显示第一个View_1,即ViewPager.setCurrentItem(1)\n");
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
+        fragment.show(getSupportFragmentManager(), "");
     }
 
     @Override
