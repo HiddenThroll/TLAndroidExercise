@@ -26,7 +26,8 @@ public class IndexPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         container.addView(viewList.get(position));
 
-        return viewList.get(position);
+//        return viewList.get(position);
+        return position;
     }
 
     @Override
@@ -41,6 +42,7 @@ public class IndexPagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == object;
+        int position = Integer.parseInt(object.toString());
+        return view == viewList.get(position);
     }
 }
