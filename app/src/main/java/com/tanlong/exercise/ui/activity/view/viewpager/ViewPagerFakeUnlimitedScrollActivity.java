@@ -61,7 +61,7 @@ public class ViewPagerFakeUnlimitedScrollActivity extends BaseActivity {
         pagerAdapter = new FakeUnlimitedScrollPagerAdapter(viewList);
         vpWelcome.setAdapter(pagerAdapter);
 
-        vpWelcome.setCurrentItem(Integer.MAX_VALUE / 2);
+        vpWelcome.setCurrentItem(Integer.MAX_VALUE / 2);//从中间开始
     }
 
     @OnClick({R.id.iv_back, R.id.btn_help})
@@ -78,6 +78,10 @@ public class ViewPagerFakeUnlimitedScrollActivity extends BaseActivity {
 
     private void showTips() {
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("ViewPager实现伪无限循环滚动原理：")
+                .append("1. 覆写getCount()方法，返回一个足够大的值，如Integer.MAX_VALUE\n")
+                .append("2. instantiateItem()方法中添加View时，position对viewList.size()取余，即viewList.get(position % viewList.size())\n")
+                .append("2. destroyItem()方法中删除View时，position对viewList.size()取余，即viewList.get(position % viewList.size())\n");
 
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
         fragment.show(getSupportFragmentManager(), "");
