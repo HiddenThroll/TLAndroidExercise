@@ -204,6 +204,11 @@
             android:launchMode="singleTop"
             android:configChanges="keyboard"
             />
+        <activity android:name=".ui.activity.view.viewpager.ViewPagerWelcomeActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
 
         <!-- 百度地图相关 -->
         <activity

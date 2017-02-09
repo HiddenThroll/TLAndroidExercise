@@ -43,7 +43,9 @@
     <string name="fragment_viewpager">Fragment + ViewPager练习</string>
     <string name="fragment_update_content">第%s次更新</string>
 
+    <!-- ViewPager练习-->
     <string name="viewpager_exercise">ViewPager练习</string>
+    <string name="viewpager_welcome">ViewPager实现引导页</string>
 
 
     <string name="recyclerview_exercise">RecyclerView练习</string>

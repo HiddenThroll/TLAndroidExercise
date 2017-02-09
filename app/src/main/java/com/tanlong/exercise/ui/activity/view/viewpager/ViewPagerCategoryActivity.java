@@ -1,5 +1,6 @@
 package com.tanlong.exercise.ui.activity.view.viewpager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -51,6 +52,15 @@ public class ViewPagerCategoryActivity extends BaseActivity {
 
     @OnItemClick(R.id.lv_activity_category)
     public void onItemClick(int position) {
+        Intent intent = new Intent();
+        switch (position) {
+            case 0:
+                intent.setClass(this, ViewPagerWelcomeActivity.class);
+                break;
+        }
 
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
