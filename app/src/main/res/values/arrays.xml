@@ -53,6 +53,7 @@
 
     <array name="viewpager_category">
         <item>ViewPager实现引导页</item>
+        <item>ViewPager实现真无限循环滚动</item>
         <item>ViewPager实现Banner栏</item>
         <item>ViewPager+Fragment实现APP首页Tab效果</item>
     </array>

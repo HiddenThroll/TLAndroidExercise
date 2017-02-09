@@ -57,6 +57,9 @@ public class ViewPagerCategoryActivity extends BaseActivity {
             case 0:
                 intent.setClass(this, ViewPagerWelcomeActivity.class);
                 break;
+            case 1:
+                intent.setClass(this, ViewPagerRealUnlimitedScrollActivity.class);
+                break;
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {
