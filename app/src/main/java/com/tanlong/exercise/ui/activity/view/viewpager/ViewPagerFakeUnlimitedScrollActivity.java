@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * ViewPager实现伪无限循环滚动使用的Adapter
  * Created by 龙 on 2017/2/9.
  */
 

@@ -55,7 +55,7 @@
         <item>ViewPager实现引导页</item>
         <item>ViewPager实现伪无限循环滚动</item>
         <item>ViewPager实现真无限循环滚动</item>
-        <item>ViewPager实现Banner栏</item>
+        <item>ViewPager实现自定义滑动指示条</item>
         <item>ViewPager+Fragment实现APP首页Tab效果</item>
     </array>
 
