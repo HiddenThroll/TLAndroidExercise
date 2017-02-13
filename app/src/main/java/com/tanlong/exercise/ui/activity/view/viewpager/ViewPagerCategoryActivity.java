@@ -64,7 +64,7 @@ public class ViewPagerCategoryActivity extends BaseActivity {
                 intent.setClass(this, ViewPagerRealUnlimitedScrollActivity.class);
                 break;
             case 3:
-                intent.setClass(this, ViewPagerCustomIndicatorActivity.class);
+                intent.setClass(this, ViewPagerTabLayoutActivity.class);
                 break;
         }
 

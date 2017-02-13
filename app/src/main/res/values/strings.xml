@@ -48,7 +48,7 @@
     <string name="viewpager_welcome">ViewPager实现引导页</string>
     <string name="viewpager_fake_unlimited_scroll">ViewPager实现伪无限循环滚动</string>
     <string name="viewpager_real_unlimited_scroll">ViewPager实现真无限循环滚动</string>
-    <string name="viewpager_custom_indicator">ViewPager实现自定义滑动指示条</string>
+    <string name="viewpager_custom_indicator">ViewPager+TabLayout实现滑动指示条</string>
 
 
     <string name="recyclerview_exercise">RecyclerView练习</string>

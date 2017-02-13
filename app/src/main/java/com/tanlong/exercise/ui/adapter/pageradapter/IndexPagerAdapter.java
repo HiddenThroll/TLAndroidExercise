@@ -45,4 +45,9 @@ public class IndexPagerAdapter extends PagerAdapter {
         int position = Integer.parseInt(object.toString());
         return view == viewList.get(position);
     }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return "标题 " + String.valueOf(position + 1);
+    }
 }
