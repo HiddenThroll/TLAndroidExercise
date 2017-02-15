@@ -15,11 +15,11 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.fragment.base.BaseFragment;
-import com.tanlong.exercise.ui.fragment.tabcontent.ContentFiveFragment;
-import com.tanlong.exercise.ui.fragment.tabcontent.ContentFourFragment;
-import com.tanlong.exercise.ui.fragment.tabcontent.ContentOneFragment;
-import com.tanlong.exercise.ui.fragment.tabcontent.ContentThreeFragment;
-import com.tanlong.exercise.ui.fragment.tabcontent.ContentTwoFragment;
+import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentFiveFragment;
+import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentFourFragment;
+import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentOneFragment;
+import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentThreeFragment;
+import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentTwoFragment;
 import com.tanlong.exercise.util.LogTool;
 
 import java.util.ArrayList;

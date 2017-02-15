@@ -1,4 +1,4 @@
-package com.tanlong.exercise.ui.fragment.tabcontent;
+package com.tanlong.exercise.ui.activity.view.viewpager.tabcontent;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,20 +19,20 @@ import butterknife.ButterKnife;
  * Created by 龙 on 2016/11/14.
  */
 
-public class ContentThreeFragment extends BaseFragment {
+public class ContentOneFragment extends BaseFragment {
 
     @Bind(R.id.tv_update_content)
     TextView tvUpdateContent;
 
-    public static ContentThreeFragment newInstance() {
-        return new ContentThreeFragment();
+    public static ContentOneFragment newInstance() {
+        return new ContentOneFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LogTool.e(TAG, "onCreateView");
-        View view = inflater.inflate(R.layout.fragment_three, container, false);
+        View view = inflater.inflate(R.layout.fragment_one, container, false);
         ButterKnife.bind(this, view);
 
         tvUpdateContent.setText(mFragmentContext.getString(R.string.fragment_update_content, getUpdateContent()));

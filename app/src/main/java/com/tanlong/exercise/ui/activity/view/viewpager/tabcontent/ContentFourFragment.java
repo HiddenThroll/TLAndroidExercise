@@ -1,4 +1,4 @@
-package com.tanlong.exercise.ui.fragment.tabcontent;
+package com.tanlong.exercise.ui.activity.view.viewpager.tabcontent;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -56,7 +56,7 @@
         <item>ViewPager实现伪无限循环滚动</item>
         <item>ViewPager实现真无限循环滚动</item>
         <item>ViewPager+TabLayout实现滑动指示条</item>
-        <item>ViewPager+Fragment实现APP首页Tab效果</item>
+        <item>ViewPager+FragmentPagerAdapter实现APP首页Tab效果</item>
     </array>
 
     <!-- 百度地图 -->
