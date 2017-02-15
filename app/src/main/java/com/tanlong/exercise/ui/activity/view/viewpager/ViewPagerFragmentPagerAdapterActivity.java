@@ -16,6 +16,7 @@ import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentOneFrag
 import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentThreeFragment;
 import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentTwoFragment;
 import com.tanlong.exercise.ui.adapter.pageradapter.fragmentpageradapter.SimpleFragmentPagerAdapter;
+import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 import com.tanlong.exercise.util.LogTool;
 
 import java.util.ArrayList;
@@ -24,8 +25,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.baidu.location.g.h.T;
 
 /**
  * ViewPager+Fragment+FragmentPagerAdapter实现APP首页Tab效果
@@ -156,6 +155,15 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity {
     }
 
     private void showTips() {
-
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("1. 使用FragmentPagerAdapter作为ViewPager的PagerAdapter时，对于不再需要的Fragment，调用该Fragment的onDetach方法，销毁视图，不会销毁Fragment实例\n")
+                .append("2. 关于TabLayout: \n")
+                .append("2.1 TabLayout.setOnTabSelectedListener()可以监听Tab选择变化，其中:\n")
+                .append("2.1.1 onTabSelected(Tab)方法是当前选择的Tab\n")
+                .append("2.1.2 onTabUnselected(Tab)方法是之前选择的Tab\n")
+                .append("2.1.3 onTabReselected(Tab)方法是再次点击当前选择Tab时回调\n")
+                .append("2.2 调用TabLayout.setupWithViewPager(ViewPager)方法后会将把前面所有TabLayout添加的View都删掉，然后设置为PagerAdapter返回的title\n");
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
+        fragment.show(getSupportFragmentManager(), "");
     }
 }
