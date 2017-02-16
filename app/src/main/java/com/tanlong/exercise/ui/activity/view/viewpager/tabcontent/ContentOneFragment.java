@@ -3,6 +3,7 @@ package com.tanlong.exercise.ui.activity.view.viewpager.tabcontent;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,12 +35,17 @@ public class ContentOneFragment extends BaseFragment {
     public static final String FRAGMENT_IDTENTIFICATION = "fragment_idtentification";
     @Bind(R.id.btn_refresh)
     Button btnRefresh;
+    public interface OnRefreshFragment {
+        void onRefreshFragment();
+    }
+    private static OnRefreshFragment mOnRefreshFragment;
 
-    public static ContentOneFragment newInstance(String idtenfication) {
+    public static ContentOneFragment newInstance(String idtenfication, OnRefreshFragment onRefreshFragment) {
         ContentOneFragment fragment = new ContentOneFragment();
         Bundle bundle = new Bundle();
         bundle.putString(FRAGMENT_IDTENTIFICATION, idtenfication);
         fragment.setArguments(bundle);
+        mOnRefreshFragment = onRefreshFragment;
         return fragment;
     }
 
@@ -52,6 +58,12 @@ public class ContentOneFragment extends BaseFragment {
 
         String idContent = getArguments().getString(FRAGMENT_IDTENTIFICATION);
         tvFragmentId.setText(idContent);
+        String content = etContent.getText().toString();
+        if (TextUtils.isEmpty(content)) {
+            tvUpdateContent.setText("暂无输入数据");
+        } else {
+            tvUpdateContent.setText(content);
+        }
         return view;
     }
 
@@ -118,6 +130,7 @@ public class ContentOneFragment extends BaseFragment {
 
     @OnClick(R.id.btn_refresh)
     public void onClick() {
-
+        LogTool.e(TAG, "btn_refresh");
+        mOnRefreshFragment.onRefreshFragment();
     }
 }

@@ -11,10 +11,7 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentFourFragment;
 import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentOneFragment;
-import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentThreeFragment;
-import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentTwoFragment;
 import com.tanlong.exercise.ui.adapter.pageradapter.fragmentpageradapter.SimpleFragmentPagerAdapter;
 import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 import com.tanlong.exercise.util.LogTool;
@@ -31,7 +28,7 @@ import butterknife.OnClick;
  * Created by 龙 on 2017/2/15.
  */
 
-public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity {
+public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity implements ContentOneFragment.OnRefreshFragment{
 
     @Bind(R.id.iv_back)
     ImageView ivBack;
@@ -73,10 +70,10 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity {
 
     private void initViewPager() {
         fragmentList = new ArrayList<>();
-        fragmentList.add(ContentOneFragment.newInstance("标题1"));
-        fragmentList.add(ContentOneFragment.newInstance("标题2"));
-        fragmentList.add(ContentOneFragment.newInstance("标题3"));
-        fragmentList.add(ContentOneFragment.newInstance("标题4"));
+        fragmentList.add(ContentOneFragment.newInstance("标题1", this));
+        fragmentList.add(ContentOneFragment.newInstance("标题2", this));
+        fragmentList.add(ContentOneFragment.newInstance("标题3", this));
+        fragmentList.add(ContentOneFragment.newInstance("标题4", this));
         mAdapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
         vpTabContent.setAdapter(mAdapter);
 
@@ -91,7 +88,7 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity {
                 TabLayout.Tab tab = tabContainer.getTabAt(position);
                 if (tab != null) {
                     if (tab.isSelected()) {
-                        LogTool.e(TAG, "onPageSelected " + position + "已设置TabLayout");
+//                        LogTool.e(TAG, "onPageSelected " + position + "已设置TabLayout");
                     } else {
                         tab.select();
                     }
@@ -124,7 +121,7 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity {
                 if (position != vpTabContent.getCurrentItem()) {
                     vpTabContent.setCurrentItem(position);
                 } else {
-                    LogTool.e(TAG, "onTabSelected " + position + "已切换ViewPager");
+//                    LogTool.e(TAG, "onTabSelected " + position + "已切换ViewPager");
                 }
             }
 
@@ -167,5 +164,11 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity {
                 .append("2.2 调用TabLayout.setupWithViewPager(ViewPager)方法后会将把前面所有TabLayout添加的View都删掉，然后设置为PagerAdapter返回的title\n");
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
         fragment.show(getSupportFragmentManager(), "");
+    }
+
+    @Override
+    public void onRefreshFragment() {
+        LogTool.e(TAG, "onRefreshFragment");
+        mAdapter.notifyDataSetChanged();
     }
 }
