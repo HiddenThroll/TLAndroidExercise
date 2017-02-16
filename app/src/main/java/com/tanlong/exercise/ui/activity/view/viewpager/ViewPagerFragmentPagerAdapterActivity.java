@@ -73,10 +73,10 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity {
 
     private void initViewPager() {
         fragmentList = new ArrayList<>();
-        fragmentList.add(ContentOneFragment.newInstance());
-        fragmentList.add(ContentTwoFragment.newInstance());
-        fragmentList.add(ContentThreeFragment.newInstance());
-        fragmentList.add(ContentFourFragment.newInstance());
+        fragmentList.add(ContentOneFragment.newInstance("标题1"));
+        fragmentList.add(ContentOneFragment.newInstance("标题2"));
+        fragmentList.add(ContentOneFragment.newInstance("标题3"));
+        fragmentList.add(ContentOneFragment.newInstance("标题4"));
         mAdapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
         vpTabContent.setAdapter(mAdapter);
 
@@ -156,7 +156,9 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity {
 
     private void showTips() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("1. 使用FragmentPagerAdapter作为ViewPager的PagerAdapter时，对于不再需要的Fragment，调用该Fragment的onDetach方法，销毁视图，不会销毁Fragment实例\n")
+        stringBuilder.append("1. 关于FragmentPagerAdapter:\n")
+                .append("1.1 getCount()返回ViewPager页面的数量，getItem()返回要显示的fragment对象\n")
+                .append("1.2 使用FragmentPagerAdapter作为ViewPager的PagerAdapter时，对于不再需要的Fragment，调用该Fragment的onDetach方法，销毁视图，不会销毁Fragment实例\n")
                 .append("2. 关于TabLayout: \n")
                 .append("2.1 TabLayout.setOnTabSelectedListener()可以监听Tab选择变化，其中:\n")
                 .append("2.1.1 onTabSelected(Tab)方法是当前选择的Tab\n")

@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.tanlong.exercise.R;
@@ -14,6 +16,7 @@ import com.tanlong.exercise.util.LogTool;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by 龙 on 2016/11/14.
@@ -23,9 +26,21 @@ public class ContentOneFragment extends BaseFragment {
 
     @Bind(R.id.tv_update_content)
     TextView tvUpdateContent;
+    @Bind(R.id.tv_fragment_id)
+    TextView tvFragmentId;
+    @Bind(R.id.et_content)
+    EditText etContent;
 
-    public static ContentOneFragment newInstance() {
-        return new ContentOneFragment();
+    public static final String FRAGMENT_IDTENTIFICATION = "fragment_idtentification";
+    @Bind(R.id.btn_refresh)
+    Button btnRefresh;
+
+    public static ContentOneFragment newInstance(String idtenfication) {
+        ContentOneFragment fragment = new ContentOneFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(FRAGMENT_IDTENTIFICATION, idtenfication);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Nullable
@@ -35,7 +50,8 @@ public class ContentOneFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_one, container, false);
         ButterKnife.bind(this, view);
 
-        tvUpdateContent.setText(mFragmentContext.getString(R.string.fragment_update_content, getUpdateContent()));
+        String idContent = getArguments().getString(FRAGMENT_IDTENTIFICATION);
+        tvFragmentId.setText(idContent);
         return view;
     }
 
@@ -98,5 +114,10 @@ public class ContentOneFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         LogTool.e(TAG, "onDestroy");
+    }
+
+    @OnClick(R.id.btn_refresh)
+    public void onClick() {
+
     }
 }

@@ -7,19 +7,43 @@
     >
 
     <TextView
+        android:id="@+id/tv_fragment_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="第一个Fragment"
         android:textSize="22sp"
         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="请输入改变内容"
+            android:layout_margin="4dp"
+            />
+
+        <Button
+            android:id="@+id/btn_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="刷新界面"
+            android:layout_margin="4dp"
+            />
+    </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/tv_update_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/fragment_update_content"
         android:textSize="22sp"
         />
 

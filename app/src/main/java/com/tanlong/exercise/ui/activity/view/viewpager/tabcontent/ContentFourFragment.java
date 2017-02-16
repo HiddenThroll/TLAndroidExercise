@@ -32,7 +32,7 @@ public class ContentFourFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LogTool.e(TAG, "onCreateView");
-        View view = inflater.inflate(R.layout.fragment_four, container, false);
+        View view = inflater.inflate(R.layout.fragment_one, container, false);
         ButterKnife.bind(this, view);
 
         tvUpdateContent.setText(mFragmentContext.getString(R.string.fragment_update_content, getUpdateContent()));

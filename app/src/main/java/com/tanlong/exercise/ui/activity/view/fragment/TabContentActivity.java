@@ -81,7 +81,7 @@ public class TabContentActivity extends BaseActivity implements View.OnClickList
         itemViews.add(tvSetting);
 
         itemFragments = new ArrayList<>();
-        itemFragments.add(ContentOneFragment.newInstance());
+        itemFragments.add(ContentOneFragment.newInstance("测试"));
         itemFragments.add(ContentTwoFragment.newInstance());
         itemFragments.add(ContentThreeFragment.newInstance());
         itemFragments.add(ContentFourFragment.newInstance());
