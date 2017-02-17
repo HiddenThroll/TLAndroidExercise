@@ -69,6 +69,9 @@ public class ViewPagerCategoryActivity extends BaseActivity {
             case 4:
                 intent.setClass(this, ViewPagerFragmentPagerAdapterActivity.class);
                 break;
+            case 5:
+                intent.setClass(this, ViewPagerFragmentPagerNotifyAdapterActivity.class);
+                break;
 
         }
 

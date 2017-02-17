@@ -192,12 +192,6 @@
             android:launchMode="singleTop"
             android:configChanges="keyboard"
             />
-        <activity
-            android:name=".ui.activity.view.fragment.TabContentActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
-            android:configChanges="keyboard"
-            />
         <!-- ViewPager练习相关 -->
         <activity android:name=".ui.activity.view.viewpager.ViewPagerCategoryActivity"
             android:screenOrientation="portrait"
@@ -225,6 +219,11 @@
             android:configChanges="keyboard"
             />
         <activity android:name=".ui.activity.view.viewpager.ViewPagerFragmentPagerAdapterActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
+        <activity android:name=".ui.activity.view.viewpager.ViewPagerFragmentPagerNotifyAdapterActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:configChanges="keyboard"

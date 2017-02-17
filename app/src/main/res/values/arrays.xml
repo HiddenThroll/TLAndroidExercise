@@ -48,7 +48,6 @@
         <item>DialogFragment练习</item>
         <item>Fragment之间数据传递</item>
         <item>屏幕旋转时处理网络加载数据</item>
-        <item>Fragment+ViewPager</item>
     </array>
 
     <array name="viewpager_category">
@@ -57,6 +56,7 @@
         <item>ViewPager实现真无限循环滚动</item>
         <item>ViewPager+TabLayout实现滑动指示条</item>
         <item>ViewPager+FragmentPagerAdapter实现APP首页Tab效果</item>
+        <item>ViewPager+FragmentPagerAdapter实现通过notifyDataSetChange()刷新Fragment</item>
     </array>
 
     <!-- 百度地图 -->

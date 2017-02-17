@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.tanlong.exercise.R;
@@ -29,14 +28,13 @@ public class ContentOneFragment extends BaseFragment {
     TextView tvUpdateContent;
     @Bind(R.id.tv_fragment_id)
     TextView tvFragmentId;
-    @Bind(R.id.et_content)
-    EditText etContent;
 
     public static final String FRAGMENT_IDTENTIFICATION = "fragment_idtentification";
     @Bind(R.id.btn_refresh)
     Button btnRefresh;
     public interface OnRefreshFragment {
         void onRefreshFragment();
+        String getUpdateContent();
     }
     private static OnRefreshFragment mOnRefreshFragment;
 
@@ -58,7 +56,7 @@ public class ContentOneFragment extends BaseFragment {
 
         String idContent = getArguments().getString(FRAGMENT_IDTENTIFICATION);
         tvFragmentId.setText(idContent);
-        String content = etContent.getText().toString();
+        String content = mOnRefreshFragment.getUpdateContent();
         if (TextUtils.isEmpty(content)) {
             tvUpdateContent.setText("暂无输入数据");
         } else {

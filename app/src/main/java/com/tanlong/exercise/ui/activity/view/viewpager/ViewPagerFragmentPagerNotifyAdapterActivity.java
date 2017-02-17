@@ -13,8 +13,7 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentOneFragment;
-import com.tanlong.exercise.ui.adapter.pageradapter.fragmentpageradapter.SimpleFragmentPagerAdapter;
-import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.ui.adapter.pageradapter.fragmentpageradapter.NotifyFragmentPagerAdapter;
 import com.tanlong.exercise.util.LogTool;
 
 import java.util.ArrayList;
@@ -25,11 +24,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * ViewPager+Fragment+FragmentPagerAdapter实现APP首页Tab效果
- * Created by 龙 on 2017/2/15.
+ * Created by 龙 on 2017/2/17.
  */
 
-public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity implements ContentOneFragment.OnRefreshFragment{
+public class ViewPagerFragmentPagerNotifyAdapterActivity extends BaseActivity implements ContentOneFragment.OnRefreshFragment {
 
     @Bind(R.id.iv_back)
     ImageView ivBack;
@@ -44,13 +42,14 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity implemen
     @Bind(R.id.et_update_content)
     EditText etUpdateContent;
 
-    SimpleFragmentPagerAdapter mAdapter;
     List<Fragment> fragmentList;
+    NotifyFragmentPagerAdapter mAdapter;
 
     private final int POSITION_1 = 0;
     private final int POSITION_2 = 1;
     private final int POSITION_3 = 2;
     private final int POSITION_4 = 3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +62,7 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity implemen
     }
 
     private void initView() {
-        tvTitle.setText(R.string.viewpager_fragment_fragmentpageradapter);
+        tvTitle.setText(R.string.viewpager_fragment_fragmentpageradapter_notify);
         btnHelp.setVisibility(View.VISIBLE);
         // 设置ViewPager
         initViewPager();
@@ -74,10 +73,7 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity implemen
     private void initViewPager() {
         fragmentList = new ArrayList<>();
         fragmentList.add(ContentOneFragment.newInstance("标题1", this));
-        fragmentList.add(ContentOneFragment.newInstance("标题2", this));
-        fragmentList.add(ContentOneFragment.newInstance("标题3", this));
-        fragmentList.add(ContentOneFragment.newInstance("标题4", this));
-        mAdapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
+        mAdapter = new NotifyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList, this);
         vpTabContent.setAdapter(mAdapter);
 
         vpTabContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -108,9 +104,6 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity implemen
     private void initTabLayout() {
         tabContainer.setTabMode(TabLayout.MODE_FIXED);
         tabContainer.addTab(tabContainer.newTab().setText("标题1").setIcon(R.mipmap.ic_location).setTag(POSITION_1));
-        tabContainer.addTab(tabContainer.newTab().setText("标题2").setIcon(R.mipmap.ic_launcher).setTag(POSITION_2));
-        tabContainer.addTab(tabContainer.newTab().setText("标题3").setIcon(R.mipmap.ic_launcher).setTag(POSITION_3));
-        tabContainer.addTab(tabContainer.newTab().setText("标题4").setIcon(R.mipmap.ic_launcher).setTag(POSITION_4));
 
         tabContainer.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -156,18 +149,28 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity implemen
 
     private void showTips() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("1. 关于FragmentPagerAdapter:\n")
-                .append("1.1 getCount()返回ViewPager页面的数量，getItem()返回要显示的fragment对象\n")
-                .append("1.2 使用FragmentPagerAdapter作为ViewPager的PagerAdapter时，对于不再需要的Fragment，调用该Fragment的onDetach方法，销毁视图，不会销毁Fragment实例\n")
-                .append("1.3 因为每一个Fragment均保存于内存中，故FragmentPagerAdapter适用于Fragment数量固定且较少的情况\n")
-                .append("2. 关于TabLayout: \n")
-                .append("2.1 TabLayout.setOnTabSelectedListener()可以监听Tab选择变化，其中:\n")
-                .append("2.1.1 onTabSelected(Tab)方法是当前选择的Tab\n")
-                .append("2.1.2 onTabUnselected(Tab)方法是之前选择的Tab\n")
-                .append("2.1.3 onTabReselected(Tab)方法是再次点击当前选择Tab时回调\n")
-                .append("2.2 调用TabLayout.setupWithViewPager(ViewPager)方法后会将把前面所有TabLayout添加的View都删掉，然后设置为PagerAdapter返回的title\n");
-        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
-        fragment.show(getSupportFragmentManager(), "");
+        stringBuilder.append("调用FragmentPagerAdapter.notifyDataSetChanged()方法更新Fragment: \n")
+                .append("1. ViewPager: \n")
+                .append("1.1 ViewPager会在setAdapter()中调用PagerAdapter的registerDataSetObserver()方法，" +
+                        "注册一个自己生成的PagerObserver对象，从而在PagerAdapter有所需要时(如notifyDataSetChanged())，" +
+                        "可以调用Observer的onChanged()或onInvalidated()方法，实现PagerAdapter向ViewPager方向发送信息\n")
+                .append("1.2 dataSetChanged()方法在在PagerObserver.onChanged()和PagerObserver.onInvalide()中被调用，" +
+                        "该方法将使用getItemPosition()的返回值来进行判断，如果为POSITION_UNCHANGED，则什么都不做；" +
+                        "如果为POSITION_NONE，则调用PagerAdapter.destroyItem()来去掉该对象，并设置为需要刷新以便触发PagerAdapter.instantiateItem()来生成新的对象\n")
+                .append("2. FragmentPagerAdapter: ")
+                .append("2.1 getItemPosition()该方法用于返回给定对象的位置，给定对象是instantiateItem()的返回值。" +
+                        "当返回POSITION_UNCHANGED时，什么都不做;当返回POSITION_NONE时，会触发PagerAdapter.instantiateItem()来生成新的对象。默认返回POSITION_UNCHANGED\n")
+                .append("2.2 getItem()方法在第一次生成Fragment时调用，适用于向Fragment传递静态数据\n")
+                .append("2.3 instantiateItem()方法在ViewPager需要一个显示的Object时被调用，" +
+                        "该方法判断要生成的Fragment是否已经生成过，如果生成过了，就使用旧的；如果没有生成过，就调用getItem()方法生成一个新的。" +
+                        "适用于向Fragment传递动态数据\n")
+                .append("3. notifyDataSetChanged()触发刷新过程：\n")
+                .append("3.1 ViewPager通过setAdapter()方法与PagerAdapter建立联系，使用观察者模糊监听PagerAdapter，即PagerObserver\n")
+                .append("3.2 调用PagerAdapter.notifyDataSetChanged()方法后，触发PagerObserver的onChanged()方法\n")
+                .append("3.3 PagerObserver.onChanged()方法会调用ViewPager.dataSetChanged()\n")
+                .append("3.4 dataSetChanged()判断PagerAdapter.getItemPosition()的返回值，如果返回值是POSITION_NONE，" +
+                        "则调用PagerAdapter.destroyItem()来去掉该对象，并设置为需要刷新以便触发PagerAdapter.instantiateItem()来生成新的对象\n")
+                .append("3.5 PagerAdapter.instantiateItem()中更新数据，实现Fragment的刷新\n");
     }
 
     @Override
