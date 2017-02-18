@@ -14,6 +14,7 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentOneFragment;
 import com.tanlong.exercise.ui.adapter.pageradapter.fragmentpageradapter.NotifyFragmentPagerAdapter;
+import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 import com.tanlong.exercise.util.LogTool;
 
 import java.util.ArrayList;
@@ -154,10 +155,10 @@ public class ViewPagerFragmentPagerNotifyAdapterActivity extends BaseActivity im
                 .append("1.1 ViewPager会在setAdapter()中调用PagerAdapter的registerDataSetObserver()方法，" +
                         "注册一个自己生成的PagerObserver对象，从而在PagerAdapter有所需要时(如notifyDataSetChanged())，" +
                         "可以调用Observer的onChanged()或onInvalidated()方法，实现PagerAdapter向ViewPager方向发送信息\n")
-                .append("1.2 dataSetChanged()方法在在PagerObserver.onChanged()和PagerObserver.onInvalide()中被调用，" +
+                .append("1.2 dataSetChanged()方法在PagerObserver.onChanged()和PagerObserver.onInvalide()中被调用，" +
                         "该方法将使用getItemPosition()的返回值来进行判断，如果为POSITION_UNCHANGED，则什么都不做；" +
                         "如果为POSITION_NONE，则调用PagerAdapter.destroyItem()来去掉该对象，并设置为需要刷新以便触发PagerAdapter.instantiateItem()来生成新的对象\n")
-                .append("2. FragmentPagerAdapter: ")
+                .append("2. FragmentPagerAdapter: \n")
                 .append("2.1 getItemPosition()该方法用于返回给定对象的位置，给定对象是instantiateItem()的返回值。" +
                         "当返回POSITION_UNCHANGED时，什么都不做;当返回POSITION_NONE时，会触发PagerAdapter.instantiateItem()来生成新的对象。默认返回POSITION_UNCHANGED\n")
                 .append("2.2 getItem()方法在第一次生成Fragment时调用，适用于向Fragment传递静态数据\n")
@@ -165,12 +166,15 @@ public class ViewPagerFragmentPagerNotifyAdapterActivity extends BaseActivity im
                         "该方法判断要生成的Fragment是否已经生成过，如果生成过了，就使用旧的；如果没有生成过，就调用getItem()方法生成一个新的。" +
                         "适用于向Fragment传递动态数据\n")
                 .append("3. notifyDataSetChanged()触发刷新过程：\n")
-                .append("3.1 ViewPager通过setAdapter()方法与PagerAdapter建立联系，使用观察者模糊监听PagerAdapter，即PagerObserver\n")
+                .append("3.1 ViewPager通过setAdapter()方法与PagerAdapter建立联系，使用观察者模式监听PagerAdapter，即PagerObserver\n")
                 .append("3.2 调用PagerAdapter.notifyDataSetChanged()方法后，触发PagerObserver的onChanged()方法\n")
                 .append("3.3 PagerObserver.onChanged()方法会调用ViewPager.dataSetChanged()\n")
                 .append("3.4 dataSetChanged()判断PagerAdapter.getItemPosition()的返回值，如果返回值是POSITION_NONE，" +
                         "则调用PagerAdapter.destroyItem()来去掉该对象，并设置为需要刷新以便触发PagerAdapter.instantiateItem()来生成新的对象\n")
                 .append("3.5 PagerAdapter.instantiateItem()中更新数据，实现Fragment的刷新\n");
+
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
+        fragment.show(getSupportFragmentManager(), "");
     }
 
     @Override

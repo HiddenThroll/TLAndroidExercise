@@ -57,6 +57,7 @@
         <item>ViewPager+TabLayout实现滑动指示条</item>
         <item>ViewPager+FragmentPagerAdapter实现APP首页Tab效果</item>
         <item>ViewPager+FragmentPagerAdapter实现通过notifyDataSetChange()刷新Fragment</item>
+        <item>ViewPager+FragmentStatePagerAdapter实现APP首页Tab效果</item>
     </array>
 
     <!-- 百度地图 -->

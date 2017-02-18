@@ -51,6 +51,7 @@
     <string name="viewpager_custom_indicator">ViewPager+TabLayout实现滑动指示条</string>
     <string name="viewpager_fragment_fragmentpageradapter">ViewPager+FragmentPagerAdapter实现APP首页Tab效果</string>
     <string name="viewpager_fragment_fragmentpageradapter_notify">ViewPager+FragmentPagerAdapter实现通过notifyDataSetChange()刷新Fragment</string>
+    <string name="viewpager_fragment_fragmentstatepageradapter">ViewPager+FragmentStatePagerAdapter实现APP首页Tab效果</string>
 
 
     <string name="recyclerview_exercise">RecyclerView练习</string>

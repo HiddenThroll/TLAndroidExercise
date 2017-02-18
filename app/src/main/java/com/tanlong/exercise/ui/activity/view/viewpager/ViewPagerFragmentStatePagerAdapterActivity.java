@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentOneFragment;
-import com.tanlong.exercise.ui.adapter.pageradapter.fragmentpageradapter.SimpleFragmentPagerAdapter;
+import com.tanlong.exercise.ui.adapter.pageradapter.fragmentstatepageradapter.SimpleFragmentStatePagerAdapter;
 import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 import com.tanlong.exercise.util.LogTool;
 
@@ -25,11 +25,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * ViewPager+Fragment+FragmentPagerAdapter实现APP首页Tab效果
- * Created by 龙 on 2017/2/15.
+ * ViewPager+Fragment+FragmentStatePagerAdapter实现APP首页Tab效果
+ * Created by Administrator on 2017/2/18.
  */
 
-public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity implements ContentOneFragment.OnRefreshFragment{
+public class ViewPagerFragmentStatePagerAdapterActivity extends BaseActivity implements ContentOneFragment.OnRefreshFragment{
 
     @Bind(R.id.iv_back)
     ImageView ivBack;
@@ -37,14 +37,14 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity implemen
     TextView tvTitle;
     @Bind(R.id.btn_help)
     Button btnHelp;
+    @Bind(R.id.et_update_content)
+    EditText etUpdateContent;
     @Bind(R.id.vp_tab_content)
     ViewPager vpTabContent;
     @Bind(R.id.tl_item_container)
     TabLayout tabContainer;
-    @Bind(R.id.et_update_content)
-    EditText etUpdateContent;
 
-    SimpleFragmentPagerAdapter mAdapter;
+    SimpleFragmentStatePagerAdapter mAdapter;
     List<Fragment> fragmentList;
 
     private final int POSITION_1 = 0;
@@ -63,9 +63,9 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity implemen
     }
 
     private void initView() {
-        tvTitle.setText(R.string.viewpager_fragment_fragmentpageradapter);
+        tvTitle.setText(R.string.viewpager_fragment_fragmentstatepageradapter);
         btnHelp.setVisibility(View.VISIBLE);
-        etUpdateContent.setVisibility(View.GONE);
+
         // 设置ViewPager
         initViewPager();
         // 设置TabLayout
@@ -78,7 +78,7 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity implemen
         fragmentList.add(ContentOneFragment.newInstance("标题2", this));
         fragmentList.add(ContentOneFragment.newInstance("标题3", this));
         fragmentList.add(ContentOneFragment.newInstance("标题4", this));
-        mAdapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
+        mAdapter = new SimpleFragmentStatePagerAdapter(getSupportFragmentManager(), fragmentList);
         vpTabContent.setAdapter(mAdapter);
 
         vpTabContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -140,7 +140,6 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity implemen
                 LogTool.e(TAG, "onTabReselected " + tab.getText());
             }
         });
-//        tabContainer.setupWithViewPager(vpTabContent);//调用该方法后会将把前面所有tablayout添加的view都删掉，然后设置为PagerAdapter返回的title
     }
 
     @OnClick({R.id.iv_back, R.id.btn_help})
@@ -157,23 +156,20 @@ public class ViewPagerFragmentPagerAdapterActivity extends BaseActivity implemen
 
     private void showTips() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("1. 关于FragmentPagerAdapter:\n")
+        stringBuilder.append("1. 关于FragmentStatePagerAdapter:\n")
                 .append("1.1 getCount()返回ViewPager页面的数量，getItem()返回要显示的fragment对象\n")
-                .append("1.2 使用FragmentPagerAdapter作为ViewPager的PagerAdapter时，对于不再需要的Fragment，调用该Fragment的onDestroyView方法，销毁视图，不会销毁Fragment实例\n")
-                .append("1.3 因为每一个Fragment均保存于内存中，故FragmentPagerAdapter适用于Fragment数量固定且较少的情况\n")
-                .append("2. 关于TabLayout: \n")
-                .append("2.1 TabLayout.setOnTabSelectedListener()可以监听Tab选择变化，其中:\n")
-                .append("2.1.1 onTabSelected(Tab)方法是当前选择的Tab\n")
-                .append("2.1.2 onTabUnselected(Tab)方法是之前选择的Tab\n")
-                .append("2.1.3 onTabReselected(Tab)方法是再次点击当前选择Tab时回调\n")
-                .append("2.2 调用TabLayout.setupWithViewPager(ViewPager)方法后会将把前面所有TabLayout添加的View都删掉，然后设置为PagerAdapter返回的title\n");
+                .append("1.2 使用FragmentStatePagerAdapter作为ViewPager的PagerAdapter时，对于不再需要的Fragment，调用Fragment.onDetach()销毁视图及实例\n")
+                .append("1.3 故FragmentStatePagerAdapter适用于Fragment较多,变化较快的情况\n")
+                .append("2. 使用FragmentStatePagerAdapter刷新数据:\n")
+                .append("2.1 覆写FragmentStatePagerAdapter的etItemPosition方法,返回POSITION_NONE\n")
+                .append("2.2 在instantiateItem()方法中设置动态数据");
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
         fragment.show(getSupportFragmentManager(), "");
+
     }
 
     @Override
     public void onRefreshFragment() {
-        LogTool.e(TAG, "onRefreshFragment");
         mAdapter.notifyDataSetChanged();
     }
 
