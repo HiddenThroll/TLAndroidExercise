@@ -1,4 +1,4 @@
-package com.tanlong.exercise.ui.adapter.base;
+package com.tanlong.exercise.ui.activity.view.listview.adapter.base;
 
 import android.content.Context;
 import android.view.LayoutInflater;

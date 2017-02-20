@@ -53,8 +53,11 @@
     <string name="viewpager_fragment_fragmentpageradapter_notify">ViewPager+FragmentPagerAdapter实现通过notifyDataSetChange()刷新Fragment</string>
     <string name="viewpager_fragment_fragmentstatepageradapter">ViewPager+FragmentStatePagerAdapter实现APP首页Tab效果</string>
 
+    <!-- RecyclerView练习-->
+    <string name="recycler_view_exercise">RecyclerView练习</string>
+    <string name="recycler_view_list">RecyclerView实现常用线性列表</string>
 
-    <string name="recyclerview_exercise">RecyclerView练习</string>
+
 
     <!-- 百度地图练习-->
     <string name="baidu_map_exercise">百度地图练习</string>

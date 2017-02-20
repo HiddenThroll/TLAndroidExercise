@@ -1,4 +1,4 @@
-package com.tanlong.exercise.ui.adapter.pageradapter.fragmentstatepageradapter;
+package com.tanlong.exercise.ui.activity.view.viewpager.adapter.fragmentstatepageradapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

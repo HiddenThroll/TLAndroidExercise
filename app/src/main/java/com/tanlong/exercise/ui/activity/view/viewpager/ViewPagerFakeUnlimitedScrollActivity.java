@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.ui.adapter.pageradapter.FakeUnlimitedScrollPagerAdapter;
+import com.tanlong.exercise.ui.activity.view.viewpager.adapter.FakeUnlimitedScrollPagerAdapter;
 import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 
 import java.util.ArrayList;

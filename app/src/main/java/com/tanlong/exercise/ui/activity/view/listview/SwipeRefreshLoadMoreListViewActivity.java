@@ -18,7 +18,7 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.model.entity.IMenuItem;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.ui.adapter.MenuAdapter;
+import com.tanlong.exercise.ui.activity.view.listview.adapter.MenuAdapter;
 import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 import com.tanlong.exercise.ui.view.swiperefresh.CustomSwipeRefreshLayout;
 import com.tanlong.exercise.util.DisplayUtil;

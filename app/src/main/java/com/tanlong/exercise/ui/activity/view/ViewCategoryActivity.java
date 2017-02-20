@@ -13,6 +13,7 @@ import com.tanlong.exercise.ui.activity.view.customview.CustomViewCategoryActivi
 import com.tanlong.exercise.ui.activity.view.customviewgroup.CustomViewGroupCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.fragment.FragmentCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.listview.ListViewCategoryActivity;
+import com.tanlong.exercise.ui.activity.view.recyclerview.RecyclerViewCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.vieweffect.ViewEffectCategory;
 import com.tanlong.exercise.ui.activity.view.viewpager.ViewPagerCategoryActivity;
 
@@ -76,6 +77,9 @@ public class ViewCategoryActivity extends BaseActivity {
                 break;
             case 5:
                 intent.setClass(this, ViewPagerCategoryActivity.class);
+                break;
+            case 6:
+                intent.setClass(this, RecyclerViewCategoryActivity.class);
                 break;
 
         }

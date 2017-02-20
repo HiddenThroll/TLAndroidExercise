@@ -12,6 +12,7 @@
         <item>效果合集</item>
         <item>Fragment练习</item>
         <item>ViewPager练习</item>
+        <item>RecyclerView练习</item>
     </array>
 
     <array name="custom_view_category">
@@ -58,6 +59,10 @@
         <item>ViewPager+FragmentPagerAdapter实现APP首页Tab效果</item>
         <item>ViewPager+FragmentPagerAdapter实现通过notifyDataSetChange()刷新Fragment</item>
         <item>ViewPager+FragmentStatePagerAdapter实现APP首页Tab效果</item>
+    </array>
+
+    <array name="recycler_view_category">
+        <item>RecyclerView实现常用线性列表</item>
     </array>
 
     <!-- 百度地图 -->
