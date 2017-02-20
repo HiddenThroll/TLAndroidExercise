@@ -8,4 +8,5 @@
     android:textColor="@color/color_text_black"
     android:gravity="center_vertical|start"
     android:padding="8dp"
+    android:background="@drawable/selector_simple_click"
     />
