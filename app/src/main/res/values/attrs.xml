@@ -61,4 +61,8 @@
         <attr name="line_height" format="dimension"/>
         <attr name="line_width" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="recycler_view">
+        <attr name="divider_list" format="reference"/>
+    </declare-styleable>
 </resources>

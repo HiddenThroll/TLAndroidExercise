@@ -63,6 +63,7 @@
 
     <array name="recycler_view_category">
         <item>RecyclerView实现常用线性列表</item>
+        <item>RecyclerView实现网格列表</item>
     </array>
 
     <!-- 百度地图 -->

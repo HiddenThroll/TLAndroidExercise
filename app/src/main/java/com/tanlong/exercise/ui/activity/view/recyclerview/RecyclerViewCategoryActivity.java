@@ -59,6 +59,9 @@ public class RecyclerViewCategoryActivity extends BaseActivity {
             case 0:
                 intent.setClass(this, RecyclerViewListActivity.class);
                 break;
+            case 1:
+                intent.setClass(this, RecyclerViewGridActivity.class);
+                break;
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {

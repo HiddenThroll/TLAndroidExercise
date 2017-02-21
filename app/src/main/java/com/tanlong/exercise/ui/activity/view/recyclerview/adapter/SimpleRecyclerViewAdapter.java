@@ -8,12 +8,11 @@ import android.view.ViewGroup;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.view.recyclerview.viewholder.SimpleViewHolder;
-import com.tanlong.exercise.util.LogTool;
-import com.tanlong.exercise.util.ToastHelp;
 
 import java.util.List;
 
 /**
+ *
  * Created by 龙 on 2017/2/20.
  */
 

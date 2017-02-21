@@ -56,6 +56,7 @@
     <!-- RecyclerView练习-->
     <string name="recycler_view_exercise">RecyclerView练习</string>
     <string name="recycler_view_list">RecyclerView实现常用线性列表</string>
+    <string name="recycler_view_grid">RecyclerView实现网格列表</string>
 
 
 
