@@ -1,6 +1,7 @@
 package com.tanlong.exercise.ui.activity.view.recyclerview;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,8 +12,9 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.SimpleRecyclerViewAdapter;
-import com.tanlong.exercise.ui.activity.view.recyclerview.divider.SimpleDividerItemDecoration;
+import com.tanlong.exercise.ui.activity.view.recyclerview.divider.LinearDividerItemDecoration;
 import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.util.DisplayUtil;
 import com.tanlong.exercise.util.ToastHelp;
 
 import java.util.ArrayList;
@@ -64,8 +66,11 @@ public class RecyclerViewListActivity extends BaseActivity {
         SimpleRecyclerViewAdapter adapter = new SimpleRecyclerViewAdapter(this, mDatas);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);//设置布局管理器
-        mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(this,
-                SimpleDividerItemDecoration.VERTICAL_LIST));//设置Divider
+        int space = DisplayUtil.dip2px(this, 8);
+        RecyclerView.ItemDecoration itemDecoration = new LinearDividerItemDecoration(0, space,
+                ContextCompat.getColor(this, R.color.color_86d0ab));
+
+        mRecyclerView.addItemDecoration(itemDecoration);//设置Divider
         mRecyclerView.setAdapter(adapter);
         adapter.setmOnItemClickListener(new SimpleRecyclerViewAdapter.OnItemClickListener() {
             @Override
@@ -99,9 +104,9 @@ public class RecyclerViewListActivity extends BaseActivity {
                 .append("1.1 可以通过LinearLayoutManager的构造方法设置垂直(LinearLayoutManager.VERTICAL)或水平(LinearLayoutManager.HORIZONTAL)布局、是否倒序显示数据(reverseLayout)\n")
                 .append("2. RecyclerView.addItemDecoration()设置Item间的间隔\n")
                 .append("2.1 需继承ItemDecoration抽象类并实现方法：\n")
-                .append("2.1.1 onDraw()方法绘制Divider，该方法先于drawChildren()\n")
-                .append("2.1.2 onDrawOver()方法绘制Divider，该方法在drawChildren()之后；一般选择二者之一绘制Divider\n")
-                .append("2.1.3 getItemOffsets()通过outRect.set()为每个Item设置一定的偏移量，主要用于绘制Divider\n")
+                .append("2.1.1 onDraw()方法中计算Divider绘制范围并绘制Divider，该方法先于drawChildren()执行\n")
+                .append("2.1.2 onDrawOver()方法功能与onDraw()方法相同，在drawChildren()之后执行；一般选择二者之一绘制Divider\n")
+                .append("2.1.3 getItemOffsets()通过outRect.set()为每个Item设置一定的偏移量(Padding)，用于显示Divider\n")
                 .append("3. 通过接口的方式，在Adapter中设置单击监听和长按监听\n");
 
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
