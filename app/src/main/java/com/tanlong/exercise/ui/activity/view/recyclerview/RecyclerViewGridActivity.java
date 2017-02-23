@@ -13,6 +13,7 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.SimpleRecyclerViewAdapter;
 import com.tanlong.exercise.ui.activity.view.recyclerview.divider.GridDividerItemDecoration;
+import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 import com.tanlong.exercise.util.DisplayUtil;
 import com.tanlong.exercise.util.ToastHelp;
 
@@ -98,18 +99,13 @@ public class RecyclerViewGridActivity extends BaseActivity {
     }
 
     private void showTips() {
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append("RecyclerView的基本用法: \n")
-//                .append("1. RecyclerView.setLayoutManager()设置布局管理器，控制RecyclerView的显示方式。这里使用线性布局管理器LinearLayoutManager\n")
-//                .append("1.1 可以通过LinearLayoutManager的构造方法设置垂直(LinearLayoutManager.VERTICAL)或水平(LinearLayoutManager.HORIZONTAL)布局、是否倒序显示数据(reverseLayout)\n")
-//                .append("2. RecyclerView.addItemDecoration()设置Item间的间隔\n")
-//                .append("2.1 需继承ItemDecoration抽象类并实现方法：\n")
-//                .append("2.1.1 onDraw()方法绘制Divider，该方法先于drawChildren()\n")
-//                .append("2.1.2 onDrawOver()方法绘制Divider，该方法在drawChildren()之后；一般选择二者之一绘制Divider\n")
-//                .append("2.1.3 getItemOffsets()通过outRect.set()为每个Item设置一定的偏移量，主要用于绘制Divider\n")
-//                .append("3. 通过接口的方式，在Adapter中设置单击监听和长按监听\n");
-//
-//        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
-//        fragment.show(getSupportFragmentManager(), "");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("RecyclerView的基本用法: \n")
+                .append("1. RecyclerView.setLayoutManager(GridLayoutManager)设置网格布局管理器\n")
+                .append("1.1 可以通过GridLayoutManager的构造方法设置网格总列数(spanCount)、垂直(GridLayoutManager.VERTICAL)或水平(GridLayoutManager.HORIZONTAL)布局、是否倒序显示数据(reverseLayout)\n")
+                .append("2. RecyclerView.addItemDecoration()设置Item间的Divider，实现方法详见代码\n");
+
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
+        fragment.show(getSupportFragmentManager(), "");
     }
 }
