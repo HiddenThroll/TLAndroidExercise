@@ -1,182 +1,178 @@
 package com.tanlong.exercise.ui.activity.view.recyclerview.divider;
 
-import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
-import com.tanlong.exercise.util.LogTool;
-
 /**
+ * 网格布局使用的常用分割线
  * Created by 龙 on 2017/2/21.
  */
 
 public class GridDividerItemDecoration extends RecyclerView.ItemDecoration {
     private final String TAG = getClass().getSimpleName();
-    private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
+    private int leftRight;
+    private int topBottom;
+
     private Drawable mDivider;
 
-    public GridDividerItemDecoration(Context context) {
-        TypedArray typedArray = context.obtainStyledAttributes(ATTRS);
-        mDivider = typedArray.getDrawable(0);
-        typedArray.recycle();
+    public GridDividerItemDecoration(int leftRight, int topBottom) {
+        this.leftRight = leftRight;
+        this.topBottom = topBottom;
+    }
+
+    public GridDividerItemDecoration(int leftRight, int topBottom, int color) {
+        this.leftRight = leftRight;
+        this.topBottom = topBottom;
+        if (color != 0) {
+            mDivider = new ColorDrawable(color);
+        }
+
     }
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-        super.onDraw(c, parent, state);
-
-        drawHorizontal(c, parent);
-        drawVertical(c, parent);
-    }
-
-    /**
-     * 绘制水平直线 分割线
-     *
-     * @param c
-     * @param parent
-     */
-    public void drawHorizontal(Canvas c, RecyclerView parent) {
-        int childCount = parent.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            final View child = parent.getChildAt(i);
-            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
-                    .getLayoutParams();
-            final int left = child.getLeft() - params.leftMargin;
-            final int right = child.getRight() + params.rightMargin
-                    + mDivider.getIntrinsicWidth();
-            final int top = child.getBottom() + params.bottomMargin;
-            final int bottom = top + mDivider.getIntrinsicHeight();
-            mDivider.setBounds(left, top, right, bottom);
-            mDivider.draw(c);
+        GridLayoutManager layoutManager = (GridLayoutManager) parent.getLayoutManager();
+        if (mDivider == null || layoutManager.getChildCount() == 0) {
+            return;
         }
-    }
+        //判断总的数量是否可以整除
+        int totalCount = layoutManager.getItemCount();
+        int surplusCount = totalCount % layoutManager.getSpanCount();
 
-    /**
-     * 绘制垂直直线 分割线
-     *
-     * @param c
-     * @param parent
-     */
-    public void drawVertical(Canvas c, RecyclerView parent) {
-        int childCount = parent.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            View child = parent.getChildAt(i);
-            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-            int left = child.getRight() + params.rightMargin;
-            int right = left + mDivider.getIntrinsicWidth();
-            int top = child.getTop() - params.topMargin;
-            int bottom = child.getBottom() + params.bottomMargin;
-            mDivider.setBounds(left, top, right, bottom);
-            mDivider.draw(c);
+        int left;
+        int right;
+        int top;
+        int bottom;
+
+        final int childCount = parent.getChildCount();
+        if (layoutManager.getOrientation() == GridLayoutManager.VERTICAL) {
+
+            for (int i = 0; i < childCount; i++) {
+                final View child = parent.getChildAt(i);
+                final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+                //得到它在总数里面的位置
+                final int position = parent.getChildAdapterPosition(child);
+                //将带有颜色的分割线处于中间位置
+                final float centerLeft = (layoutManager.getLeftDecorationWidth(child) - leftRight) / 2;
+                final float centerTop = (layoutManager.getTopDecorationHeight(child) - topBottom) / 2;
+                //是否为最后一排
+                boolean isLast = surplusCount == 0 ?
+                        position > totalCount - layoutManager.getSpanCount() - 1 :
+                        position > totalCount - surplusCount - 1;
+                // 第一列 且 不是最后一行，绘制 整条 水平分割线
+                if ((position + 1) % layoutManager.getSpanCount() == 1 && !isLast) {
+                    //计算水平分割线绘制范围
+                    left = child.getLeft() + params.leftMargin;
+                    right = parent.getWidth() - left;
+                    top = (int) (child.getBottom() + params.bottomMargin + centerTop);
+                    bottom = top + topBottom;
+                    mDivider.setBounds(left, top, right, bottom);
+                    mDivider.draw(c);
+                }
+                //画每个Item右边的分割线，能被整除的不需要右边的分割线,并且当Item总数量比列数小的时候最后一项不需要右边
+                boolean first = totalCount >= layoutManager.getSpanCount()//Item总数量比列数多或一样
+                        && (position + 1) % layoutManager.getSpanCount() != 0;//该Item位置不能被整除
+                boolean second = totalCount < layoutManager.getSpanCount()//Item总数量比列数少
+                        && position + 1 != totalCount;//该Item不是最后一个
+                if (first || second) {
+                    //计算右边分割线绘制范围
+                    left = (int) (child.getRight() + params.rightMargin + centerLeft);
+                    right = left + leftRight;
+                    top = child.getTop() + params.topMargin;
+                    //第一排的不需要上面那一丢丢
+                    if (position > layoutManager.getSpanCount() - 1) {
+                        top -= centerTop;
+                    }
+                    bottom = child.getBottom() + params.bottomMargin;
+                    //最后一排的不需要最底下那一丢丢
+                    if (!isLast) {
+                        bottom += centerTop;
+                    }
+                    mDivider.setBounds(left, top, right, bottom);
+                    mDivider.draw(c);
+                }
+            }
+        } else {
+
+            for (int i = 0; i < childCount; i++) {
+                final View child = parent.getChildAt(i);
+                final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+                //得到它在总数里面的位置
+                final int position = parent.getChildAdapterPosition(child);
+                //将带有颜色的分割线处于中间位置
+                final float centerLeft = (layoutManager.getLeftDecorationWidth(child) - leftRight) / 2;
+                final float centerTop = (layoutManager.getTopDecorationHeight(child) - topBottom) / 2;
+                //是否为最后一排
+                boolean isLast = surplusCount == 0 ?
+                        position > totalCount - layoutManager.getSpanCount() - 1 :
+                        position > totalCount - surplusCount - 1;
+                //画右边的，最后一排不需要画
+                if ((position + 1) % layoutManager.getSpanCount() == 1 && !isLast) {
+                    //计算右边的
+                    left = (int) (child.getRight() + params.rightMargin + centerLeft);
+                    right = left + leftRight;
+                    top = child.getTop() + params.topMargin;
+                    bottom = parent.getHeight() - top + layoutManager.getTopDecorationHeight(child);
+                    mDivider.setBounds(left, top, right, bottom);
+                    mDivider.draw(c);
+                }
+
+                boolean first = totalCount > layoutManager.getSpanCount() && (position + 1) % layoutManager.getSpanCount() != 0;
+                boolean second = totalCount < layoutManager.getSpanCount() && position + 1 != totalCount;
+                //画下边的，能被整除的不需要下边
+                if (first || second) {
+                    left = child.getLeft() + params.leftMargin;
+                    if (position > layoutManager.getSpanCount() - 1) {
+                        left -= centerLeft;
+                    }
+                    right = child.getRight() - params.rightMargin;
+                    if (!isLast) {
+                        right += centerLeft;
+                    }
+                    top = (int) (child.getBottom() + params.bottomMargin + centerTop);
+                    bottom = top + topBottom;
+                    mDivider.setBounds(left, top, right, bottom);
+                    mDivider.draw(c);
+                }
+            }
         }
     }
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        int spanCount = getSpanCount(parent);
-        int childCount = parent.getAdapter().getItemCount();
-        int itemPosition = ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition();
-        if (isLastRaw(parent, itemPosition, spanCount, childCount)) {// 如果是最后一行，则不需要绘制底部
-            LogTool.e(TAG, "最后一行，" + itemPosition);
-            outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
-        } else if (isLastColum(parent, itemPosition, spanCount, childCount)) {// 如果是最后一列，则不需要绘制右边
-            LogTool.e(TAG, "最后一列，" + itemPosition);
-            outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
+        GridLayoutManager layoutManager = (GridLayoutManager) parent.getLayoutManager();
+        //判断Item总数量是否可以被总列数整除
+        int totalCount = layoutManager.getItemCount();
+        int surplusCount = totalCount % layoutManager.getSpanCount();
+        int childPosition = parent.getChildAdapterPosition(view);
+        if (layoutManager.getOrientation() == GridLayoutManager.VERTICAL) {//竖直方向的
+            if (surplusCount == 0 && childPosition > totalCount - layoutManager.getSpanCount() - 1) {
+                //后面几项需要bottom
+                outRect.bottom = topBottom;
+            } else if (surplusCount != 0 && childPosition > totalCount - surplusCount - 1) {
+                outRect.bottom = topBottom;//后面几项需要bottom
+            }
+            if ((childPosition + 1) % layoutManager.getSpanCount() == 0) {//被整除的需要右边
+                outRect.right = leftRight;
+            }
+            outRect.top = topBottom;
+            outRect.left = leftRight;
         } else {
-            outRect.set(0, 0, mDivider.getIntrinsicWidth(),
-                    mDivider.getIntrinsicHeight());
+            if (surplusCount == 0 && childPosition > totalCount - layoutManager.getSpanCount() - 1) {
+                //后面几项需要右边
+                outRect.right = leftRight;
+            } else if (surplusCount != 0 && childPosition > totalCount - surplusCount - 1) {
+                outRect.right = leftRight;
+            }
+            outRect.bottom = 0;
+            outRect.top = topBottom;
+            outRect.left = leftRight;
         }
-    }
 
-    /**
-     * 返回网格规定的跨度数
-     * @param parent
-     * @return
-     */
-    private int getSpanCount(RecyclerView parent) {
-        // 列数
-        int spanCount = -1;
-        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-        if (layoutManager instanceof GridLayoutManager) {
-            spanCount = ((GridLayoutManager) layoutManager).getSpanCount();
-        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-            spanCount = ((StaggeredGridLayoutManager) layoutManager)
-                    .getSpanCount();
-        }
-        return spanCount;
-    }
-
-    /**
-     * 是否是最后一列
-     *
-     * @param parent
-     * @param pos
-     * @param spanCount
-     * @param childCount
-     * @return
-     */
-    private boolean isLastColum(RecyclerView parent, int pos, int spanCount,
-                                int childCount) {
-        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-        if (layoutManager instanceof GridLayoutManager) {
-            if ((pos + 1) % spanCount == 0) {// 如果是最后一列，则不需要绘制右边
-                return true;
-            }
-        } else if (layoutManager instanceof StaggeredGridLayoutManager) {//瀑布流布局
-            int orientation = ((StaggeredGridLayoutManager) layoutManager)
-                    .getOrientation();
-            if (orientation == StaggeredGridLayoutManager.VERTICAL) {
-                if ((pos + 1) % spanCount == 0) {// 如果是最后一列，则不需要绘制右边
-                    return true;
-                }
-            } else {
-                childCount = childCount - childCount % spanCount;
-                if (pos >= childCount) {// 如果是最后一列，则不需要绘制右边
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * 是否是最后一行
-     *
-     * @param parent -- 父RecyclerView
-     * @param pos -- 子Item位置
-     * @param spanCount -- 网格规定的跨度数
-     * @param childCount -- 子Item总数
-     * @return
-     */
-    private boolean isLastRaw(RecyclerView parent, int pos, int spanCount,
-                              int childCount) {
-        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-        if (layoutManager instanceof GridLayoutManager) {
-            childCount = childCount - childCount % spanCount;
-            if ((pos + 1) >= childCount) {// 如果是最后一行，则不需要绘制底部
-                return true;
-            }
-        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-            int orientation = ((StaggeredGridLayoutManager) layoutManager)
-                    .getOrientation();
-            // StaggeredGridLayoutManager 且纵向滚动
-            if (orientation == StaggeredGridLayoutManager.VERTICAL) {
-                childCount = childCount - childCount % spanCount;
-                if (pos >= childCount) {// 如果是最后一行，则不需要绘制底部
-                    return true;
-                }
-            } else {// StaggeredGridLayoutManager 且横向滚动
-                if ((pos + 1) % spanCount == 0) {// 如果是最后一行，则不需要绘制底部
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }

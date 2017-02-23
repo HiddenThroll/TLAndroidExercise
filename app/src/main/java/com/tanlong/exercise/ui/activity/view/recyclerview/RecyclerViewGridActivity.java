@@ -1,8 +1,8 @@
 package com.tanlong.exercise.ui.activity.view.recyclerview;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +13,7 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.SimpleRecyclerViewAdapter;
 import com.tanlong.exercise.ui.activity.view.recyclerview.divider.GridDividerItemDecoration;
-import com.tanlong.exercise.ui.activity.view.recyclerview.divider.SimpleDividerItemDecoration;
-import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.util.DisplayUtil;
 import com.tanlong.exercise.util.ToastHelp;
 
 import java.util.ArrayList;
@@ -64,9 +63,14 @@ public class RecyclerViewGridActivity extends BaseActivity {
         btnHelp.setVisibility(View.VISIBLE);
 
         SimpleRecyclerViewAdapter adapter = new SimpleRecyclerViewAdapter(this, mDatas);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3, GridLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(layoutManager);//设置布局管理器
-        mRecyclerView.addItemDecoration(new GridDividerItemDecoration(this));//设置Divider
+
+        int spac = DisplayUtil.dip2px(this, 8);
+        RecyclerView.ItemDecoration itemDecoration = new GridDividerItemDecoration(spac, spac,
+                ContextCompat.getColor(this, R.color.color_fb9b10));
+        mRecyclerView.addItemDecoration(itemDecoration);//设置Divider
+
         mRecyclerView.setAdapter(adapter);
         adapter.setmOnItemClickListener(new SimpleRecyclerViewAdapter.OnItemClickListener() {
             @Override
