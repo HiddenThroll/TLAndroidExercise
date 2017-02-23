@@ -111,8 +111,8 @@ public class RecyclerViewStaggeredActivity extends BaseActivity {
     private void showTips() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("RecyclerView的基本用法: \n")
-                .append("1. RecyclerView.setLayoutManager(GridLayoutManager)设置网格布局管理器\n")
-                .append("1.1 可以通过GridLayoutManager的构造方法设置网格总列数(spanCount)、垂直(GridLayoutManager.VERTICAL)或水平(GridLayoutManager.HORIZONTAL)布局、是否倒序显示数据(reverseLayout)\n")
+                .append("1. RecyclerView.setLayoutManager(StaggeredGridLayoutManager)设置网格布局管理器\n")
+                .append("1.1 可以通过StaggeredGridLayoutManager的构造方法设置spanCount和方向，当方向为水平时,spanCount是总行数，当方向为垂直时，spanCount是总列数\n")
                 .append("2. RecyclerView.addItemDecoration()设置Item间的Divider，实现方法详见代码\n");
 
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
