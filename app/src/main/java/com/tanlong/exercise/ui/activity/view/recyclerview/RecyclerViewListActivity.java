@@ -40,6 +40,12 @@ public class RecyclerViewListActivity extends BaseActivity {
     RecyclerView mRecyclerView;
 
     List<String> mDatas;
+    @Bind(R.id.btn_addItem)
+    Button btnAddItem;
+    @Bind(R.id.btn_removeItem)
+    Button btnRemoveItem;
+
+    SimpleRecyclerViewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +69,7 @@ public class RecyclerViewListActivity extends BaseActivity {
         tvTitle.setText(R.string.recycler_view_list);
         btnHelp.setVisibility(View.VISIBLE);
 
-        SimpleRecyclerViewAdapter adapter = new SimpleRecyclerViewAdapter(this, mDatas);
+        mAdapter = new SimpleRecyclerViewAdapter(this, mDatas);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);//设置布局管理器
         int space = DisplayUtil.dip2px(this, 8);
@@ -71,8 +77,8 @@ public class RecyclerViewListActivity extends BaseActivity {
                 ContextCompat.getColor(this, R.color.color_86d0ab));
 
         mRecyclerView.addItemDecoration(itemDecoration);//设置Divider
-        mRecyclerView.setAdapter(adapter);
-        adapter.setmOnItemClickListener(new SimpleRecyclerViewAdapter.OnItemClickListener() {
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setmOnItemClickListener(new SimpleRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onClick(View view, int position) {
                 ToastHelp.showShortMsg(RecyclerViewListActivity.this, "onClick " + mDatas.get(position));
@@ -85,7 +91,7 @@ public class RecyclerViewListActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_back, R.id.btn_help})
+    @OnClick({R.id.iv_back, R.id.btn_help, R.id.btn_addItem, R.id.btn_removeItem})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -93,6 +99,12 @@ public class RecyclerViewListActivity extends BaseActivity {
                 break;
             case R.id.btn_help:
                 showTips();
+                break;
+            case R.id.btn_addItem:
+                mAdapter.addData(1, "添加的Item");
+                break;
+            case R.id.btn_removeItem:
+                mAdapter.removeData(0);
                 break;
         }
     }
@@ -112,4 +124,5 @@ public class RecyclerViewListActivity extends BaseActivity {
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
         fragment.show(getSupportFragmentManager(), "");
     }
+
 }

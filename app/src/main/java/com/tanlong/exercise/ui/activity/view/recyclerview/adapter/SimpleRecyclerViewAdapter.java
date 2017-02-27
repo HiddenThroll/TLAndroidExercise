@@ -72,4 +72,14 @@ public class SimpleRecyclerViewAdapter extends RecyclerView.Adapter<SimpleViewHo
     public void setmOnItemClickListener(OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
     }
+
+    public void addData(int position, String content) {
+        mDatas.add(position, content);
+        notifyItemInserted(position);
+    }
+
+    public void removeData(int position) {
+        mDatas.remove(position);
+        notifyItemRemoved(position);
+    }
 }
