@@ -58,6 +58,9 @@ public class ViewEffectCategory extends BaseActivity {
             case 0:
                 intent.setClass(this, MaskEffectActivity.class);
                 break;
+            case 1:
+                intent.setClass(this, ShadowBackgroundActivity.class);
+                break;
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {

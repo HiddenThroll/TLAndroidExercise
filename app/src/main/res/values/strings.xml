@@ -36,6 +36,7 @@
     <!-- View效果练习-->
     <string name="view_effect_exercise">View效果练习</string>
     <string name="view_effect_mask">蒙版效果</string>
+    <string name="view_shadow_background">阴影效果</string>
 
     <!-- Fragment练习-->
     <string name="fragment_exercise">Fragment练习</string>
