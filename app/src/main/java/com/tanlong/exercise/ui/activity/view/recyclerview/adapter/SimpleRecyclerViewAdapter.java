@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.view.recyclerview.viewholder.SimpleViewHolder;
+import com.tanlong.exercise.util.LogTool;
 
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class SimpleRecyclerViewAdapter extends RecyclerView.Adapter<SimpleViewHo
     @Override
     public void onBindViewHolder(final SimpleViewHolder holder, int position) {
         holder.getTvContent().setText(mDatas.get(position));
+        LogTool.e("test", position + "width is " + holder.getTvContent().getWidth());
 
         if (mOnItemClickListener != null) {
             holder.getTvContent().setOnClickListener(new View.OnClickListener() {
@@ -74,12 +76,27 @@ public class SimpleRecyclerViewAdapter extends RecyclerView.Adapter<SimpleViewHo
     }
 
     public void addData(int position, String content) {
-        mDatas.add(position, content);
+        //判断是否可以在该位置添加
+        if (position < getItemCount() && position >= 0) {//在size内
+            mDatas.add(position, content);
+        } else if (position >= getItemCount()) {//超过size，放在最后
+            position = getItemCount() - 1;
+            if (position < 0) {
+                position = 0;
+            }
+            mDatas.add(position, content);
+        } else {
+            position = 0;
+            mDatas.add(position, content);
+        }
         notifyItemInserted(position);
+
     }
 
     public void removeData(int position) {
-        mDatas.remove(position);
-        notifyItemRemoved(position);
+        if (position < getItemCount() && position >= 0) {
+            mDatas.remove(position);
+            notifyItemRemoved(position);
+        }
     }
 }

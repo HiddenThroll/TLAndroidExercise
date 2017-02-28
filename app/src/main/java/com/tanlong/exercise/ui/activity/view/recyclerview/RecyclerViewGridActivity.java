@@ -2,6 +2,7 @@ package com.tanlong.exercise.ui.activity.view.recyclerview;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -40,7 +41,12 @@ public class RecyclerViewGridActivity extends BaseActivity {
     RecyclerView mRecyclerView;
 
     List<String> mDatas;
+    @Bind(R.id.btn_addItem)
+    Button btnAddItem;
+    @Bind(R.id.btn_removeItem)
+    Button btnRemoveItem;
 
+    SimpleRecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,15 +69,15 @@ public class RecyclerViewGridActivity extends BaseActivity {
         tvTitle.setText(R.string.recycler_view_grid);
         btnHelp.setVisibility(View.VISIBLE);
 
-        SimpleRecyclerViewAdapter adapter = new SimpleRecyclerViewAdapter(this, mDatas);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 3, GridLayoutManager.HORIZONTAL, false);
+        adapter = new SimpleRecyclerViewAdapter(this, mDatas);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);//设置布局管理器
 
         int spac = DisplayUtil.dip2px(this, 8);
         RecyclerView.ItemDecoration itemDecoration = new GridDividerItemDecoration(spac, spac,
                 ContextCompat.getColor(this, R.color.color_fb9b10));
         mRecyclerView.addItemDecoration(itemDecoration);//设置Divider
-
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置添加/移除Item时动画
         mRecyclerView.setAdapter(adapter);
         adapter.setmOnItemClickListener(new SimpleRecyclerViewAdapter.OnItemClickListener() {
             @Override
@@ -86,7 +92,7 @@ public class RecyclerViewGridActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_back, R.id.btn_help})
+    @OnClick({R.id.iv_back, R.id.btn_help, R.id.btn_addItem, R.id.btn_removeItem})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -94,6 +100,14 @@ public class RecyclerViewGridActivity extends BaseActivity {
                 break;
             case R.id.btn_help:
                 showTips();
+                break;
+            case R.id.btn_addItem:
+                adapter.addData(1, "添加的Item");
+                mRecyclerView.invalidateItemDecorations();
+                break;
+            case R.id.btn_removeItem:
+                adapter.removeData(0);
+                mRecyclerView.invalidateItemDecorations();
                 break;
         }
     }
@@ -108,4 +122,5 @@ public class RecyclerViewGridActivity extends BaseActivity {
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
         fragment.show(getSupportFragmentManager(), "");
     }
+
 }

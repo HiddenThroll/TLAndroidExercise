@@ -2,6 +2,7 @@ package com.tanlong.exercise.ui.activity.view.recyclerview;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -77,6 +78,7 @@ public class RecyclerViewListActivity extends BaseActivity {
                 ContextCompat.getColor(this, R.color.color_86d0ab));
 
         mRecyclerView.addItemDecoration(itemDecoration);//设置Divider
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置添加/移除Item时动画
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setmOnItemClickListener(new SimpleRecyclerViewAdapter.OnItemClickListener() {
             @Override
@@ -102,9 +104,11 @@ public class RecyclerViewListActivity extends BaseActivity {
                 break;
             case R.id.btn_addItem:
                 mAdapter.addData(1, "添加的Item");
+                mRecyclerView.invalidateItemDecorations();
                 break;
             case R.id.btn_removeItem:
                 mAdapter.removeData(0);
+                mRecyclerView.invalidateItemDecorations();
                 break;
         }
     }
@@ -119,7 +123,11 @@ public class RecyclerViewListActivity extends BaseActivity {
                 .append("2.1.1 onDraw()方法中计算Divider绘制范围并绘制Divider，该方法先于drawChildren()执行\n")
                 .append("2.1.2 onDrawOver()方法功能与onDraw()方法相同，在drawChildren()之后执行；一般选择二者之一绘制Divider\n")
                 .append("2.1.3 getItemOffsets()通过outRect.set()为每个Item设置一定的偏移量(Padding)，用于显示Divider\n")
-                .append("3. 通过接口的方式，在Adapter中设置单击监听和长按监听\n");
+                .append("3. 通过接口的方式，在Adapter中设置单击监听和长按监听\n")
+                .append("4. 添加/移除Item添加动画效果：\n")
+                .append("4.1 RecyclerView.setItemAnimator(new DefaultItemAnimator())设置添加/移除Item时动画\n")
+                .append("4.1 添加/移除Item后调用Adapter的notifyItemInserted(position)或notifyItemRemoved(position)方法触发界面刷新和动画效果\n")
+                .append("4.2 添加/删除Item时，只会计算更新的部分区域的OutRect，导致分割线计算出错，这时需要在添加和删除操作之后调用RecyclerView.invalidateItemDecorations()方法\n");
 
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
         fragment.show(getSupportFragmentManager(), "");

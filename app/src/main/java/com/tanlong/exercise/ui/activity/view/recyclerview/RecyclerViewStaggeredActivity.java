@@ -2,7 +2,7 @@ package com.tanlong.exercise.ui.activity.view.recyclerview;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.SimpleRecyclerViewAdapter;
-import com.tanlong.exercise.ui.activity.view.recyclerview.divider.GridDividerItemDecoration;
 import com.tanlong.exercise.ui.activity.view.recyclerview.divider.StaggeredDividerItemDecoration;
 import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 import com.tanlong.exercise.util.DisplayUtil;
@@ -42,7 +41,12 @@ public class RecyclerViewStaggeredActivity extends BaseActivity {
     RecyclerView mRecyclerView;
 
     List<String> mDatas;
+    @Bind(R.id.btn_addItem)
+    Button btnAddItem;
+    @Bind(R.id.btn_removeItem)
+    Button btnRemoveItem;
 
+    SimpleRecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +61,10 @@ public class RecyclerViewStaggeredActivity extends BaseActivity {
     private void initData() {
         mDatas = new ArrayList<>();
         int random = 0;
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 20; i++) {
             random = (int) (Math.random() * 100);
             if (random % 2 == 0) {
-                mDatas.add("item " + i + " 一段随机添加的数据，用于展示瀑布流效果" );
+                mDatas.add("item " + i + " 一段随机添加的数据，用于展示瀑布流效果");
             } else {
                 mDatas.add("item " + i);
             }
@@ -72,7 +76,7 @@ public class RecyclerViewStaggeredActivity extends BaseActivity {
         btnHelp.setVisibility(View.VISIBLE);
 
 
-        SimpleRecyclerViewAdapter adapter = new SimpleRecyclerViewAdapter(this, mDatas);
+        adapter = new SimpleRecyclerViewAdapter(this, mDatas);
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(3,
                 StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);//设置布局管理器
@@ -81,7 +85,7 @@ public class RecyclerViewStaggeredActivity extends BaseActivity {
         RecyclerView.ItemDecoration itemDecoration = new StaggeredDividerItemDecoration(spac, spac,
                 ContextCompat.getColor(this, R.color.color_fb9b10));
         mRecyclerView.addItemDecoration(itemDecoration);//设置Divider
-
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置添加/移除Item时动画
         mRecyclerView.setAdapter(adapter);
         adapter.setmOnItemClickListener(new SimpleRecyclerViewAdapter.OnItemClickListener() {
             @Override
@@ -96,7 +100,7 @@ public class RecyclerViewStaggeredActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_back, R.id.btn_help})
+    @OnClick({R.id.iv_back, R.id.btn_help, R.id.btn_addItem, R.id.btn_removeItem})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -104,6 +108,14 @@ public class RecyclerViewStaggeredActivity extends BaseActivity {
                 break;
             case R.id.btn_help:
                 showTips();
+                break;
+            case R.id.btn_addItem:
+                adapter.addData(1, "Item");
+                mRecyclerView.invalidateItemDecorations();
+                break;
+            case R.id.btn_removeItem:
+                adapter.removeData(0);
+                mRecyclerView.invalidateItemDecorations();
                 break;
         }
     }
@@ -118,4 +130,5 @@ public class RecyclerViewStaggeredActivity extends BaseActivity {
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
         fragment.show(getSupportFragmentManager(), "");
     }
+
 }
