@@ -16,7 +16,7 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
 
     protected Context mContext;
     private int mLayoutId;
-    private List<T> mDatas;
+    protected List<T> mDatas;
 
     public CommonAdapter(Context mContext, int mLayoutId, List<T> mDatas) {
         this.mContext = mContext;
