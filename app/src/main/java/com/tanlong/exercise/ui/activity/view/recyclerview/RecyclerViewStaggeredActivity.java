@@ -110,12 +110,19 @@ public class RecyclerViewStaggeredActivity extends BaseActivity {
                 showTips();
                 break;
             case R.id.btn_addItem:
-                adapter.addData(1, "Item");
-                mRecyclerView.invalidateItemDecorations();
+                if (mDatas.size() > 1) {
+                    mDatas.add(1, "Item");
+                    adapter.notifyDataSetChanged();
+                } else {
+                    mDatas.add(0, "Item");
+                    adapter.notifyDataSetChanged();
+                }
                 break;
             case R.id.btn_removeItem:
-                adapter.removeData(0);
-                mRecyclerView.invalidateItemDecorations();
+                if (mDatas.size() > 0) {
+                    mDatas.remove(0);
+                    adapter.notifyDataSetChanged();
+                }
                 break;
         }
     }
