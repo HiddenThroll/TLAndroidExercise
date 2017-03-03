@@ -24,8 +24,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.R.attr.fragment;
-
 /**
  * RecyclerView实现多Item布局
  * Created by 龙 on 2017/3/2.
