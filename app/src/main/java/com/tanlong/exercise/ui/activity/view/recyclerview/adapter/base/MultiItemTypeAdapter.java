@@ -12,6 +12,7 @@ import com.tanlong.exercise.ui.activity.view.recyclerview.viewholder.base.ViewHo
 import java.util.List;
 
 /**
+ * RecyclerView的多类型Item通用Adapter
  * Created by 龙 on 2017/3/2.
  */
 
@@ -21,14 +22,6 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
     protected List<T> mDatas;
 
     protected ItemViewDelegateManager mItemViewDelegateManager;
-    protected OnItemClickListener<T> mOnItemClickListener;
-    public int offset = 0;
-
-    public interface OnItemClickListener<T> {
-        void onItemClick(View view, RecyclerView.ViewHolder holder, T o, int position);
-
-        boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, T o, int position);
-    }
 
     public MultiItemTypeAdapter(Context mContext, List<T> mDatas) {
         this.mContext = mContext;
@@ -36,11 +29,16 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
         mItemViewDelegateManager = new ItemViewDelegateManager();
     }
 
+    /**
+     * 获得ItemViewType
+     * @param position
+     * @return
+     */
     @Override
     public int getItemViewType(int position) {
-        if (!useItemViewDelegateManager()) {
-            return super.getItemViewType(position);
-        } else {
+        if (!useItemViewDelegateManager()) {//判断是否使用ItemViewDelegateManager
+            return super.getItemViewType(position);//不使用，调用父类方法
+        } else {//使用，调用ItemViewDelegateManager.getItemViewType方法
             return mItemViewDelegateManager.getItemViewType(mDatas.get(position), position);
         }
     }
@@ -49,9 +47,7 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int layoutId = mItemViewDelegateManager.getItemViewLayoutId(viewType);
-        ViewHolder viewHolder = ViewHolder.createViewHolder(mContext, parent, layoutId);
-        setListener(parent, viewHolder, viewType);
-        return viewHolder;
+        return ViewHolder.createViewHolder(mContext, parent, layoutId);
     }
 
     @Override
@@ -68,37 +64,12 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
         return mDatas.size();
     }
 
+    /**
+     * 是否使用ItemViewDelegateManager
+     * @return 当ItemViewDelegateManager中有ItemViewDelegate时返回true，否则返回false
+     */
     protected boolean useItemViewDelegateManager() {
         return mItemViewDelegateManager.getItemViewDelegateCount() > 0;
-    }
-
-    protected boolean isEnabled(int viewType) {
-        return true;
-    }
-
-
-    protected void setListener(final ViewGroup parent, final ViewHolder viewHolder, int viewType) {
-        if (!isEnabled(viewType)) return;
-        viewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnItemClickListener != null) {
-                    int position = viewHolder.getAdapterPosition();
-                    mOnItemClickListener.onItemClick(v, viewHolder, mDatas.get(position - offset), position);
-                }
-            }
-        });
-
-        viewHolder.getConvertView().setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (mOnItemClickListener != null) {
-                    int position = viewHolder.getAdapterPosition();
-                    return mOnItemClickListener.onItemLongClick(v, viewHolder, mDatas.get(position - offset), position);
-                }
-                return false;
-            }
-        });
     }
 
     public MultiItemTypeAdapter addItemViewDelegate(ItemViewDelegate<T> itemViewDelegate) {

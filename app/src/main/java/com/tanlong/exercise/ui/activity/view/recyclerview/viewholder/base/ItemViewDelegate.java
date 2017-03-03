@@ -1,7 +1,7 @@
 package com.tanlong.exercise.ui.activity.view.recyclerview.viewholder.base;
 
 /**
- *
+ * ItemView代理，RecyclerView实现多类型Item时使用，
  * Created by 龙 on 2017/3/1.
  */
 
@@ -21,10 +21,10 @@ public interface ItemViewDelegate<T> {
     boolean isForViewType(T item, int position);
 
     /**
-     * 进行View数据绑定
-     * @param holder
-     * @param t
-     * @param position
+     * findView，进行View数据绑定
+     * @param holder -- ViewHolder
+     * @param t -- Item数据
+     * @param position -- Item位置
      */
     void convert(ViewHolder holder, T t, int position);
 }

@@ -20,9 +20,9 @@ public class NewsMultiAdapter extends MultiItemTypeAdapter<NewsItem> {
 
     public NewsMultiAdapter(Context mContext, List<NewsItem> mDatas) {
         super(mContext, mDatas);
-        mItemViewDelegateManager.addDelegate(new NewsTypeOneDelegate());
-        mItemViewDelegateManager.addDelegate(new NewsTypeTwoDelegate());
-        mItemViewDelegateManager.addDelegate(new NewsTypeThreeDelegate());
+        addItemViewDelegate(new NewsTypeOneDelegate());
+        addItemViewDelegate(new NewsTypeTwoDelegate());
+        addItemViewDelegate(new NewsTypeThreeDelegate());
     }
 
 

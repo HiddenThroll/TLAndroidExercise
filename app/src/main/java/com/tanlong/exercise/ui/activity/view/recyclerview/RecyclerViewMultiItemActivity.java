@@ -14,6 +14,7 @@ import com.tanlong.exercise.model.entity.NewsItem;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.NewsMultiAdapter;
 import com.tanlong.exercise.ui.activity.view.recyclerview.divider.LinearDividerItemDecoration;
+import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 import com.tanlong.exercise.util.DisplayUtil;
 
 import java.util.ArrayList;
@@ -23,7 +24,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.R.attr.fragment;
+
 /**
+ * RecyclerView实现多Item布局
  * Created by 龙 on 2017/3/2.
  */
 
@@ -85,7 +89,20 @@ public class RecyclerViewMultiItemActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_help:
+                showTips();
                 break;
         }
+    }
+
+    private void showTips() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("1. RecyclerView实现多Item布局的原理为：\n")
+                .append("1.1 Adapter中getItemViewType(int position)方法根据Item的位置和内容，返回对应的布局文件ID\n")
+                .append("1.2 Adapter中onCreateViewHolder(ViewGroup parent, int viewType)方法根据viewType生成对应的ViewHolder\n")
+                .append("1.3 Adapter中onBindViewHolder(ViewHolder holder, int position)方法根据不同的位置，进行对应ViewHolder的View绑定和赋值\n")
+                .append("2. 本例已对ViewHolder和Adapter进行封装，详见代码\n");
+
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
+        fragment.show(getSupportFragmentManager(), "");
     }
 }

@@ -3,6 +3,7 @@ package com.tanlong.exercise.ui.activity.view.recyclerview.viewholder.base;
 import android.support.v4.util.SparseArrayCompat;
 
 /**
+ * ItemViewDelegateManager完成不同类型ItemViewDelegate的管理
  * Created by 龙 on 2017/3/1.
  */
 
@@ -73,6 +74,12 @@ public class ItemViewDelegateManager<T> {
         return this;
     }
 
+    /**
+     * 实现ItemView的绑定，实质是调用对应ItemViewDelegate的convert方法
+     * @param viewHolder
+     * @param item
+     * @param position
+     */
     public void convert(ViewHolder viewHolder, T item, int position) {
         int count = delegates.size();
         for (int i = 0; i < count; i++) {
@@ -84,6 +91,11 @@ public class ItemViewDelegateManager<T> {
         }
     }
 
+    /**
+     * 获得viewtype对应的布局文件ID，实质是调用对应ItemViewDelegate的getItemViewLayoutId方法
+     * @param viewType
+     * @return
+     */
     public int getItemViewLayoutId(int viewType) {
         return delegates.get(viewType).getItemViewLayoutId();
     }
@@ -92,6 +104,12 @@ public class ItemViewDelegateManager<T> {
         return delegates.indexOfValue(itemViewDelegate);
     }
 
+    /**
+     * 获取传入的Item内容和位置对应的viewtype
+     * @param item
+     * @param position
+     * @return
+     */
     public int getItemViewType(T item, int position) {
         int delegatesCount = delegates.size();
         for (int i = delegatesCount - 1; i >= 0; i--) {
