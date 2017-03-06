@@ -27,7 +27,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     }
 
     /**
-     * 外部调用，获取ViewHolder是你
+     * 外部调用，获取ViewHolder实例
      * @param context -- 上下文
      * @param parent -- 父ViewGroup
      * @param layoutId -- 布局文件ID
@@ -35,6 +35,16 @@ public class ViewHolder extends RecyclerView.ViewHolder {
      */
     public static ViewHolder createViewHolder(Context context, ViewGroup parent, int layoutId) {
         View itemView = LayoutInflater.from(context).inflate(layoutId, parent, false);
+        return new ViewHolder(context, itemView);
+    }
+
+    /**
+     * 外部调用，获取ViewHolder实例
+     * @param context -- 上下文
+     * @param itemView -- ItemView
+     * @return
+     */
+    public static ViewHolder createViewHolder(Context context,  View itemView) {
         return new ViewHolder(context, itemView);
     }
 

@@ -68,6 +68,9 @@ public class RecyclerViewCategoryActivity extends BaseActivity {
             case 3:
                 intent.setClass(this, RecyclerViewMultiItemActivity.class);
                 break;
+            case 4:
+                intent.setClass(this, RecyclerViewRefreshActivity.class);
+                break;
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {
