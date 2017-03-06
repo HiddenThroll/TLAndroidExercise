@@ -3,12 +3,13 @@ package com.tanlong.exercise.ui.activity.view.recyclerview.wrapper;
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.tanlong.exercise.ui.activity.view.recyclerview.util.WrapperUtils;
 import com.tanlong.exercise.ui.activity.view.recyclerview.viewholder.base.ViewHolder;
-
-import static com.baidu.location.g.h.m;
+import com.tanlong.exercise.util.LogTool;
 
 /**
  * Created by 龙 on 2017/3/3.
@@ -25,7 +26,8 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
     private RecyclerView.Adapter mNotifyAdapter;
 
     /**
-     * @param adapter
+     * 对已有Adapter进行包装，使其具有添加Header和Footer能力
+     * @param adapter -- 需包装的Adapter
      */
     public HeaderAndFooterWrapper(RecyclerView.Adapter adapter) {
         mInnerAdapter = adapter;
@@ -54,6 +56,10 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
         return mInnerAdapter.getItemViewType(position - getHeadersCount());
     }
 
+    /**
+     * 获取真实Item数量，不包含HeaderView和FooterView数量
+     * @return
+     */
     private int getRealItemCount() {
         return mInnerAdapter.getItemCount();
     }
@@ -112,8 +118,13 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
         return getHeadersCount() + getFootersCount() + getRealItemCount();
     }
 
+    /**
+     * Adapter附着到RecyclerView时调用，处理当布局管理器是GridLayoutManager时，HeaderView/FooterView长度为总列数
+     * @param recyclerView
+     */
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        LogTool.e("test", "onAttachedToRecyclerView");
         mNotifyAdapter = recyclerView.getAdapter();
         WrapperUtils.onAttachedToRecyclerView(mInnerAdapter, recyclerView, new WrapperUtils.SpanSizeCallback() {
 
@@ -132,12 +143,27 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
         });
     }
 
+    /**
+     * 处理当布局管理器是StaggeredGridLayoutManager时,HeaderView/FooterView长度为总列数
+     * @param holder
+     */
     @Override
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
         mInnerAdapter.onViewAttachedToWindow(holder);
+        ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
         int position = holder.getLayoutPosition();
         if (isHeaderViewPos(position) || isFooterViewPos(position)) {
-            WrapperUtils.setFullSpan(holder);
+            if (lp != null
+                    && lp instanceof StaggeredGridLayoutManager.LayoutParams) {
+                StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
+                p.setFullSpan(true);
+            }
+        } else {
+            if (lp != null
+                    && lp instanceof StaggeredGridLayoutManager.LayoutParams) {
+                StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
+                p.setFullSpan(false);
+            }
         }
     }
 

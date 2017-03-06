@@ -1,8 +1,11 @@
 package com.tanlong.exercise.ui.activity.view.recyclerview;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +17,9 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.model.entity.NewsItem;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.NewsSingleAdapter;
+import com.tanlong.exercise.ui.activity.view.recyclerview.divider.LinearDividerItemDecoration;
 import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.HeaderAndFooterWrapper;
+import com.tanlong.exercise.util.DisplayUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,8 +67,8 @@ public class RecyclerViewRefreshActivity extends BaseActivity {
 
     private void initData() {
         mDatas = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            mDatas.add(new NewsItem("左侧图片 + 右侧标题 + 描述字段 ", "一段内容", ""));
+        for (int i = 0; i < 20; i++) {
+            mDatas.add(new NewsItem(String.valueOf(i), "一段内容", ""));
         }
     }
 
@@ -71,7 +76,15 @@ public class RecyclerViewRefreshActivity extends BaseActivity {
         tvTitle.setText(R.string.recycler_view_refresh);
         btnHelp.setVisibility(View.VISIBLE);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+//        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
+//        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        int space = DisplayUtil.dip2px(this, 8);
+        RecyclerView.ItemDecoration itemDecoration = new LinearDividerItemDecoration(0, space,
+                ContextCompat.getColor(this, R.color.color_86d0ab), true);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(itemDecoration);
         mRealAdapter = new NewsSingleAdapter(this, mDatas, R.layout.item_news_type_2);
         mAdapter = new HeaderAndFooterWrapper<>(mRealAdapter);
         recyclerView.setAdapter(mAdapter);
@@ -97,12 +110,12 @@ public class RecyclerViewRefreshActivity extends BaseActivity {
             case R.id.btn_help:
                 break;
             case R.id.btn_addItem:
-//                addHeaderView();
-                addFooterView();
+                addHeaderView();
+//                addFooterView();
                 break;
             case R.id.btn_removeItem:
-//                removeHeaderView();
-                removeFooterView();
+                removeHeaderView();
+//                removeFooterView();
                 break;
         }
     }
