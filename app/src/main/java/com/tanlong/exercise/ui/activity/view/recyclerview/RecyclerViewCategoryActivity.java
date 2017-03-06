@@ -57,7 +57,7 @@ public class RecyclerViewCategoryActivity extends BaseActivity {
 
         switch (position) {
             case 0:
-                intent.setClass(this, RecyclerViewListActivity.class);
+                intent.setClass(this, RecyclerViewBaseUseActivity.class);
                 break;
             case 1:
                 intent.setClass(this, RecyclerViewGridActivity.class);

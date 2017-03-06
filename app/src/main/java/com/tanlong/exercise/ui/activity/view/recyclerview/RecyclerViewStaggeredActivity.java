@@ -41,9 +41,9 @@ public class RecyclerViewStaggeredActivity extends BaseActivity {
     RecyclerView mRecyclerView;
 
     List<String> mDatas;
-    @Bind(R.id.btn_addItem)
+    @Bind(R.id.btn_list)
     Button btnAddItem;
-    @Bind(R.id.btn_removeItem)
+    @Bind(R.id.btn_grid)
     Button btnRemoveItem;
 
     SimpleRecyclerViewAdapter adapter;
@@ -100,7 +100,7 @@ public class RecyclerViewStaggeredActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_back, R.id.btn_help, R.id.btn_addItem, R.id.btn_removeItem})
+    @OnClick({R.id.iv_back, R.id.btn_help, R.id.btn_list, R.id.btn_grid})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -109,7 +109,7 @@ public class RecyclerViewStaggeredActivity extends BaseActivity {
             case R.id.btn_help:
                 showTips();
                 break;
-            case R.id.btn_addItem:
+            case R.id.btn_list:
                 if (mDatas.size() > 1) {
                     mDatas.add(1, "Item");
                     adapter.notifyDataSetChanged();
@@ -118,7 +118,7 @@ public class RecyclerViewStaggeredActivity extends BaseActivity {
                     adapter.notifyDataSetChanged();
                 }
                 break;
-            case R.id.btn_removeItem:
+            case R.id.btn_grid:
                 if (mDatas.size() > 0) {
                     mDatas.remove(0);
                     adapter.notifyDataSetChanged();

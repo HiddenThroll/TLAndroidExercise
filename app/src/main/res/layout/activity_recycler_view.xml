@@ -16,22 +16,57 @@
         >
 
         <Button
-            android:id="@+id/btn_addItem"
+            android:id="@+id/btn_list"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="添加Item"
-            />
-        <Button
-            android:id="@+id/btn_removeItem"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="移除Item"
+            android:text="线性布局"
             />
 
+        <Button
+            android:id="@+id/btn_grid"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="网格布局"
+            />
+
+        <Button
+            android:id="@+id/btn_stagger"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="瀑布流布局"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_operation2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/btn_vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="垂直方向"
+            />
+
+        <Button
+            android:id="@+id/btn_horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="水平方向"
+            />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
