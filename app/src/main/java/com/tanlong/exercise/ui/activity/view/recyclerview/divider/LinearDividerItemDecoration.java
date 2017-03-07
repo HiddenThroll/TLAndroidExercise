@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -49,9 +50,10 @@ public class LinearDividerItemDecoration extends RecyclerView.ItemDecoration {
                 final View child = parent.getChildAt(i);
                 final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
                 //计算Divider绘制范围
-                left = params.leftMargin + child.getLeft();
-                right = params.rightMargin + child.getRight();
-                top = (child.getBottom() + params.bottomMargin);
+                left = parent.getPaddingLeft() + params.leftMargin;
+                right = parent.getWidth() - parent.getPaddingRight() - params.rightMargin;
+                top = child.getBottom() + params.bottomMargin +
+                        Math.round(ViewCompat.getTranslationY(child));
                 bottom = top + topBottom;
                 mDivider.setBounds(left, top, right, bottom);
                 mDivider.draw(c);//绘制Divider
@@ -61,10 +63,11 @@ public class LinearDividerItemDecoration extends RecyclerView.ItemDecoration {
                 final View child = parent.getChildAt(i);
                 final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
                 //计算Divider绘制范围
-                left = (int) (child.getRight() + params.rightMargin);
+                left = (int) (child.getRight() + params.rightMargin +
+                        Math.round(ViewCompat.getTranslationX(child)));
                 right = left + leftRight;
-                top = child.getTop() + params.topMargin;
-                bottom = child.getBottom() + params.bottomMargin;
+                top = parent.getPaddingTop() + params.topMargin;
+                bottom = parent.getHeight() - parent.getPaddingBottom() - params.bottomMargin;
                 mDivider.setBounds(left, top, right, bottom);
                 mDivider.draw(c);
             }
@@ -74,28 +77,14 @@ public class LinearDividerItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
 //        super.getItemOffsets(outRect, view, parent, state);
+        // getItemOffsets 中为 outRect 设置的4个方向的值，将被计算进所有 decoration 的尺寸中，
+        // 而这个尺寸，被计入了 RecyclerView 每个 item view 的 padding 中
         LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
         //竖直方向的
         if (layoutManager.getOrientation() == LinearLayoutManager.VERTICAL) {
-            // 设置Item偏移量，用于显示Divider
-            if (parent.getChildAdapterPosition(view) == layoutManager.getItemCount() - 1) {//最后一项需要 bottom
-                outRect.bottom = topBottom;
-            } else {
-                outRect.bottom = 0;
-            }
-            outRect.top = topBottom;
-            outRect.left = leftRight;
-            outRect.right = leftRight;
+            outRect.set(0, 0, 0, topBottom);
         } else {
-            //最后一项需要right
-            if (parent.getChildAdapterPosition(view) == layoutManager.getItemCount() - 1) {
-                outRect.right = leftRight;
-            } else {
-                outRect.right = 0;
-            }
-            outRect.top = topBottom;
-            outRect.left = leftRight;
-            outRect.bottom = topBottom;
+            outRect.set(0, 0, leftRight, 0);
         }
     }
 }

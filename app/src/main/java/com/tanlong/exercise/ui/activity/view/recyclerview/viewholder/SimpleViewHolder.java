@@ -17,7 +17,7 @@ public class SimpleViewHolder extends RecyclerView.ViewHolder{
 
     public SimpleViewHolder(View itemView) {
         super(itemView);
-        tvContent = (TextView) itemView.findViewById(R.id.tv_category);
+        tvContent = (TextView) itemView.findViewById(R.id.tv_recycler_content);
     }
 
     public TextView getTvContent() {

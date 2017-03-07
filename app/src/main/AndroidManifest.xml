@@ -250,7 +250,7 @@
             android:launchMode="singleTop"
             android:configChanges="keyboard"
             />
-        <activity android:name=".ui.activity.view.recyclerview.RecyclerViewGridActivity"
+        <activity android:name=".ui.activity.view.recyclerview.RecyclerViewItemDecorationActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:configChanges="keyboard"

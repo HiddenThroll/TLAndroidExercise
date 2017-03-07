@@ -57,7 +57,7 @@
     <!-- RecyclerView练习-->
     <string name="recycler_view_exercise">RecyclerView练习</string>
     <string name="recycler_view_base_use">RecyclerView基本使用</string>
-    <string name="recycler_view_grid">RecyclerView实现网格列表</string>
+    <string name="recycler_view_item_decoration">RecyclerView添加ItemDecoration</string>
     <string name="recycler_view_staggered">RecyclerView实现瀑布流</string>
     <string name="recycler_view_multi_item">RecyclerView实现多Item布局</string>
     <string name="recycler_view_refresh">RecyclerView实现下拉刷新上拉加载</string>

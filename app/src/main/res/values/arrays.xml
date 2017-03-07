@@ -64,7 +64,7 @@
 
     <array name="recycler_view_category">
         <item>RecyclerView基本使用</item>
-        <item>RecyclerView添加ItemDecoration及默认动画</item>
+        <item>RecyclerView添加ItemDecoration</item>
         <item>RecyclerView实现多Item布局</item>
         <item>RecyclerView实现Section</item>
         <item>RecyclerView实现下拉刷新上拉加载</item>

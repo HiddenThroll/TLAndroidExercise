@@ -35,14 +35,13 @@ public class SimpleRecyclerViewAdapter extends RecyclerView.Adapter<SimpleViewHo
 
     @Override
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_category, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_recycler_simple, parent, false);
         return new SimpleViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final SimpleViewHolder holder, int position) {
         holder.getTvContent().setText(mDatas.get(position));
-        LogTool.e("test", position + "width is " + holder.getTvContent().getWidth());
 
         if (mOnItemClickListener != null) {
             holder.getTvContent().setOnClickListener(new View.OnClickListener() {
