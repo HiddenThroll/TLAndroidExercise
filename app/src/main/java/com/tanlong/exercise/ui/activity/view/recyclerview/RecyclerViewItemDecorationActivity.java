@@ -136,7 +136,7 @@ public class RecyclerViewItemDecorationActivity extends BaseActivity {
                 }
                 break;
             case MODE_GRID:
-                itemDecoration = new GridDividerItemDecoration(0, 8);
+                itemDecoration = new GridDividerItemDecoration(8, 8, color);
                 break;
             case MODE_STAGGER:
                 itemDecoration = new StaggeredDividerItemDecoration(0, 8);
@@ -158,9 +158,9 @@ public class RecyclerViewItemDecorationActivity extends BaseActivity {
     private RecyclerView.LayoutManager initGridLayoutManager(int orientation) {
         RecyclerView.LayoutManager layoutManager = null;
         if (orientation == MODE_VERTICAL) {
-            layoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+            layoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         } else if (orientation == MODE_HORIZONTAL) {
-            layoutManager = new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false);
+            layoutManager = new GridLayoutManager(this, 3, GridLayoutManager.HORIZONTAL, false);
         }
         return layoutManager;
     }
@@ -168,9 +168,9 @@ public class RecyclerViewItemDecorationActivity extends BaseActivity {
     private RecyclerView.LayoutManager initStaggerLayoutManager(int orientation) {
         RecyclerView.LayoutManager layoutManager = null;
         if (orientation == MODE_VERTICAL) {
-            layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+            layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         } else if (orientation == MODE_HORIZONTAL) {
-            layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
+            layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL);
         }
         return layoutManager;
     }
