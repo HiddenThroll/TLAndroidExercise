@@ -140,7 +140,7 @@ public class RecyclerViewItemDecorationActivity extends BaseActivity {
                 itemDecoration = new GridDividerItemDecoration(8, 8, color);
                 break;
             case MODE_STAGGER:
-                itemDecoration = new StaggeredDividerItemDecoration(24, 24, color);
+                itemDecoration = new StaggeredDividerItemDecoration(8, 8, color);
                 break;
         }
         return itemDecoration;
@@ -227,10 +227,13 @@ public class RecyclerViewItemDecorationActivity extends BaseActivity {
 
     private void showTips() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("RecyclerView的基本用法: \n")
-                .append("1. RecyclerView.setLayoutManager(GridLayoutManager)设置网格布局管理器\n")
-                .append("1.1 可以通过GridLayoutManager的构造方法设置网格总列数(spanCount)、垂直(GridLayoutManager.VERTICAL)或水平(GridLayoutManager.HORIZONTAL)布局、是否倒序显示数据(reverseLayout)\n")
-                .append("2. RecyclerView.addItemDecoration()设置Item间的Divider，实现方法详见代码\n");
+        stringBuilder.append("关于ItemDecoration: \n")
+                .append("1. 继承ItemDecoration一般需覆写2个方法：\n")
+                .append("1.1 getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state),为outRect设置的4个方向的值，将被计算进所有decoration的尺寸中，而这个尺寸，被计入了RecyclerView每个itemview的padding中\n")
+                .append("1.2 在onDraw(Canvas c, RecyclerView parent, RecyclerView.State state)中为divider设置绘制范围，并将内容绘制到canvas上;这个绘制范围可以超出在getItemOffsets中设置的范围，但由于decoration是绘制在child view的底下，所以并不可见\n")
+                .append("1.3 onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state)实现和在onDraw一样的功能，区别在于它绘制的内容在child view之上, 不受getItemOffsets中设置的范围限制\n")
+                .append("1.4 decoration的onDraw，child view的onDraw，decoration的onDrawOver，这三者是依次发生的")
+                ;
 
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
         fragment.show(getSupportFragmentManager(), "");
