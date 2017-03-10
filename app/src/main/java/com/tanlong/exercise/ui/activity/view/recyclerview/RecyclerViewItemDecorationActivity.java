@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * 演示RecyclerView添加Divider，包括线性布局、表格布局、瀑布流布局
  * Created by 龙 on 2017/2/20.
  */
 
@@ -139,7 +140,7 @@ public class RecyclerViewItemDecorationActivity extends BaseActivity {
                 itemDecoration = new GridDividerItemDecoration(8, 8, color);
                 break;
             case MODE_STAGGER:
-                itemDecoration = new StaggeredDividerItemDecoration(0, 8);
+                itemDecoration = new StaggeredDividerItemDecoration(24, 24, color);
                 break;
         }
         return itemDecoration;
@@ -172,6 +173,17 @@ public class RecyclerViewItemDecorationActivity extends BaseActivity {
         } else if (orientation == MODE_HORIZONTAL) {
             layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL);
         }
+
+        mDatas.clear();
+        for (int i = 0; i < 20; i++) {
+            int random = (int) (Math.random() * 100);
+            if (random % 2 == 0) {
+                mDatas.add("一段随机添加的数据" + i);
+            } else {
+                mDatas.add("item " + i);
+            }
+        }
+
         return layoutManager;
     }
 
@@ -202,11 +214,15 @@ public class RecyclerViewItemDecorationActivity extends BaseActivity {
         }
         RecyclerView.LayoutManager layoutManager = initLayoutManager(mCurMode, mCurOrientation);
         mRecyclerView.setLayoutManager(layoutManager);
-        if (mItemDecoration != null) {//
+        if (mItemDecoration != null) {//删除已有的分割线
             mRecyclerView.removeItemDecoration(mItemDecoration);
         }
         mItemDecoration = initItemDecoration(mCurMode, mCurOrientation);
         mRecyclerView.addItemDecoration(mItemDecoration);
+
+        if (mCurMode == MODE_STAGGER) {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     private void showTips() {

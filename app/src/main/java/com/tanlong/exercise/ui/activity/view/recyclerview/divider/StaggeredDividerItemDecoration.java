@@ -40,9 +40,9 @@ public class StaggeredDividerItemDecoration extends RecyclerView.ItemDecoration 
         if (mDivider == null || layoutManager.getChildCount() == 0) {
             return;
         }
-        int left;
+        int left = 0;
         int right;
-        int top;
+        int top = 0;
         int bottom;
 
         final int spanCount = layoutManager.getSpanCount();
@@ -57,35 +57,26 @@ public class StaggeredDividerItemDecoration extends RecyclerView.ItemDecoration 
                 final int position = parent.getChildAdapterPosition(child);
                 //它在每列的位置
                 final int spanPosition = params.getSpanIndex();
-                //将带有颜色的分割线处于中间位置
-                final float centerLeft = (layoutManager.getLeftDecorationWidth(child) + 1 - leftRight) / 2;
-                final float centerTop = (layoutManager.getBottomDecorationHeight(child) + 1 - topBottom) / 2;
-                //画上边的
+                //画上边的横线
                 if (position > spanCount - 1) {//不是第一行
-                    left = child.getLeft() + params.leftMargin;
-                    if (spanPosition > 0) {
-                        left -= centerLeft;
-                    }
-                    right = child.getRight() + params.rightMargin;
-                    if (spanPosition + 1 != spanCount) {//最右边的不需要那一丢丢
-                        right += centerLeft;
-                    }
-                    top = (int) (child.getTop() + params.topMargin - centerTop - topBottom);
-                    bottom = top + topBottom;
+                    left = child.getLeft();
+                    right = child.getRight();
+                    top = (child.getTop() - topBottom);
+                    bottom = child.getTop();
                     mDivider.setBounds(left, top, right, bottom);
                     mDivider.draw(c);
                 }
 
-                //画右边的
+                //画右边的竖线
                 if ((spanPosition + 1) % spanCount != 0) {//不是最后一列
-                    left = (int) (child.getRight() + params.rightMargin + centerLeft);
+                    left = child.getRight();
                     right = left + leftRight;
-                    top = child.getTop() + params.topMargin;
-                    //第一排的不需要上面那一丢丢
-                    if (position > spanCount - 1) {//换个思路，都给top了
-                        top -= centerTop + centerTop + topBottom;
+                    if (position > spanCount - 1) {//不是第一排的，要冒出来一些
+                        top = child.getTop() - topBottom;
+                    } else {//第一排的不需要上面那一丢丢
+                        top = child.getTop();
                     }
-                    bottom = child.getBottom() + params.bottomMargin;
+                    bottom = child.getBottom();
                     mDivider.setBounds(left, top, right, bottom);
                     mDivider.draw(c);
                 }
@@ -98,33 +89,26 @@ public class StaggeredDividerItemDecoration extends RecyclerView.ItemDecoration 
                 final int position = parent.getChildAdapterPosition(child);
                 //它在每列的位置
                 final int spanPosition = params.getSpanIndex();
-                //将带有颜色的分割线处于中间位置
-                final float centerLeft = (layoutManager.getRightDecorationWidth(child) + 1 - leftRight) / 2;
-                final float centerTop = (layoutManager.getTopDecorationHeight(child) + 1 - topBottom) / 2;
                 //画左边
-                if (position > spanCount - 1) {
-                    left = (int) (child.getLeft() + params.leftMargin - centerLeft - leftRight);
-                    right = left + leftRight;
-                    top = (int) (child.getTop() + params.topMargin - centerTop);
-                    if (spanPosition == 0) {
-                        top += centerTop;
-                    }
-                    bottom = child.getBottom() + params.bottomMargin;
-                    if (spanPosition + 1 != spanCount) {
-                        bottom += centerTop;
-                    }
+                if (position > spanCount - 1) {//不是第一列
+                    left =  (child.getLeft() - leftRight);
+                    right = child.getLeft();
+                    top =  (child.getTop());
+                    bottom = child.getBottom();
                     mDivider.setBounds(left, top, right, bottom);
                     mDivider.draw(c);
                 }
-                //画上面的
+
+                //画bottom的
                 if (spanPosition > 0) {
-                    left = child.getLeft() + params.leftMargin;
-                    if (position > spanCount - 1) {//换个思路，都给left了
-                        left -= centerLeft + centerLeft + leftRight;
+                    if (position > spanCount - 1) {//不是第一列
+                        left = child.getLeft() - leftRight;
+                    } else {
+                        left = child.getLeft();
                     }
-                    right = child.getRight() + params.rightMargin;
-                    top = (int) (child.getTop() + params.bottomMargin - centerTop - topBottom);
-                    bottom = top + topBottom;
+                    right = child.getRight();
+                    top =  (child.getTop() - topBottom);
+                    bottom = child.getTop();
                     mDivider.setBounds(left, top, right, bottom);
                     mDivider.draw(c);
                 }
@@ -140,26 +124,35 @@ public class StaggeredDividerItemDecoration extends RecyclerView.ItemDecoration 
         final StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) view.getLayoutParams();
         final int childPosition = parent.getChildAdapterPosition(view);
         final int spanCount = layoutManager.getSpanCount();
-        //这边我们换下思路，每一个item都需要bottom，同时第一排的需要top
+        //这边我们换下思路，除第一排以外的Item都有top，除最右边以外的Item都有right
         if (layoutManager.getOrientation() == StaggeredGridLayoutManager.VERTICAL) {
-            if (childPosition < spanCount) {//第一排的需要上面
+            if (childPosition < spanCount) {//第一排的不需要上面
+                outRect.top = 0;
+            } else {
                 outRect.top = topBottom;
             }
-            if (layoutParams.getSpanIndex() == spanCount - 1) {//最边上的需要右边
+            if (layoutParams.getSpanIndex() == spanCount - 1) {//最边上的不需要右边
+                outRect.right = 0;
+            } else {
                 outRect.right = leftRight;
             }
-            outRect.bottom = topBottom;
-            outRect.left = leftRight;
+            outRect.bottom = 0;
+            outRect.left = 0;
         } else {
-            //这边我们换下思路，每一item都需要right，同时第一排的需要left
-            if (childPosition < spanCount) {//第一排的需要left
+            //这边我们换下思路，除第一列以外的Item都有left,除最后一行以外的Item都有bottom
+            if (childPosition < spanCount) {//第一列的不需要left
+                outRect.left = 0;
+            } else {
                 outRect.left = leftRight;
             }
-            if (layoutParams.getSpanIndex() == spanCount - 1) {//最边上的需要bottom
+
+            if (layoutParams.getSpanIndex() == spanCount - 1) {//最后一行的不需要bottom
+                outRect.bottom = 0;
+            } else {
                 outRect.bottom = topBottom;
             }
-            outRect.right = leftRight;
-            outRect.top = topBottom;
+            outRect.right = 0;
+            outRect.top = 0;
         }
 
     }
