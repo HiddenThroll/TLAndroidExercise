@@ -1,6 +1,7 @@
 package com.tanlong.exercise.ui.activity.view.recyclerview;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -39,11 +40,14 @@ public class RecyclerViewMultiItemActivity extends BaseActivity {
     Button btnHelp;
     @Bind(R.id.ll_operation)
     LinearLayout llOperation;
+    @Bind(R.id.ll_operation2)
+    LinearLayout llOperation2;
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
 
     NewsMultiAdapter mAdapter;
     List<NewsItem> mDatas;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +62,13 @@ public class RecyclerViewMultiItemActivity extends BaseActivity {
 
     private void initView() {
         llOperation.setVisibility(View.GONE);
+        llOperation2.setVisibility(View.GONE);
         btnHelp.setVisibility(View.VISIBLE);
         tvTitle.setText(R.string.recycler_view_multi_item);
         mAdapter = new NewsMultiAdapter(this, mDatas);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new LinearDividerItemDecoration(0, DisplayUtil.dip2px(this, 8)));
+        recyclerView.addItemDecoration(new LinearDividerItemDecoration(0, DisplayUtil.dip2px(this, 8),
+                ContextCompat.getColor(this, R.color.colorPrimary)));
         recyclerView.setAdapter(mAdapter);
     }
 
