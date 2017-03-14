@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
+import com.tanlong.exercise.ui.activity.view.recyclerview.base.BaseRecyclerActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -67,6 +68,9 @@ public class RecyclerViewCategoryActivity extends BaseActivity {
                 break;
             case 3:
                 intent.setClass(this, RecyclerViewRefreshActivity.class);
+                break;
+            case 4:
+//                intent.setClass(this, BaseRecyclerActivity.class);
                 break;
         }
 
