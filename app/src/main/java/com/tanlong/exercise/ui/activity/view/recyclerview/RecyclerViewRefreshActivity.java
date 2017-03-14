@@ -10,9 +10,12 @@ import com.tanlong.exercise.ui.activity.view.recyclerview.base.BaseRecyclerActiv
 import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.PtrRecyclerLayout;
 import com.tanlong.exercise.ui.activity.view.recyclerview.layoutmanager.MyLinearLayoutManager;
 import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.HeaderAndFooterWrapper;
+import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.fragment;
 
 /**
  * RecyclerView实现下拉刷新、上拉加载更多
@@ -84,6 +87,17 @@ public class RecyclerViewRefreshActivity extends BaseRecyclerActivity implements
     @Override
     public void showTips() {
         super.showTips();
-//        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("实现下拉刷新上拉加载的原理为: ")
+                .append("1. 下拉刷新通过SwipeRefreshLayout控件实现\n")
+                .append("2. 上拉加载通过RecyclerView.addOnScrollListener()实现，具体为：\n")
+                .append("2.1 当总Item个数 - 最后一个可见Item的位置小于某个值时，触发加载更多\n")
+                .append("2.1.1 LinearLayoutManager和GridLayoutManager的findLastVisibleItemPosition()返回int, StaggerGridLayoutManager的findLastVisibleItemPositions()返回int[]，这里使用策略模式，统一返回数据\n")
+                .append("2.2 加载更多使用的FooterView实质是在Adapter中通过不同的Item ViewType添加的Item View\n")
+                .append("2.2.1 针对GridLayoutManager，需通过GridLayoutManager.setSpanCount(int)方法设置每个Item占用的列数，即普通Item为1，FooterView为总列数\n")
+                .append("2.2.2 针对StaggeredGridLayoutManager，需通过StaggeredGridLayoutManager.LayoutParams.setFullSpan(boolean)设置每个Item是否占用整列\n");
+
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
+        fragment.show(getSupportFragmentManager(), "");
     }
 }
