@@ -34,39 +34,39 @@ public class RecyclerViewSectionActivity extends BaseRecyclerActivity {
 
     private void initData() {
         mDatas = new ArrayList<>();
+        mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_1));
+        mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_2));
+        mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_3));
+    }
 
-        for (int i = 0; i < 3; i++) {
+    private List<SectionData<NewsItem>> addNewsItem(int count, int type) {
+        List<SectionData<NewsItem>> datas = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
             SectionData<NewsItem> sectionData;
-            if (i == 0) {
-                sectionData = new SectionData<>(true, 1, "第一类新闻");
-            } else {
-                NewsItem newsItem = new NewsItem("标题 + 大图形式 ", "");
-                sectionData = new SectionData<>(newsItem);
+            String header = "";
+            NewsItem newsItem = null;
+            switch (type) {
+                case NewsItem.NEWS_TYPE_1:
+                    header = "第一类新闻";
+                    newsItem = new NewsItem("标题 + 大图形式 ", "");
+                    break;
+                case NewsItem.NEWS_TYPE_2:
+                    header = "第二类新闻";
+                    newsItem = new NewsItem("左侧图片 + 右侧标题 + 描述字段","一段内容","");
+                    break;
+                case NewsItem.NEWS_TYPE_3:
+                    header = "第三类新闻";
+                    newsItem = new NewsItem("标题 + 3副图片 ", "", "", "");
+                    break;
             }
-            mDatas.add(sectionData);
-        }
-
-        for (int i = 0; i < 3; i++) {
-            SectionData<NewsItem> sectionData;
             if (i == 0) {
-                sectionData = new SectionData<>(true, 1, "第三类新闻");
+                sectionData = new SectionData<NewsItem>(true, 0, header);
             } else {
-                NewsItem newsItem = new NewsItem("标题 + 3副图片 ", "", "", "");
-                sectionData = new SectionData<>(newsItem);
+                sectionData = new SectionData<NewsItem>(newsItem);
             }
-            mDatas.add(sectionData);
+            datas.add(sectionData);
         }
-
-        for (int i = 0; i < 3; i++) {
-            SectionData<NewsItem> sectionData;
-            if (i == 0) {
-                sectionData = new SectionData<>(true, 2, "第四类新闻");
-            } else {
-                NewsItem newsItem = new NewsItem("测试");
-                sectionData = new SectionData<>(newsItem);
-            }
-            mDatas.add(sectionData);
-        }
+        return datas;
     }
 
 

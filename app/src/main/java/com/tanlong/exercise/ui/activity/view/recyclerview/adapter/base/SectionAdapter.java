@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.tanlong.exercise.ui.activity.view.recyclerview.entity.SectionData;
 import com.tanlong.exercise.ui.activity.view.recyclerview.viewholder.base.ViewHolder;
+import com.tanlong.exercise.util.LogTool;
 
 import java.util.List;
 
@@ -18,11 +19,7 @@ public abstract class SectionAdapter<T> extends MultiItemTypeAdapter<SectionData
     /**
      * Section头类型
      */
-    protected static final int VIEW_TYPE_SECTION_HEADER = 1;
-    /**
-     * Section内容类型
-     */
-    protected static final int VIEW_TYPE_SECTION_CONTENT = 2;
+    protected static final int VIEW_TYPE_SECTION_HEADER = 300000;//为防止与其他viewtype冲突, 使用一个较大的值
 
     private int mSectionHeaderLayoutId;
 

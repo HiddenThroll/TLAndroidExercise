@@ -27,7 +27,6 @@ public class NewsItem {
     public static final int NEWS_TYPE_1 = 1;//标题 + 大图形式
     public static final int NEWS_TYPE_2 = 2;//左侧图片 + 右侧标题 + 描述字段
     public static final int NEWS_TYPE_3 = 3;//标题 + 3副图片
-    public static final int NEWS_TYPE_4 = 4;//测试
 
     public NewsItem(String title, String titleImgUrl) {
         this.type = NEWS_TYPE_1;
@@ -48,11 +47,6 @@ public class NewsItem {
         this.contentImgUrl_1 = contentImgUrl_1;
         this.contentImgUrl_2 = contentImgUrl_2;
         this.contentImgUrl_3 = contentImgUrl_3;
-    }
-
-    public NewsItem(String test) {
-        this.type = NEWS_TYPE_4;
-        this.title = test;
     }
 
     public NewsItem(int type) {

@@ -23,8 +23,8 @@ public class NewsSectionAdapter extends SectionAdapter<NewsItem> {
         super(mContext, mDatas, sectionHeaderLayoutId);
 
         addItemViewDelegate(new NewsTypeOneDelegate());
+        addItemViewDelegate(new NewsTypeTwoDelegate());
         addItemViewDelegate(new NewsTypeThreeDelegate());
-        addItemViewDelegate(new NewsTypeFourDelegete());
     }
 
     @Override
@@ -88,21 +88,4 @@ public class NewsSectionAdapter extends SectionAdapter<NewsItem> {
         }
     }
 
-    public class NewsTypeFourDelegete implements ItemViewDelegate<SectionData<NewsItem>> {
-
-        @Override
-        public int getItemViewLayoutId() {
-            return R.layout.layout_news_type_4;
-        }
-
-        @Override
-        public boolean isForViewType(SectionData<NewsItem> item, int position) {
-            return item.getData().getType() == NewsItem.NEWS_TYPE_4;
-        }
-
-        @Override
-        public void convert(ViewHolder holder, SectionData<NewsItem> newsItemSectionData, int position) {
-            holder.setText(R.id.tv_test, newsItemSectionData.getData().getTitle());
-        }
-    }
 }
