@@ -40,8 +40,8 @@ public class NewsMultiAdapter extends MultiItemTypeAdapter<NewsItem> {
 
         @Override
         public void convert(ViewHolder holder, NewsItem newsItem, int position) {
-            holder.setText(R.id.tv_news_title, newsItem.getTitle());
-            ImageView imageView = holder.getView(R.id.iv_news_title_picture);
+            holder.setText(R.id.tv_news_title_1, newsItem.getTitle());
+            ImageView imageView = holder.getView(R.id.iv_news_title_picture_1);
 //            Glide.with(mContext).load(R.mipmap.ic_launcher).into(imageView);
         }
     }
@@ -62,7 +62,7 @@ public class NewsMultiAdapter extends MultiItemTypeAdapter<NewsItem> {
         public void convert(ViewHolder holder, NewsItem newsItem, int position) {
             ImageView imageView = holder.getView(R.id.iv_news_left_picture);
 //            Glide.with(mContext).load(R.mipmap.ic_launcher).into(imageView);
-            holder.setText(R.id.tv_news_title, newsItem.getTitle());
+            holder.setText(R.id.tv_news_title_2, newsItem.getTitle());
             holder.setText(R.id.tv_news_summary, newsItem.getSummary());
         }
     }
@@ -81,7 +81,7 @@ public class NewsMultiAdapter extends MultiItemTypeAdapter<NewsItem> {
 
         @Override
         public void convert(ViewHolder holder, NewsItem newsItem, int position) {
-            holder.setText(R.id.tv_news_title, newsItem.getTitle());
+            holder.setText(R.id.tv_news_title_3, newsItem.getTitle());
 
             ImageView ivPic1 = holder.getView(R.id.iv_news_content_picture_1);
             ImageView ivPic2 = holder.getView(R.id.iv_news_content_picture_2);

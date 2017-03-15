@@ -70,7 +70,7 @@ public class RecyclerViewCategoryActivity extends BaseActivity {
                 intent.setClass(this, RecyclerViewRefreshActivity.class);
                 break;
             case 4:
-//                intent.setClass(this, BaseRecyclerActivity.class);
+                intent.setClass(this, RecyclerViewSectionActivity.class);
                 break;
         }
 

@@ -43,6 +43,7 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
             ViewHolder holder = ViewHolder.createViewHolder(parent.getContext(), mFootViews.get(viewType));
             return holder;
         }
+
         return mInnerAdapter.onCreateViewHolder(parent, viewType);
     }
 

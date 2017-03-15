@@ -7,15 +7,13 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.model.entity.NewsItem;
 import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.NewsSingleAdapter;
 import com.tanlong.exercise.ui.activity.view.recyclerview.base.BaseRecyclerActivity;
-import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.PtrRecyclerLayout;
 import com.tanlong.exercise.ui.activity.view.recyclerview.layoutmanager.MyLinearLayoutManager;
 import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.HeaderAndFooterWrapper;
+import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.PtrRecyclerLayout;
 import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.attr.fragment;
 
 /**
  * RecyclerView实现下拉刷新、上拉加载更多
@@ -66,7 +64,7 @@ public class RecyclerViewRefreshActivity extends BaseRecyclerActivity implements
                 mContentAdapter.notifyDataSetChanged();
                 onRefreshComplete();
             }
-        }, 2000);
+        }, 5000);
     }
 
     @Override

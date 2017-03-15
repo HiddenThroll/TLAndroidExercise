@@ -2,7 +2,6 @@ package com.tanlong.exercise.ui.activity.view.recyclerview.adapter.base;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.tanlong.exercise.ui.activity.view.recyclerview.viewholder.base.ItemViewDelegate;
@@ -17,7 +16,6 @@ import java.util.List;
  */
 
 public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
-
     protected Context mContext;
     protected List<T> mDatas;
 

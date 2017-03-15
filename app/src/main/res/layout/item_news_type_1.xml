@@ -7,7 +7,7 @@
     >
 
     <TextView
-        android:id="@+id/tv_news_title"
+        android:id="@+id/tv_news_title_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_info_normal"
@@ -16,7 +16,7 @@
         />
 
     <ImageView
-        android:id="@+id/iv_news_title_picture"
+        android:id="@+id/iv_news_title_picture_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
