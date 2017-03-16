@@ -1,7 +1,9 @@
 package com.tanlong.exercise.ui.activity.view.recyclerview.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tanlong.exercise.R;
@@ -9,6 +11,8 @@ import com.tanlong.exercise.model.entity.NewsItem;
 import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.base.MultiItemTypeAdapter;
 import com.tanlong.exercise.ui.activity.view.recyclerview.viewholder.base.ItemViewDelegate;
 import com.tanlong.exercise.ui.activity.view.recyclerview.viewholder.base.ViewHolder;
+import com.tanlong.exercise.util.LogTool;
+import com.tanlong.exercise.util.ToastHelp;
 
 import java.util.List;
 
@@ -91,5 +95,18 @@ public class NewsMultiAdapter extends MultiItemTypeAdapter<NewsItem> {
 //            Glide.with(mContext).load(R.mipmap.ic_launcher).into(ivPic3);
 
         }
+    }
+
+    @Override
+    protected void onBindEmptyViewHolder(ViewHolder holder, int position) {
+        super.onBindEmptyViewHolder(holder, position);
+        LogTool.e("test", "onBindEmptyViewHolder");
+        TextView tvEmptyTips = holder.getView(R.id.tv_recycler_empty_tips);
+        tvEmptyTips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastHelp.showShortMsg(mContext, "请下拉刷新");
+            }
+        });
     }
 }

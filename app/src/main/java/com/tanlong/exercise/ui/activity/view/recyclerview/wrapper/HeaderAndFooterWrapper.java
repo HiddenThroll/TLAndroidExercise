@@ -7,17 +7,17 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.base.MultiItemTypeAdapter;
 import com.tanlong.exercise.ui.activity.view.recyclerview.util.WrapperUtils;
 import com.tanlong.exercise.ui.activity.view.recyclerview.viewholder.base.ViewHolder;
 import com.tanlong.exercise.util.LogTool;
+
 
 /**
  * Created by 龙 on 2017/3/3.
  */
 
 public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final int BASE_ITEM_TYPE_HEADER = 100000;
-    private static final int BASE_ITEM_TYPE_FOOTER = 200000;
 
     private SparseArrayCompat<View> mHeaderViews = new SparseArrayCompat<>();
     private SparseArrayCompat<View> mFootViews = new SparseArrayCompat<>();
@@ -171,7 +171,7 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
     public void addHeaderView(View view) {
         int key = findHeaderKeyByView(view);
         if (key == -1) {
-            mHeaderViews.put(mHeaderViews.size() + BASE_ITEM_TYPE_HEADER, view);
+            mHeaderViews.put(mHeaderViews.size() + MultiItemTypeAdapter.VIEW_TYPE_HEADER, view);
             if (mNotifyAdapter != null)
                 mNotifyAdapter.notifyDataSetChanged();
         }
@@ -189,7 +189,7 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
     public void addFootView(View view) {
         int key = findFooterKeyByView(view);
         if (key == -1) {
-            mFootViews.put(mFootViews.size() + BASE_ITEM_TYPE_FOOTER, view);
+            mFootViews.put(mFootViews.size() + MultiItemTypeAdapter.VIEW_TYPE_FOOTER, view);
             if (mNotifyAdapter != null) {
                 mNotifyAdapter.notifyDataSetChanged();
             }

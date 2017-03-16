@@ -46,6 +46,7 @@ public class RecyclerViewRefreshActivity extends BaseRecyclerActivity implements
         mContentAdapter = new NewsSingleAdapter(this, mDatas, R.layout.item_news_type_2);
         mWrapperAdapter = new HeaderAndFooterWrapper<>(mContentAdapter);
         setLayoutManager(new MyLinearLayoutManager(this));
+        mContentAdapter.setmEmptyLayoutId(R.layout.layout_recycler_empty);
         setAdapter(mWrapperAdapter);
 
         setRefreshListener(this);
@@ -61,7 +62,7 @@ public class RecyclerViewRefreshActivity extends BaseRecyclerActivity implements
                 for (int i = size; i < size + 10; i++) {
                     mDatas.add(new NewsItem("标题" + i, "内容" + i, ""));
                 }
-                mContentAdapter.notifyDataSetChanged();
+                mWrapperAdapter.notifyDataSetChanged();
                 onRefreshComplete();
             }
         }, 5000);
@@ -76,7 +77,7 @@ public class RecyclerViewRefreshActivity extends BaseRecyclerActivity implements
                 for (int i = 0; i < 20; i++) {
                     mDatas.add(new NewsItem("标题" + i, "内容" + i, ""));
                 }
-                mContentAdapter.notifyDataSetChanged();
+                mWrapperAdapter.notifyDataSetChanged();
                 onRefreshComplete();
             }
         }, 2000);

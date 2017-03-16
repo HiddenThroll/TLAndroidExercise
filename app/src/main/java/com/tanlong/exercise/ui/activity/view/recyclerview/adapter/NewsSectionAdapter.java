@@ -1,6 +1,8 @@
 package com.tanlong.exercise.ui.activity.view.recyclerview.adapter;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.model.entity.NewsItem;
@@ -88,4 +90,17 @@ public class NewsSectionAdapter extends SectionAdapter<NewsItem> {
         }
     }
 
+    @Override
+    protected void onBindEmptyViewHolder(ViewHolder holder, int position) {
+        TextView tvEmptyTips = holder.getView(R.id.tv_recycler_empty_tips);
+        tvEmptyTips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onRefreshEmptyView != null) {
+                    onRefreshEmptyView.onRefreshEmptyView();
+                }
+            }
+        });
+
+    }
 }

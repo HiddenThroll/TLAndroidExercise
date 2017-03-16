@@ -39,4 +39,18 @@ public class NewsSingleAdapter extends CommonAdapter<NewsItem>{
             }
         });
     }
+
+    @Override
+    protected void onBindEmptyViewHolder(ViewHolder holder, int position) {
+        super.onBindEmptyViewHolder(holder, position);
+        TextView tvEmptyTips = holder.getView(R.id.tv_recycler_empty_tips);
+        tvEmptyTips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastHelp.showShortMsg(mContext, "下拉刷新");
+            }
+        });
+    }
+
+
 }

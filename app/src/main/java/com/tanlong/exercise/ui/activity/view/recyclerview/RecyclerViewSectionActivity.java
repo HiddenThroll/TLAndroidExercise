@@ -6,12 +6,14 @@ import android.os.Handler;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.model.entity.NewsItem;
 import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.NewsSectionAdapter;
+import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.base.MultiItemTypeAdapter;
 import com.tanlong.exercise.ui.activity.view.recyclerview.base.BaseRecyclerActivity;
 import com.tanlong.exercise.ui.activity.view.recyclerview.entity.SectionData;
 import com.tanlong.exercise.ui.activity.view.recyclerview.layoutmanager.MyLinearLayoutManager;
 import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.HeaderAndFooterWrapper;
 import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.PtrRecyclerLayout;
 import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.util.ToastHelp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +40,9 @@ public class RecyclerViewSectionActivity extends BaseRecyclerActivity implements
 
     private void initData() {
         mDatas = new ArrayList<>();
-        mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_1));
-        mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_2));
-        mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_3));
+//        mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_1));
+//        mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_2));
+//        mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_3));
     }
 
     private List<SectionData<NewsItem>> addNewsItem(int count, int type) {
@@ -80,6 +82,14 @@ public class RecyclerViewSectionActivity extends BaseRecyclerActivity implements
         mContentAdapter = new NewsSectionAdapter(this, mDatas, R.layout.layout_recycler_section);
         mWrapperAdapter = new HeaderAndFooterWrapper<>(mContentAdapter);
         setLayoutManager(new MyLinearLayoutManager(this));
+        mContentAdapter.setmEmptyLayoutId(R.layout.layout_recycler_empty);
+        mContentAdapter.setOnRefreshEmptyView(new MultiItemTypeAdapter.OnRefreshEmptyView() {
+            @Override
+            public void onRefreshEmptyView() {
+                ToastHelp.showShortMsg(getApplicationContext(), "正在刷新...");
+                onRefresh();
+            }
+        });
         setAdapter(mWrapperAdapter);
 
         setRefreshListener(this);
@@ -100,7 +110,7 @@ public class RecyclerViewSectionActivity extends BaseRecyclerActivity implements
                     mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_3));
                 }
 
-                mContentAdapter.notifyDataSetChanged();
+                mWrapperAdapter.notifyDataSetChanged();
                 onRefreshComplete();
             }
         }, 2000);
@@ -115,7 +125,7 @@ public class RecyclerViewSectionActivity extends BaseRecyclerActivity implements
                 mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_1));
                 mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_2));
                 mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_3));
-                mContentAdapter.notifyDataSetChanged();
+                mWrapperAdapter.notifyDataSetChanged();
                 onRefreshComplete();
             }
         }, 2000);
