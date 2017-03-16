@@ -61,6 +61,7 @@
     <string name="recycler_view_staggered">RecyclerView实现瀑布流</string>
     <string name="recycler_view_multi_item">RecyclerView实现多Item布局</string>
     <string name="recycler_view_refresh">RecyclerView实现下拉刷新上拉加载</string>
+    <string name="recycler_view_section">RecyclerView添加Section</string>
 
     <!-- 百度地图练习-->
     <string name="baidu_map_exercise">百度地图练习</string>
