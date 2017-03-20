@@ -17,6 +17,7 @@
     <string name="custom_volume_bar">CustomVolumeBar</string>
     <string name="custom_arc_show_view">CustomArcShowView</string>
     <string name="schedule_chart">ScheduleChart</string>
+    <string name="custom_simple_clock">CustomSimpleClock</string>
 
     <!-- CustomViewGroup练习-->
     <string name="custom_view_group_exercise">CustomViewGroup练习</string>

@@ -22,6 +22,7 @@
         <item>CustomVolumeBar</item>
         <item>CustomArcShowView</item>
         <item>ScheduleChart</item>
+        <item>CustomSimpleClock</item>
     </array>
 
     <array name="custom_view_group_category">

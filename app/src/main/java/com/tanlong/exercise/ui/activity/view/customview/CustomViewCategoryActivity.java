@@ -73,6 +73,9 @@ public class CustomViewCategoryActivity extends BaseActivity {
             case 5:
                 intent.setClass(this, ScheduleChartActivity.class);
                 break;
+            case 6:
+                intent.setClass(this, CustomSimpleClockActivity.class);
+                break;
 
         }
 
