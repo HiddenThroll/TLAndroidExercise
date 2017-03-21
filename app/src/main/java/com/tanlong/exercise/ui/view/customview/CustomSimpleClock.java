@@ -105,15 +105,15 @@ public class CustomSimpleClock extends View {
                 } else {
                     text = String.valueOf(i);
                 }
+                mPaint.setTextSize(mTextSizeBig);
                 textX = mRadius - mPaint.measureText(text) / 2;
                 textY = mDialScale + mInteval;
-                mPaint.setTextSize(mTextSizeBig);
                 canvas.drawText(text, textX, textY, mPaint);
             } else {
+                mPaint.setTextSize(mTextSizeNormal);
                 text = String.valueOf(i);
                 textX = mRadius - mPaint.measureText(text) / 2;
                 textY = mDialScale / 2 + mInteval;
-                mPaint.setTextSize(mTextSizeNormal);
                 canvas.drawText(text, textX, textY, mPaint);
             }
             int degree = 360 / 12;
@@ -122,19 +122,14 @@ public class CustomSimpleClock extends View {
     }
 
     private void drawTime(Canvas canvas) {
+        canvas.save();//保存画布
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaint.setStrokeWidth(DisplayUtil.dip2px(getContext(), 4f));
         mPaint.setColor(ContextCompat.getColor(getContext(), R.color.color_text_black));
 
-        canvas.translate(getMeasuredWidth() / 2, getMeasuredHeight() / 2);
+        canvas.translate(getMeasuredWidth() / 2, getMeasuredHeight() / 2);//移动画布
         canvas.drawLine(0, 0, 0, -mMinuteHand, mPaint);
-        canvas.save();//保存画布
-
-        int degree = 360 / 12;
-        canvas.translate(getMeasuredWidth() / 2, getMeasuredHeight() / 2);
-        canvas.rotate(-degree, getMeasuredWidth() / 2, getMeasuredHeight() / 2);
-        canvas.drawLine(0, 0, 0, -mMinuteHand / 2, mPaint);
-//        canvas.rotate(degree, getMeasuredWidth() / 2, getMeasuredHeight() / 2);
+        canvas.drawLine(0, 0, -100, -mMinuteHand / 2, mPaint);
         canvas.restore();
     }
 }
