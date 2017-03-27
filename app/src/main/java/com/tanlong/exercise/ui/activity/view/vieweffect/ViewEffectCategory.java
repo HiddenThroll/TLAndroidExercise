@@ -61,6 +61,9 @@ public class ViewEffectCategory extends BaseActivity {
             case 1:
                 intent.setClass(this, ShadowBackgroundActivity.class);
                 break;
+            case 2:
+                intent.setClass(this, RoundImageByXfermodeActivity.class);
+                break;
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {

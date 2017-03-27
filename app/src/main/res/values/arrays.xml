@@ -45,6 +45,7 @@
     <array name="view_effect_category">
         <item>蒙版效果</item>
         <item>阴影背景</item>
+        <item>PorterDuffXfermode实现圆角图片</item>
     </array>
 
     <array name="fragment_category">
