@@ -59,7 +59,8 @@ public class RoundImageByXfermodeActivity extends BaseActivity {
         stringBuilder.append("1. 使用PorterDuffXfermode实现圆角图片效果:")
                 .append("1.1 PorterDuffXfermode用于实现新绘制的像素与Canvas上对应位置已有像素,按照混合规则进行颜色混合\n")
                 .append("1.2 DST是先画的图形, SRC是后画的图形\n")
-                .append("1.3 一般需配合Canvas.saveLayer()保存图层方法和Canvas.restoreToCount()恢复图层方法使用, 关键代码位于两个方法之间\n");
+                .append("1.3 一般需配合Canvas.saveLayer()保存图层方法和Canvas.restoreToCount()恢复图层方法使用, 关键代码位于两个方法之间\n")
+                .append("1.4 为保证在不同机型上的效果，需关闭硬件加速，即View.setLayerType(View.LAYER_TYPE_SOFTWARE, null)");
 
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
         fragment.show(getSupportFragmentManager(), "");

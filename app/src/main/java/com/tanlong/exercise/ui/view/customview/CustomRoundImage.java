@@ -55,6 +55,8 @@ public class CustomRoundImage extends View {
         round = DisplayUtil.dip2px(getContext(), 16);
         mRectF = new RectF(0, 0, mBitmap.getWidth(), mBitmap.getHeight());
         xfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
+
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);//View禁用掉GPU硬件加速，切换到软件渲染模式
     }
 
     @Override
