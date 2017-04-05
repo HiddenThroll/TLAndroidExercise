@@ -82,4 +82,7 @@
     <string name="minutes">分</string>
     <string name="seconds">秒</string>
     <string name="error_data_phonenume">手机号码不能为空</string>
+
+    <string name="ipc_exercise">IPC练习</string>
+    <string name="messenger_ipc">使用Messenger实现IPC</string>
 </resources>

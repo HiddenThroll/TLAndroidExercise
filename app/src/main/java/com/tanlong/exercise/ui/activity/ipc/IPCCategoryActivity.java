@@ -1,8 +1,7 @@
-package com.tanlong.exercise.ui.activity;
+package com.tanlong.exercise.ui.activity.ipc;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -10,16 +9,19 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.ui.activity.ipc.IPCCategoryActivity;
-import com.tanlong.exercise.ui.activity.map.MapCategoryActivity;
-import com.tanlong.exercise.ui.activity.view.ViewCategoryActivity;
+import com.tanlong.exercise.ui.activity.ipc.messenger.MessengerIPCActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemClick;
 
-public class MainActivity extends BaseActivity {
+/**
+ *
+ * Created by 龙 on 2017/4/5.
+ */
 
+public class IPCCategoryActivity extends BaseActivity {
     @Bind(R.id.lv_activity_category)
     ListView mLvCategory;
     @Bind(R.id.iv_back)
@@ -34,14 +36,18 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         initView();
-        String[] items = getResources().getStringArray(R.array.main_category);
+        String[] items = getResources().getStringArray(R.array.ipc_category);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_category, items);
         mLvCategory.setAdapter(adapter);
     }
 
     public void initView() {
-        mIvBack.setVisibility(View.INVISIBLE);
-        mTvTitle.setText(R.string.app_name);
+        mTvTitle.setText(R.string.ipc_exercise);
+    }
+
+    @OnClick(R.id.iv_back)
+    public void onBack() {
+        finish();
     }
 
     @OnItemClick(R.id.lv_activity_category)
@@ -49,15 +55,8 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent();
         switch (position) {
             case 0:
-                intent.setClass(this, ViewCategoryActivity.class);
+                intent.setClass(this, MessengerIPCActivity.class);
                 break;
-            case 1:
-                intent.setClass(this, MapCategoryActivity.class);
-                break;
-            case 2:
-                intent.setClass(this, IPCCategoryActivity.class);
-                break;
-
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {

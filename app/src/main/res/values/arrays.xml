@@ -3,6 +3,7 @@
     <array name="main_category">
         <item>View</item>
         <item>百度地图</item>
+        <item>进程间通信IPC</item>
     </array>
 
     <array name="view_category">
@@ -76,5 +77,9 @@
     <array name="baidu_map_category">
         <item>基础地图练习</item>
         <item>路径规划练习</item>
+    </array>
+
+    <array name="ipc_category">
+        <item>Messenger实现IPC</item>
     </array>
 </resources>

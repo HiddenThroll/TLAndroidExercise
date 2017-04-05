@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import com.tanlong.exercise.util.DisplayUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * Activity基类
  * Created by Administrator on 2016/6/23.
@@ -19,6 +21,11 @@ public class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private void init() {

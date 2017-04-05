@@ -306,6 +306,31 @@
             android:launchMode="singleTop"
             android:configChanges="keyboard"
             />
+
+        <!-- IPC相关-->
+        <activity
+            android:name=".ui.activity.ipc.IPCCategoryActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
+        <activity
+            android:name=".ui.activity.ipc.messenger.MessengerIPCActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
+
+        <service
+            android:name=".service.MessengerServiceDemo"
+            android:enabled="true"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="com.tanlong.exercise.messenger.demo"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
