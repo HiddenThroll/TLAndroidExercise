@@ -71,6 +71,7 @@ public class MessengerIPCActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        stopService(new Intent(this, MessengerServiceDemo.class));
     }
 
     private void initData() {
