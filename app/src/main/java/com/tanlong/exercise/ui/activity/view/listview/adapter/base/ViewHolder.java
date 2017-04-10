@@ -5,6 +5,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  *
@@ -58,5 +59,10 @@ public class ViewHolder {
 
     public View getConvertView() {
         return mConvertView;
+    }
+
+    public void setText(int id, String content) {
+        TextView textView = getView(id);
+        textView.setText(content);
     }
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="4dp"
+        >
+
+        <EditText
+            android:id="@+id/et_reply"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_info_normal"
+            android:textColor="@color/text_color_info"
+            android:textColorHint="@color/text_color_explain"
+            android:hint="请输入图书新价格"
+            android:inputType="number"
+            />
+
+        <Button
+            android:id="@+id/btn_confirm_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确认"
+            android:textSize="@dimen/text_size_info_normal"
+            android:textColor="@color/text_color_info"
+            android:layout_marginLeft="8dp"
+            />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_book"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        />
+</LinearLayout>

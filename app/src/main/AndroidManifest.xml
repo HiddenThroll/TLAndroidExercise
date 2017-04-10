@@ -320,6 +320,12 @@
             android:launchMode="singleTop"
             android:configChanges="keyboard"
             />
+        <activity
+            android:name=".ui.activity.ipc.aidl.AIDLIPCActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
 
         <service
             android:name=".service.MessengerServiceDemo"

@@ -75,13 +75,21 @@ public class MessengerServiceDemo extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        LogTool.e(TAG, "onDestroy");
         EventBus.getDefault().unregister(this);
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        LogTool.e(TAG, "onBind");
         return mMessenger.getBinder();
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        LogTool.e(TAG, "onUnbind " + intent.toString());
+        return super.onUnbind(intent);
     }
 
     @Subscribe(threadMode = ThreadMode.POSTING)

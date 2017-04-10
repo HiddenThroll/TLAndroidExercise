@@ -81,5 +81,6 @@
 
     <array name="ipc_category">
         <item>Messenger实现IPC</item>
+        <item>AIDL实现IPC--BOOK练习</item>
     </array>
 </resources>

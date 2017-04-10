@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -60,6 +61,5 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
      * @param item -- 对应实体类
      */
     public abstract void convert(ViewHolder helper, T item, int position);
-
 
 }

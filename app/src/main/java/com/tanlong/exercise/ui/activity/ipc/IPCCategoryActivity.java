@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
+import com.tanlong.exercise.ui.activity.ipc.aidl.AIDLIPCActivity;
 import com.tanlong.exercise.ui.activity.ipc.messenger.MessengerIPCActivity;
 
 import butterknife.Bind;
@@ -56,6 +57,9 @@ public class IPCCategoryActivity extends BaseActivity {
         switch (position) {
             case 0:
                 intent.setClass(this, MessengerIPCActivity.class);
+                break;
+            case 1:
+                intent.setClass(this, AIDLIPCActivity.class);
                 break;
         }
 

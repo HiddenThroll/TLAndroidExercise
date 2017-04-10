@@ -85,4 +85,5 @@
 
     <string name="ipc_exercise">IPC练习</string>
     <string name="messenger_ipc">使用Messenger实现IPC</string>
+    <string name="aidl_ipc">使用AIDL实现IPC</string>
 </resources>

@@ -80,6 +80,7 @@ public class MessengerIPCActivity extends BaseActivity {
     }
 
     private void initView() {
+        tvTitle.setText(R.string.messenger_ipc);
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mListData);
         lvMsg.setAdapter(mAdapter);
         btnHelp.setVisibility(View.VISIBLE);
