@@ -40,6 +40,7 @@
     <string name="view_effect_mask">蒙版效果</string>
     <string name="view_shadow_background">阴影效果</string>
     <string name="view_round_image">PorterDuffXfermode实现圆角图片</string>
+    <string name="view_scratch_card">PorterDuffXfermode实现刮刮卡</string>
 
     <!-- Fragment练习-->
     <string name="fragment_exercise">Fragment练习</string>

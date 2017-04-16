@@ -64,6 +64,10 @@ public class ViewEffectCategory extends BaseActivity {
             case 2:
                 intent.setClass(this, RoundImageByXfermodeActivity.class);
                 break;
+            case 3:
+                intent.setClass(this, ScratchCardActivity.class);
+                break;
+
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {
