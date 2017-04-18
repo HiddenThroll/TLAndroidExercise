@@ -17,6 +17,7 @@ import com.tanlong.exercise.model.event.SetBookEvent;
 import com.tanlong.exercise.service.AIDLService;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.listview.adapter.BookAdapter;
+import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 import com.tanlong.exercise.util.ToastHelp;
 
 import org.greenrobot.eventbus.EventBus;
@@ -92,6 +93,7 @@ public class AIDLIPCActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_help:
+                showTips();
                 break;
             case R.id.btn_confirm_book:
                 setBook();
@@ -105,7 +107,7 @@ public class AIDLIPCActivity extends BaseActivity {
         mAdapter.notifyDataSetChanged();
     }
 
-    public void setBook() {
+    private void setBook() {
         String price = etReply.getText().toString();
         if (TextUtils.isEmpty(price)) {
             ToastHelp.showShortMsg(this, "请输入价格");
@@ -114,5 +116,13 @@ public class AIDLIPCActivity extends BaseActivity {
         Book book = new Book();
         book.setPrice(Integer.valueOf(price));
         new SetBookEvent().setData(book).post();
+    }
+
+    private void showTips() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("详见已收藏文章“Android：学习AIDL，这一篇文章就够了(上)");
+
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
+        fragment.show(getSupportFragmentManager(), "");
     }
 }

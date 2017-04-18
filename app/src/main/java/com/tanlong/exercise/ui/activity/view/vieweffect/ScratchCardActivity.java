@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
+import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,6 +51,13 @@ public class ScratchCardActivity extends BaseActivity {
     }
 
     private void showTips() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("1. 使用PorterDuffXfermode实现刮刮卡效果:\n")
+                .append("1.1 内容图片作为DST，遮挡图片作为SRC\n")
+                .append("1.2 Paint的Xfermode设置为DST_IN，透明度设置为0，即全部透明\n")
+                .append("1.3 覆写onTouchEvent()方法，捕捉用户手指滑动路径，绘制Path\n");
 
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
+        fragment.show(getSupportFragmentManager(), "");
     }
 }
