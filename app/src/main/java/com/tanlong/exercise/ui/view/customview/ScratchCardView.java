@@ -93,10 +93,10 @@ public class ScratchCardView extends View {
     }
 
     private void canvasMove(float x, float y) {
-        float endX = (x + startX) / 2;
-        float endY = (y + startY) / 2;
+        float controlX = (x + startX) / 2;//起点和终点的中间点作为控制点，控制点决定了曲线的弯曲程度
+        float controlY = (y + startY) / 2;
 
-        mPath.quadTo(startX, startY, endX, endY);//获得一条二阶贝塞尔曲线
+        mPath.quadTo(controlX, controlY, x, y);//获得一条二阶贝塞尔曲线
         mCanvas.drawPath(mPath, mPaint);//绘制曲线
 
         //更新起始点
