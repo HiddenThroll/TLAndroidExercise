@@ -55,7 +55,7 @@ public class ScratchCardActivity extends BaseActivity {
         stringBuilder.append("1. 使用PorterDuffXfermode实现刮刮卡效果:\n")
                 .append("1.1 内容图片作为DST，遮挡图片作为SRC\n")
                 .append("1.2 Paint的Xfermode设置为DST_IN，透明度设置为0，即全部透明\n")
-                .append("1.3 覆写onTouchEvent()方法，捕捉用户手指滑动路径，绘制Path\n");
+                .append("1.3 覆写onTouchEvent()方法，捕捉用户手指滑动路径，借助二阶贝塞尔曲线绘制Path\n");
 
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
         fragment.show(getSupportFragmentManager(), "");

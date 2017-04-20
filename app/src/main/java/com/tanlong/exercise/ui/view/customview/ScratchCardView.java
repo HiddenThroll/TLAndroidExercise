@@ -28,6 +28,9 @@ public class ScratchCardView extends View {
     private Paint mPaint;
     private Path mPath;
 
+    private float startX;
+    private float startY;
+
     public ScratchCardView(Context context) {
         super(context);
         init();
@@ -64,18 +67,45 @@ public class ScratchCardView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        float x = event.getX();
+        float y = event.getY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mPath.reset();
-                mPath.moveTo(event.getX(), event.getY());
+                canvasStart(x, y);
                 break;
             case MotionEvent.ACTION_MOVE:
-                mPath.lineTo(event.getX(), event.getY());
+                canvasMove(x, y);
+                break;
+            case MotionEvent.ACTION_UP:
+                canvasEnd();
                 break;
         }
-        mCanvas.drawPath(mPath, mPaint);
+
         invalidate();
         return true;
+    }
+
+    private void canvasStart(float x, float y) {
+        mPath.moveTo(x, y);
+        // 记录起始点
+        startX = x;
+        startY = y;
+    }
+
+    private void canvasMove(float x, float y) {
+        float endX = (x + startX) / 2;
+        float endY = (y + startY) / 2;
+
+        mPath.quadTo(startX, startY, endX, endY);//获得一条二阶贝塞尔曲线
+        mCanvas.drawPath(mPath, mPaint);//绘制曲线
+
+        //更新起始点
+        startX = x;
+        startY = y;
+    }
+
+    private void canvasEnd() {
+        mPath.lineTo(startX, startY);
     }
 
     @Override
