@@ -14,6 +14,7 @@
         <item>Fragment练习</item>
         <item>ViewPager练习</item>
         <item>RecyclerView练习</item>
+        <item>SurfaceView练习</item>
     </array>
 
     <array name="custom_view_category">
@@ -24,6 +25,7 @@
         <item>CustomArcShowView</item>
         <item>ScheduleChart</item>
         <item>CustomSimpleClock</item>
+        <item>CustomSignView</item>
     </array>
 
     <array name="custom_view_group_category">
@@ -72,6 +74,11 @@
         <item>RecyclerView实现多Item布局</item>
         <item>RecyclerView实现下拉刷新上拉加载</item>
         <item>RecyclerView实现Section</item>
+    </array>
+
+    <array name="surface_view_category">
+        <item>时钟</item>
+        <item>日历</item>
     </array>
 
     <!-- 百度地图 -->

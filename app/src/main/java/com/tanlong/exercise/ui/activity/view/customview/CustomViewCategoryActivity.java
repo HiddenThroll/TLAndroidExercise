@@ -76,6 +76,9 @@ public class CustomViewCategoryActivity extends BaseActivity {
             case 6:
                 intent.setClass(this, CustomSimpleClockActivity.class);
                 break;
+            case 7:
+                intent.setClass(this, CustomSignViewActivity.class);
+                break;
 
         }
 
