@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.tanlong.exercise.util.DisplayUtil;
 
+
 /**
  * 手写签名
  * Created by 龙 on 2017/4/24.
@@ -25,6 +26,7 @@ public class CustomSignView extends View {
     private Path mPath;
     private float startX;
     private float startY;
+    private final int BACKGROUND_COLOR = Color.GRAY;
 
     private final int PIC_WIDTH = 400;
     private final int PIC_HEIGHT = 800;
@@ -49,24 +51,25 @@ public class CustomSignView extends View {
     private void init() {
         int width = DisplayUtil.getDisplay(getContext()).x;
         int height = DisplayUtil.getDisplay(getContext()).y;
-        mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        mBitmap = getBitmap(width, height);
 
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(PANIT_WIDTH);
-        mPaint.setAntiAlias(true);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
+        mPaint.setAntiAlias(true);//设置抗锯齿
+        mPaint.setStrokeJoin(Paint.Join.ROUND);//让Path的连接变得圆滑
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setColor(Color.BLACK);
+        mPaint.setColor(Color.BLACK);//画笔颜色
 
         mPath = new Path();
 
         mCanvas = new Canvas(mBitmap);
-        mCanvas.drawColor(Color.GRAY);
+        mCanvas.drawColor(BACKGROUND_COLOR);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
         canvas.drawBitmap(mBitmap, 0, 0, null);
     }
 
@@ -109,5 +112,15 @@ public class CustomSignView extends View {
 
     private void canvasEnd() {
 
+    }
+
+    private Bitmap getBitmap(int width, int height) {
+        return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+    }
+
+    public void resetSign() {
+        mPath.reset();// 重置路径
+        mCanvas.drawColor(BACKGROUND_COLOR);//清空已绘制内容
+        invalidate();
     }
 }
