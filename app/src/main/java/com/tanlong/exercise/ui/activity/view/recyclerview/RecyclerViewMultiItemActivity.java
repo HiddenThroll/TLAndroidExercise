@@ -15,7 +15,7 @@ import com.tanlong.exercise.model.entity.NewsItem;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.NewsMultiAdapter;
 import com.tanlong.exercise.ui.activity.view.recyclerview.divider.LinearDividerItemDecoration;
-import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.util.DisplayUtil;
 
 import java.util.ArrayList;

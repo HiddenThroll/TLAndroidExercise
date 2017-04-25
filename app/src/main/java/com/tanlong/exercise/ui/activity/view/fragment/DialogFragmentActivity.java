@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.ui.fragment.LoginDialogFragment;
-import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.ui.fragment.dialog.LoginDialogFragment;
+import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

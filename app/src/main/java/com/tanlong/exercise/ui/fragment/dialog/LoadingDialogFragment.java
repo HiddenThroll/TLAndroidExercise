@@ -1,4 +1,4 @@
-package com.tanlong.exercise.ui.fragment;
+package com.tanlong.exercise.ui.fragment.dialog;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

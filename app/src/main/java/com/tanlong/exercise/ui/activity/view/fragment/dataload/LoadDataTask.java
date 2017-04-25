@@ -2,7 +2,7 @@ package com.tanlong.exercise.ui.activity.view.fragment.dataload;
 
 import android.os.AsyncTask;
 
-import com.tanlong.exercise.ui.fragment.LoadingDialogFragment;
+import com.tanlong.exercise.ui.fragment.dialog.LoadingDialogFragment;
 import com.tanlong.exercise.util.LogTool;
 
 import java.util.ArrayList;

@@ -8,13 +8,11 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.R.attr.fragment;
 
 /**
  * Created by 龙 on 2016/6/27.

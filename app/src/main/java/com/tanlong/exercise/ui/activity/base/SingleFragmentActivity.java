@@ -10,13 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tanlong.exercise.R;
-import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.R.attr.fragment;
 
 /**
  * 单一Fragment的宿主Activity

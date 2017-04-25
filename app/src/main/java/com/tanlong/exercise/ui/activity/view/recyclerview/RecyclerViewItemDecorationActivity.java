@@ -17,7 +17,7 @@ import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.SimpleRecycler
 import com.tanlong.exercise.ui.activity.view.recyclerview.divider.GridDividerItemDecoration;
 import com.tanlong.exercise.ui.activity.view.recyclerview.divider.LinearDividerItemDecoration;
 import com.tanlong.exercise.ui.activity.view.recyclerview.divider.StaggeredDividerItemDecoration;
-import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.util.ToastHelp;
 
 import java.util.ArrayList;

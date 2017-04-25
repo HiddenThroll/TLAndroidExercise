@@ -17,7 +17,7 @@ import com.tanlong.exercise.model.event.SetBookEvent;
 import com.tanlong.exercise.service.AIDLService;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.listview.adapter.BookAdapter;
-import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.util.ToastHelp;
 
 import org.greenrobot.eventbus.EventBus;

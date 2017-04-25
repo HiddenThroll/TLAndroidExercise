@@ -1,4 +1,4 @@
-package com.tanlong.exercise.ui.fragment;
+package com.tanlong.exercise.ui.fragment.dialog;
 
 import android.app.Dialog;
 import android.os.Bundle;

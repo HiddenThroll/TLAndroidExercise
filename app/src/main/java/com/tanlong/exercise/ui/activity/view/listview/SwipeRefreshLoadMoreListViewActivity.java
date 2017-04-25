@@ -19,7 +19,7 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.model.entity.IMenuItem;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.listview.adapter.MenuAdapter;
-import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.ui.view.swiperefresh.CustomSwipeRefreshLayout;
 import com.tanlong.exercise.util.DisplayUtil;
 import com.tanlong.exercise.util.LogTool;

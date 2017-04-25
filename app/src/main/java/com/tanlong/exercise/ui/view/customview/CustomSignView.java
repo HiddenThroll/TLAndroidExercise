@@ -123,4 +123,12 @@ public class CustomSignView extends View {
         mCanvas.drawColor(BACKGROUND_COLOR);//清空已绘制内容
         invalidate();
     }
+
+    /**
+     * 获得签名图片
+     * @return
+     */
+    public Bitmap getSignBitmap() {
+        return mBitmap;
+    }
 }

@@ -12,7 +12,7 @@ import com.tanlong.exercise.ui.activity.view.recyclerview.entity.SectionData;
 import com.tanlong.exercise.ui.activity.view.recyclerview.layoutmanager.MyLinearLayoutManager;
 import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.HeaderAndFooterWrapper;
 import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.PtrRecyclerLayout;
-import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.util.ToastHelp;
 
 import java.util.ArrayList;

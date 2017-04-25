@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.util.DisplayUtil;
 import com.tanlong.exercise.util.LogTool;
 import com.tanlong.exercise.util.VersionUtil;

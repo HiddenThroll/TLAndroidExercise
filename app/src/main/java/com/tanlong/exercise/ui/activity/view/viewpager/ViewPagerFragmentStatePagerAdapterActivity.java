@@ -14,7 +14,7 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.viewpager.tabcontent.ContentOneFragment;
 import com.tanlong.exercise.ui.activity.view.viewpager.adapter.fragmentstatepageradapter.SimpleFragmentStatePagerAdapter;
-import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.util.LogTool;
 
 import java.util.ArrayList;

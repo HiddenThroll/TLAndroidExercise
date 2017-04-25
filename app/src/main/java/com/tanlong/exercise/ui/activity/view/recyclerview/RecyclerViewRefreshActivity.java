@@ -10,7 +10,7 @@ import com.tanlong.exercise.ui.activity.view.recyclerview.base.BaseRecyclerActiv
 import com.tanlong.exercise.ui.activity.view.recyclerview.layoutmanager.MyLinearLayoutManager;
 import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.HeaderAndFooterWrapper;
 import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.PtrRecyclerLayout;
-import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 
 import java.util.ArrayList;
 import java.util.List;

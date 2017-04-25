@@ -17,7 +17,7 @@ import com.tanlong.exercise.model.event.GetMsgItemEvent;
 import com.tanlong.exercise.model.event.SetMessageReplyEvent;
 import com.tanlong.exercise.service.MessengerServiceDemo;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

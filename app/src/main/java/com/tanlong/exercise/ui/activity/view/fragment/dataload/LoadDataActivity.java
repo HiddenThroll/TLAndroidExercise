@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.fragment.DataRetainFragment;
-import com.tanlong.exercise.ui.fragment.ShowTipsFragment;
+import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.util.LogTool;
 
 import java.util.List;
@@ -20,8 +20,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.R.attr.fragment;
 
 /**
  * 数据加载Activity, 加载数据显示对话框时不停旋转屏幕
