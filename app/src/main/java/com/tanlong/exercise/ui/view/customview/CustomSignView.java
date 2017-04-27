@@ -28,9 +28,6 @@ public class CustomSignView extends View {
     private float startY;
     private final int BACKGROUND_COLOR = Color.GRAY;
 
-    private final int PIC_WIDTH = 400;
-    private final int PIC_HEIGHT = 800;
-
     private final int PANIT_WIDTH = 32;
 
     public CustomSignView(Context context) {

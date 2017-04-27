@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
+import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.ui.fragment.dialog.SignDialogFragment;
 import com.tanlong.exercise.ui.view.customview.CustomSignView;
 import com.tanlong.exercise.util.ImageTool;
@@ -52,6 +53,7 @@ public class CustomSignViewActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         tvTitle.setText(R.string.custom_sign_view);
+        btnHelp.setVisibility(View.VISIBLE);
     }
 
     @OnClick({R.id.iv_back, R.id.btn_help, R.id.btn_reset, R.id.btn_save})
@@ -61,6 +63,7 @@ public class CustomSignViewActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_help:
+                showTips();
                 break;
             case R.id.btn_reset:
                 mCvSign.resetSign();
@@ -105,5 +108,18 @@ public class CustomSignViewActivity extends BaseActivity {
     private void showSignDialog() {
         SignDialogFragment fragment = SignDialogFragment.newInstance(mSignFile.getAbsolutePath());
         fragment.show(getSupportFragmentManager(), "");
+    }
+
+    private void showTips() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("实现手写签名：\n")
+                .append("1. 覆写onTouchEvent()方法，捕捉用户手指滑动路径，借助二阶贝塞尔曲线绘制Path\n")
+                .append("2. 贝塞尔曲线的控制点选择之前的触点，终点为之前触点与当前触点的中点，详见代码\n")
+                .append("3. 通过重置Path和Canvas填充背景的方式实现清空已绘制内容\n")
+                .append("4. Bundle不能传递太大的数据(貌似不能大于1M)，故通过保存签名文件的方式来展示签名图片");
+
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
+        fragment.show(getSupportFragmentManager(), "");
+
     }
 }
