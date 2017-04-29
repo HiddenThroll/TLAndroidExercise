@@ -3,6 +3,7 @@ package com.tanlong.exercise.app;
 import android.app.Application;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.orhanobut.logger.Logger;
 
 /**
  *
@@ -15,10 +16,15 @@ public class MyApplication extends Application {
         super.onCreate();
 
         initBaiduMap();
+        initLog();
+    }
+
+    private void initLog() {
+        Logger.init();
+        Logger.e("Logger init");
     }
 
     private void initBaiduMap() {
         SDKInitializer.initialize(getApplicationContext());
-
     }
 }

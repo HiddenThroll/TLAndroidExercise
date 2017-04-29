@@ -2,6 +2,7 @@ package com.tanlong.exercise.ui.activity.view.surfaceview;
 
 import android.os.Bundle;
 
+import com.orhanobut.logger.Logger;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 
@@ -16,5 +17,7 @@ public class CustomSurfaceClockActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_surface_clock);
+
+        Logger.e("onCreate");
     }
 }
