@@ -68,6 +68,10 @@
     <string name="recycler_view_refresh">RecyclerView实现下拉刷新上拉加载</string>
     <string name="recycler_view_section">RecyclerView添加Section</string>
 
+    <!-- SurfaceView练习-->
+    <string name="surface_view_exercise">SurfaceView练习</string>
+    <string name="custom_surface_clock">SurfaceView实现的时钟</string>
+
     <!-- 百度地图练习-->
     <string name="baidu_map_exercise">百度地图练习</string>
 
