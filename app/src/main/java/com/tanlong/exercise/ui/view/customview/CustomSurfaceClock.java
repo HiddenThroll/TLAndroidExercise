@@ -80,6 +80,7 @@ public class CustomSurfaceClock extends SurfaceView implements SurfaceHolder.Cal
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         isDrawing = false;
+        Logger.e("surfaceDestroyed");
     }
 
     @Override
