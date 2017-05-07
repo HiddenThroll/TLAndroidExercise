@@ -72,6 +72,12 @@
     <string name="surface_view_exercise">SurfaceView练习</string>
     <string name="custom_surface_clock">SurfaceView实现的时钟</string>
 
+    <!-- 动画练习-->
+    <string name="animator_exercise">动画练习</string>
+
+    <string name="property_animator_exercise">属性动画练习</string>
+    <string name="simple_property_animator">基本属性动画</string>
+
     <!-- 百度地图练习-->
     <string name="baidu_map_exercise">百度地图练习</string>
 

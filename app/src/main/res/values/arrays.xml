@@ -15,6 +15,7 @@
         <item>ViewPager练习</item>
         <item>RecyclerView练习</item>
         <item>SurfaceView练习</item>
+        <item>动画练习</item>
     </array>
 
     <array name="custom_view_category">
@@ -80,6 +81,13 @@
         <item>时钟</item>
     </array>
 
+    <array name="animator_category">
+        <item>属性动画</item>
+    </array>
+
+    <array name="property_animator_category">
+        <item>基本属性动画</item>
+    </array>
     <!-- 百度地图 -->
     <array name="baidu_map_category">
         <item>基础地图练习</item>
