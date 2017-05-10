@@ -2,8 +2,12 @@ package com.tanlong.exercise.app;
 
 import android.app.Application;
 
+import com.anupcowkur.reservoir.Reservoir;
 import com.baidu.mapapi.SDKInitializer;
 import com.orhanobut.logger.Logger;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,6 +21,7 @@ public class MyApplication extends Application {
 
         initBaiduMap();
         initLog();
+        initReservoir();
     }
 
     private void initLog() {
@@ -26,5 +31,13 @@ public class MyApplication extends Application {
 
     private void initBaiduMap() {
         SDKInitializer.initialize(getApplicationContext());
+    }
+
+    private void initReservoir() {
+        try {
+            Reservoir.init(this, 1024 * 1024 * 2);//设置缓存大小为 2M
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
