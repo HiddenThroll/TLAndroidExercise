@@ -77,6 +77,7 @@
 
     <string name="property_animator_exercise">属性动画练习</string>
     <string name="simple_property_animator">基本属性动画</string>
+    <string name="ball_fall_animator">小球落地动画</string>
 
     <!-- 百度地图练习-->
     <string name="baidu_map_exercise">百度地图练习</string>

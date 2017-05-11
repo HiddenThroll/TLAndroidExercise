@@ -87,6 +87,7 @@
 
     <array name="property_animator_category">
         <item>基本属性动画</item>
+        <item>小球落地</item>
     </array>
     <!-- 百度地图 -->
     <array name="baidu_map_category">

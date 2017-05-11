@@ -88,4 +88,7 @@ public class DisplayUtil {
         return result;
     }
 
+    public static int getToolsBarHeight(Context context) {
+        return dip2px(context, 48f);
+    }
 }
