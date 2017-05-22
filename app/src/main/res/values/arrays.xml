@@ -83,11 +83,16 @@
 
     <array name="animator_category">
         <item>属性动画</item>
+        <item>SVG矢量动画</item>
     </array>
 
     <array name="property_animator_category">
         <item>基本属性动画</item>
         <item>小球落地</item>
+    </array>
+
+    <array name="svg_animator_category">
+        <item>绘制设置按钮</item>
     </array>
     <!-- 百度地图 -->
     <array name="baidu_map_category">

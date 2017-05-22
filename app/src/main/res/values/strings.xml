@@ -79,6 +79,9 @@
     <string name="simple_property_animator">基本属性动画</string>
     <string name="ball_fall_animator">小球落地动画</string>
 
+    <string name="svg_animator_exercise">SVG动画练习</string>
+    <string name="draw_setting_animator">绘制设置Icon</string>
+
     <!-- 百度地图练习-->
     <string name="baidu_map_exercise">百度地图练习</string>
 

@@ -1,4 +1,4 @@
-package com.tanlong.exercise.ui.activity.view.animator;
+package com.tanlong.exercise.ui.activity.view.animator.svganimator;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.ui.activity.view.animator.propertyanimator.PropertyAnimatorCategoryActivity;
-import com.tanlong.exercise.ui.activity.view.animator.svganimator.SvgAnimatorCategoryActivity;
+import com.tanlong.exercise.ui.activity.view.animator.propertyanimator.BallAnimatorActivity;
+import com.tanlong.exercise.ui.activity.view.animator.propertyanimator.SimpleAnimatorActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,11 +18,10 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 /**
- * Created by Administrator on 2017/5/7.
+ * Created by Administrator on 2017/5/13.
  */
 
-public class AnimatorCategoryActivity extends BaseActivity {
-
+public class SvgAnimatorCategoryActivity extends BaseActivity {
     @Bind(R.id.lv_activity_category)
     ListView mLvCategory;
     @Bind(R.id.iv_back)
@@ -37,13 +36,13 @@ public class AnimatorCategoryActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         initView();
-        String[] items = getResources().getStringArray(R.array.animator_category);
+        String[] items = getResources().getStringArray(R.array.svg_animator_category);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_category, items);
         mLvCategory.setAdapter(adapter);
     }
 
     public void initView() {
-        mTvTitle.setText(R.string.animator_exercise);
+        mTvTitle.setText(R.string.svg_animator_exercise);
     }
 
     @OnClick(R.id.iv_back)
@@ -56,10 +55,10 @@ public class AnimatorCategoryActivity extends BaseActivity {
         Intent intent = new Intent();
         switch (position) {
             case 0:
-                intent.setClass(this, PropertyAnimatorCategoryActivity.class);
+                intent.setClass(this, DrawSettingActivity.class);
                 break;
             case 1:
-                intent.setClass(this, SvgAnimatorCategoryActivity.class);
+//                intent.setClass(this, BallAnimatorActivity.class);
                 break;
         }
 
