@@ -59,6 +59,9 @@ public class PropertyAnimatorCategoryActivity extends BaseActivity{
             case 1:
                 intent.setClass(this, BallAnimatorActivity.class);
                 break;
+            case 2:
+                intent.setClass(this, SmartMenuActivity.class);
+                break;
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {

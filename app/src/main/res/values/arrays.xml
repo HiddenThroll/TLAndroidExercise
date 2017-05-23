@@ -89,6 +89,7 @@
     <array name="property_animator_category">
         <item>基本属性动画</item>
         <item>小球落地</item>
+        <item>灵动菜单</item>
     </array>
 
     <array name="svg_animator_category">
