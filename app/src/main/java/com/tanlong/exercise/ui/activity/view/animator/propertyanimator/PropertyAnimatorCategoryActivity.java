@@ -62,6 +62,9 @@ public class PropertyAnimatorCategoryActivity extends BaseActivity{
             case 2:
                 intent.setClass(this, SmartMenuActivity.class);
                 break;
+            case 3:
+                intent.setClass(this, SmoothHideActivity.class);
+                break;
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {

@@ -90,6 +90,7 @@
         <item>基本属性动画</item>
         <item>小球落地</item>
         <item>灵动菜单</item>
+        <item>平滑显示/隐藏布局</item>
     </array>
 
     <array name="svg_animator_category">
