@@ -58,4 +58,6 @@ dependencies {
     compile 'com.anupcowkur:reservoir:3.1.0'
     // 引入SVG动画框架
     compile 'com.eftimoff:android-pathview:1.0.8@aar'
+    // 引入调色板
+    compile 'com.android.support:palette-v7:23.1.0'
 }

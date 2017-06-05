@@ -51,6 +51,7 @@
         <item>阴影背景</item>
         <item>PorterDuffXfermode实现圆角图片</item>
         <item>PorterDuffXfermode实现刮刮卡</item>
+        <item>根据图片动态改变颜色</item>
     </array>
 
     <array name="fragment_category">

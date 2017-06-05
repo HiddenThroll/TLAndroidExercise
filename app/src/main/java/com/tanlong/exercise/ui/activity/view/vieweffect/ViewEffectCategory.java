@@ -67,7 +67,9 @@ public class ViewEffectCategory extends BaseActivity {
             case 3:
                 intent.setClass(this, ScratchCardActivity.class);
                 break;
-
+            case 4:
+                intent.setClass(this, PaletteExerciseActivity.class);
+                break;
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {
