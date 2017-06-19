@@ -70,6 +70,9 @@ public class ViewEffectCategory extends BaseActivity {
             case 4:
                 intent.setClass(this, PaletteExerciseActivity.class);
                 break;
+            case 5:
+                intent.setClass(this, TintingAndClippingActivity.class);
+                break;
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {
