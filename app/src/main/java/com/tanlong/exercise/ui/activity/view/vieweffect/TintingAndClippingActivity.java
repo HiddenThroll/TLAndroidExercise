@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.util.DisplayUtil;
@@ -30,10 +31,10 @@ public class TintingAndClippingActivity extends BaseActivity {
     TextView tvTitle;
     @Bind(R.id.btn_help)
     Button btnHelp;
-    @Bind(R.id.iv_pic_1)
-    ImageView ivPic1;
-    @Bind(R.id.iv_pic_2)
-    ImageView ivPic2;
+    @Bind(R.id.tv_clip_1)
+    TextView tvClip1;
+    @Bind(R.id.tv_clip_2)
+    TextView tvClip2;
 
     ViewOutlineProvider providerRoundRect;
     ViewOutlineProvider providerCircle;
@@ -62,6 +63,7 @@ public class TintingAndClippingActivity extends BaseActivity {
                 }
             };
 
+
             providerCircle = new ViewOutlineProvider() {
                 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
                 @Override
@@ -69,6 +71,7 @@ public class TintingAndClippingActivity extends BaseActivity {
                     outline.setOval(0, 0, view.getWidth(), view.getHeight());
                 }
             };
+
         }
     }
 
@@ -77,7 +80,8 @@ public class TintingAndClippingActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.iv_back, R.id.btn_help, R.id.iv_pic_1, R.id.iv_pic_2})
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @OnClick({R.id.iv_back, R.id.btn_help, R.id.tv_clip_1, R.id.tv_clip_2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -86,15 +90,11 @@ public class TintingAndClippingActivity extends BaseActivity {
             case R.id.btn_help:
                 showTips();
                 break;
-            case R.id.iv_pic_1:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    ivPic1.setOutlineProvider(providerRoundRect);
-                }
+            case R.id.tv_clip_1:
+                tvClip1.setOutlineProvider(providerRoundRect);
                 break;
-            case R.id.iv_pic_2:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    ivPic2.setOutlineProvider(providerCircle);
-                }
+            case R.id.tv_clip_2:
+                tvClip2.setOutlineProvider(providerCircle);
                 break;
         }
     }

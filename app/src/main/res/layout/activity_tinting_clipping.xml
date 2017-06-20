@@ -17,7 +17,6 @@
             android:gravity="center_horizontal"
             >
             <ImageView
-                android:id="@+id/iv_pic_1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@mipmap/ic_launcher"
@@ -25,7 +24,6 @@
                 />
 
             <ImageView
-                android:id="@+id/iv_pic_2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@mipmap/ic_launcher"
@@ -49,6 +47,24 @@
                 android:elevation="10dp"
                 android:tint="@color/colorPrimary"
                 android:tintMode="multiply"
+                />
+
+            <TextView
+                android:id="@+id/tv_clip_1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:elevation="1dp"
+                android:text="@string/app_name"
+                />
+
+            <TextView
+                android:id="@+id/tv_clip_2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:elevation="1dp"
+                android:text="@string/app_name"
                 />
         </LinearLayout>
     </ScrollView>
