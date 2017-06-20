@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.animator.AnimatorCategoryActivity;
+import com.tanlong.exercise.ui.activity.view.cardview.SimpleCardViewActivity;
 import com.tanlong.exercise.ui.activity.view.customview.CustomViewCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.customviewgroup.CustomViewGroupCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.fragment.FragmentCategoryActivity;
@@ -88,6 +89,9 @@ public class ViewCategoryActivity extends BaseActivity {
                 break;
             case 8:
                 intent.setClass(this, AnimatorCategoryActivity.class);
+                break;
+            case 9:
+                intent.setClass(this, SimpleCardViewActivity.class);
                 break;
 
         }
