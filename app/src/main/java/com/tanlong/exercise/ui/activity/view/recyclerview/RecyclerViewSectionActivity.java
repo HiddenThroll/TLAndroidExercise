@@ -1,48 +1,66 @@
 package com.tanlong.exercise.ui.activity.view.recyclerview;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.model.entity.NewsItem;
+import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.NewsSectionAdapter;
-import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.base.MultiItemTypeAdapter;
-import com.tanlong.exercise.ui.activity.view.recyclerview.base.BaseRecyclerActivity;
 import com.tanlong.exercise.ui.activity.view.recyclerview.entity.SectionData;
-import com.tanlong.exercise.ui.activity.view.recyclerview.layoutmanager.MyLinearLayoutManager;
-import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.HeaderAndFooterWrapper;
-import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.PtrRecyclerLayout;
+import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.PtrRecycler;
+import com.tanlong.exercise.ui.activity.view.recyclerview.wrapper.PtrRecyclerHelper;
 import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
-import com.tanlong.exercise.util.ToastHelp;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
- *
  * Created by 龙 on 2017/3/15.
  */
 
-public class RecyclerViewSectionActivity extends BaseRecyclerActivity implements PtrRecyclerLayout.OnRefreshListener,
-        PtrRecyclerLayout.OnLoadMoreListener{
+public class RecyclerViewSectionActivity extends BaseActivity {
+
+    @Bind(R.id.iv_back)
+    ImageView ivBack;
+    @Bind(R.id.tv_title)
+    TextView tvTitle;
+    @Bind(R.id.btn_help)
+    Button btnHelp;
+    @Bind(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @Bind(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private List<SectionData<NewsItem>> mDatas;
     private NewsSectionAdapter mContentAdapter;
-    private HeaderAndFooterWrapper<NewsItem> mWrapperAdapter;
+
+    SectionMultiNewsPtrRecycler ptrRecycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_base_recycler_view);
+        ButterKnife.bind(this);
         initData();
         initView();
     }
 
     private void initData() {
         mDatas = new ArrayList<>();
-//        mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_1));
-//        mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_2));
-//        mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_3));
     }
 
     private List<SectionData<NewsItem>> addNewsItem(int count, int type) {
@@ -58,7 +76,7 @@ public class RecyclerViewSectionActivity extends BaseRecyclerActivity implements
                     break;
                 case NewsItem.NEWS_TYPE_2:
                     header = "第二类新闻";
-                    newsItem = new NewsItem("左侧图片 + 右侧标题 + 描述字段","一段内容","");
+                    newsItem = new NewsItem("左侧图片 + 右侧标题 + 描述字段", "一段内容", "");
                     break;
                 case NewsItem.NEWS_TYPE_3:
                     header = "第三类新闻";
@@ -66,9 +84,9 @@ public class RecyclerViewSectionActivity extends BaseRecyclerActivity implements
                     break;
             }
             if (i == 0) {
-                sectionData = new SectionData<NewsItem>(true, 0, header);
+                sectionData = new SectionData<>(true, 0, header);
             } else {
-                sectionData = new SectionData<NewsItem>(newsItem);
+                sectionData = new SectionData<>(newsItem);
             }
             datas.add(sectionData);
         }
@@ -76,62 +94,82 @@ public class RecyclerViewSectionActivity extends BaseRecyclerActivity implements
     }
 
 
-
     private void initView() {
-        setTitle(getString(R.string.recycler_view_section));
-        mContentAdapter = new NewsSectionAdapter(this, mDatas, R.layout.layout_recycler_section);
-        mWrapperAdapter = new HeaderAndFooterWrapper<>(mContentAdapter);
-        setLayoutManager(new MyLinearLayoutManager(this));
-        mContentAdapter.setmEmptyLayoutId(R.layout.layout_recycler_empty);
-        mContentAdapter.setOnRefreshEmptyView(new MultiItemTypeAdapter.OnRefreshEmptyView() {
-            @Override
-            public void onRefreshEmptyView() {
-                ToastHelp.showShortMsg(getApplicationContext(), "正在刷新...");
-                onRefresh();
-            }
-        });
-        setAdapter(mWrapperAdapter);
-
-        setRefreshListener(this);
-        setLoadMoreListener(this);
+        tvTitle.setText(R.string.recycler_view_section);
+        btnHelp.setVisibility(View.VISIBLE);
+        ptrRecycler = new SectionMultiNewsPtrRecycler(this);
+        ptrRecycler.init();
     }
 
-    @Override
-    public void onLoadMore() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                int size = mDatas.size();
-                if (size % 3 == 0) {
-                    mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_1));
-                } else if (size % 3 == 1) {
-                    mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_2));
-                } else if (size % 3 == 2) {
-                    mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_3));
+    @OnClick({R.id.iv_back, R.id.btn_help})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.btn_help:
+                showTips();
+                break;
+        }
+    }
+
+    private class SectionMultiNewsPtrRecycler extends PtrRecycler<SectionData<NewsItem>> {
+
+        public SectionMultiNewsPtrRecycler(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void getRefreshData() {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mDatas.clear();
+                    mDatas.addAll(addNewsItem(getmPageSize(), NewsItem.NEWS_TYPE_1));
+                    mDatas.addAll(addNewsItem(getmPageSize(), NewsItem.NEWS_TYPE_2));
+                    mDatas.addAll(addNewsItem(getmPageSize(), NewsItem.NEWS_TYPE_3));
+                    finishPullRefresh();
                 }
+            }, 2000);
+        }
 
-                mWrapperAdapter.notifyDataSetChanged();
-                onRefreshComplete();
-            }
-        }, 2000);
+        @Override
+        protected void getLoadMoreData() {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    int size = mDatas.size();
+                    if (size % 3 == 0) {
+                        mDatas.addAll(addNewsItem(getmPageSize(), NewsItem.NEWS_TYPE_1));
+                    } else if (size % 3 == 1) {
+                        mDatas.addAll(addNewsItem(getmPageSize(), NewsItem.NEWS_TYPE_2));
+                    } else if (size % 3 == 2) {
+                        mDatas.addAll(addNewsItem(getmPageSize(), NewsItem.NEWS_TYPE_3));
+                    }
+                    finishLoadMore(getmPageSize());
+                }
+            }, 2000);
+        }
+
+        @Override
+        protected PtrRecyclerHelper getPtrRecyclerHelper() {
+            View mFooterView = LayoutInflater.from(getContext()).inflate(R.layout.layout_refresh_item, null);
+            TextView tvLoadMoreTips = (TextView) mFooterView.findViewById(R.id.tv_refresh_tips);
+            tvLoadMoreTips.setText("正在加载...");
+
+            PtrRecyclerHelper ptrRecyclerHelper = new PtrRecyclerHelper(swipeRefreshLayout,
+                    recyclerView, mFooterView);
+            return ptrRecyclerHelper;
+        }
+
+        @Override
+        protected RecyclerView.Adapter getAdapter() {
+            mContentAdapter = new NewsSectionAdapter(getContext(), mDatas, R.layout.layout_recycler_section);
+            mContentAdapter.setmEmptyLayoutId(R.layout.layout_recycler_empty);
+            return mContentAdapter;
+        }
     }
 
-    @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mDatas.clear();
-                mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_1));
-                mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_2));
-                mDatas.addAll(addNewsItem(10, NewsItem.NEWS_TYPE_3));
-                mWrapperAdapter.notifyDataSetChanged();
-                onRefreshComplete();
-            }
-        }, 2000);
-    }
-
-    @Override
     public void showTips() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("添加Section原理: \n")

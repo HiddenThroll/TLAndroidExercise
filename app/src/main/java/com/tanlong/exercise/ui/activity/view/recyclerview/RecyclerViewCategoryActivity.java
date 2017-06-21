@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.ui.activity.view.recyclerview.base.BaseRecyclerActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

@@ -1,30 +1,27 @@
 package com.tanlong.exercise.ui.activity.view.recyclerview.wrapper;
 
-import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
-import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.view.recyclerview.layoutmanager.ILayoutManager;
 
 
 /**
- * 包含SwipeRefreshLayout和RecyclerView，实现下拉刷新，上拉加载
- * Created by 龙 on 2017/3/14.
+ * Created by 龙 on 2017/5/17.
  */
 
-public class PtrRecyclerLayout extends FrameLayout implements SwipeRefreshLayout.OnRefreshListener{
+public class PtrRecyclerHelper implements SwipeRefreshLayout.OnRefreshListener{
+
+    private final String TAG = getClass().getSimpleName();
 
     public static final int ACTION_PULL_TO_REFRESH = 1;
     public static final int ACTION_LOAD_MORE_REFRESH = 2;
     public static final int ACTION_IDLE = 0;
-
-    private int TRIGGER_LOAD_MORE_ITEM_COUNT = 5;
+    /**
+     * 当最后一个可见Item距总Item个数小于该值时，触发加载更多
+     */
+    private int TRIGGER_LOAD_MORE_ITEM_COUNT = 1;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
@@ -40,46 +37,56 @@ public class PtrRecyclerLayout extends FrameLayout implements SwipeRefreshLayout
     private HeaderAndFooterWrapper mAdapter;
     private View mFooterView;
 
-    public PtrRecyclerLayout(Context context) {
-        super(context);
-        initView();
+    private int scrollState = -1;//记录RecyclerView的滑动状态, 避免首次刷新时加载数据无法铺满屏幕触发上拉加载
+
+    public interface OnRefreshListener {
+        void onRefresh();
     }
 
-    public PtrRecyclerLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView();
+    public interface OnLoadMoreListener {
+        void onLoadMore();
     }
 
-    public PtrRecyclerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initView();
+    public PtrRecyclerHelper(SwipeRefreshLayout mSwipeRefreshLayout, RecyclerView mRecyclerView,
+                             View footerView) {
+        this.mSwipeRefreshLayout = mSwipeRefreshLayout;
+        this.mRecyclerView = mRecyclerView;
+        this.mFooterView = footerView;
     }
 
-    private void initView() {
-        View contentView = LayoutInflater.from(getContext()).inflate(R.layout.layout_ptr_recycler, this, true);
-        mRecyclerView = (RecyclerView) contentView.findViewById(R.id.recyclerView);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.swipeRefreshLayout);
-        mFooterView = LayoutInflater.from(getContext()).inflate(R.layout.layout_refresh_item, null);
-        TextView tvLoadMoreTips = (TextView) mFooterView.findViewById(R.id.tv_refresh_tips);
-        tvLoadMoreTips.setText("正在加载...");
+    public SwipeRefreshLayout getmSwipeRefreshLayout() {
+        return mSwipeRefreshLayout;
+    }
 
+    public RecyclerView getmRecyclerView() {
+        return mRecyclerView;
+    }
+
+    public void init() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                scrollState = newState;
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (mCurrentState == ACTION_IDLE && isLoadMoreEnabled && checkIfNeedLoadMore()) {
+                if (mCurrentState == ACTION_IDLE && isLoadMoreEnabled
+                        && scrollState != -1 && checkIfNeedLoadMore()) {
                     mCurrentState = ACTION_LOAD_MORE_REFRESH;
-                    mAdapter.addFootView(mFooterView);
-                    mLoadMoreListener.onLoadMore();
+                    recyclerView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mAdapter.addFootView(mFooterView);
+                            mLoadMoreListener.onLoadMore();
+                        }
+                    });
                 }
             }
         });
-    }
+}
 
     public void setLayoutManager(ILayoutManager manager) {
         mLayoutManager = manager;
@@ -124,6 +131,14 @@ public class PtrRecyclerLayout extends FrameLayout implements SwipeRefreshLayout
         mCurrentState = ACTION_IDLE;
     }
 
+    public void doRefresh() {
+        if (mRefreshListener != null) {
+            mSwipeRefreshLayout.setRefreshing(true);
+            mCurrentState = ACTION_PULL_TO_REFRESH;
+            mRefreshListener.onRefresh();
+        }
+    }
+
     public void enablePullToRefresh(boolean enable) {
         isPullToRefreshEnabled = enable;
         mSwipeRefreshLayout.setEnabled(enable);
@@ -140,38 +155,17 @@ public class PtrRecyclerLayout extends FrameLayout implements SwipeRefreshLayout
     private boolean checkIfNeedLoadMore() {
         int lastVisibleItemPosition = mLayoutManager.findLastVisiblePosition();
         int totalCount = mLayoutManager.getLayoutManager().getItemCount();
-        return totalCount - lastVisibleItemPosition < TRIGGER_LOAD_MORE_ITEM_COUNT;
+        if (totalCount == 0) {//空列表时，不允许加载更多
+            return false;
+        }
+        return totalCount - lastVisibleItemPosition <= TRIGGER_LOAD_MORE_ITEM_COUNT;
     }
 
-    public interface OnRefreshListener {
-        void onRefresh();
-    }
-
-    public interface OnLoadMoreListener {
-        void onLoadMore();
-    }
-
-    public View getmFooterView() {
-        return mFooterView;
-    }
-
-    public void setmFooterView(View mFooterView) {
-        this.mFooterView = mFooterView;
-    }
-
-    public int getTRIGGER_LOAD_MORE_ITEM_COUNT() {
-        return TRIGGER_LOAD_MORE_ITEM_COUNT;
-    }
-
-    public void setTRIGGER_LOAD_MORE_ITEM_COUNT(int TRIGGER_LOAD_MORE_ITEM_COUNT) {
-        this.TRIGGER_LOAD_MORE_ITEM_COUNT = TRIGGER_LOAD_MORE_ITEM_COUNT;
-    }
-
-    public void setmRefreshListener(OnRefreshListener mRefreshListener) {
+    public void setRefreshListener(OnRefreshListener mRefreshListener) {
         this.mRefreshListener = mRefreshListener;
     }
 
-    public void setmLoadMoreListener(OnLoadMoreListener mLoadMoreListener) {
+    public void setLoadMoreListener(OnLoadMoreListener mLoadMoreListener) {
         this.mLoadMoreListener = mLoadMoreListener;
     }
 }
