@@ -87,6 +87,7 @@
     <array name="animator_category">
         <item>属性动画</item>
         <item>SVG矢量动画</item>
+        <item>Activity过场动画</item>
     </array>
 
     <array name="property_animator_category">
