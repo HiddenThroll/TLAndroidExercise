@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
+import com.tanlong.exercise.ui.activity.view.animator.activityanimator.ActivityAnimatorCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.animator.propertyanimator.PropertyAnimatorCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.animator.svganimator.SvgAnimatorCategoryActivity;
 
@@ -60,6 +61,9 @@ public class AnimatorCategoryActivity extends BaseActivity {
                 break;
             case 1:
                 intent.setClass(this, SvgAnimatorCategoryActivity.class);
+                break;
+            case 2:
+                intent.setClass(this, ActivityAnimatorCategoryActivity.class);
                 break;
         }
 

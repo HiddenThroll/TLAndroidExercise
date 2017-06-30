@@ -82,6 +82,8 @@
     <string name="svg_animator_exercise">SVG动画练习</string>
     <string name="draw_setting_animator">绘制设置Icon</string>
 
+    <string name="share_activity">share_transition</string>
+
     <!-- 百度地图练习-->
     <string name="baidu_map_exercise">百度地图练习</string>
 

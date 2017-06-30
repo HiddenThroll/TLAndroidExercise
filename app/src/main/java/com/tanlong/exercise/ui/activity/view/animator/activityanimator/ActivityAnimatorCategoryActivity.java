@@ -68,6 +68,7 @@ public class ActivityAnimatorCategoryActivity extends BaseActivity {
                 startActivityTransitionAnimator(TransitionActivity.MODE_FADE);
                 break;
             case R.id.btn_transition_change_bounds:
+                startShareActivityTransitionAnimator();
                 break;
         }
     }
@@ -81,6 +82,19 @@ public class ActivityAnimatorCategoryActivity extends BaseActivity {
         intent.putExtra(TransitionActivity.SELECT_MODE, flag);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle());
+        } else {
+            ToastHelp.showShortMsg(this, "不支持过场动画");
+            startActivity(intent);
+        }
+    }
+
+    private void startShareActivityTransitionAnimator() {
+        Intent intent = new Intent(this, TransitionActivity.class);
+        intent.putExtra(TransitionActivity.SELECT_MODE, TransitionActivity.MODE_SHARE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            String key = getString(R.string.share_activity);
+            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                    ivShare, key).toBundle());
         } else {
             ToastHelp.showShortMsg(this, "不支持过场动画");
             startActivity(intent);
