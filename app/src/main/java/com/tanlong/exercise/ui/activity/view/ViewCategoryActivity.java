@@ -15,6 +15,7 @@ import com.tanlong.exercise.ui.activity.view.customview.CustomViewCategoryActivi
 import com.tanlong.exercise.ui.activity.view.customviewgroup.CustomViewGroupCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.fragment.FragmentCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.listview.ListViewCategoryActivity;
+import com.tanlong.exercise.ui.activity.view.notification.NotificationCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.recyclerview.RecyclerViewCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.surfaceview.SurfaceViewCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.vieweffect.ViewEffectCategory;
@@ -92,6 +93,9 @@ public class ViewCategoryActivity extends BaseActivity {
                 break;
             case 9:
                 intent.setClass(this, SimpleCardViewActivity.class);
+                break;
+            case 10:
+                intent.setClass(this, NotificationCategoryActivity.class);
                 break;
 
         }

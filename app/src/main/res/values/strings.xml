@@ -84,6 +84,8 @@
 
     <string name="share_activity">share_transition</string>
 
+    <string name="notification_exercise">通知练习</string>
+
     <!-- 百度地图练习-->
     <string name="baidu_map_exercise">百度地图练习</string>
 

@@ -17,6 +17,7 @@
         <item>SurfaceView练习</item>
         <item>动画练习</item>
         <item>CardView练习</item>
+        <item>通知练习</item>
     </array>
 
     <array name="custom_view_category">
@@ -100,6 +101,14 @@
     <array name="svg_animator_category">
         <item>绘制设置按钮</item>
     </array>
+
+    <array name="notification_category">
+        <item>普通通知，点击后打开指定Activity</item>
+        <item>高优先级，无法通过左右滑动清除的通知</item>
+        <item>不确定进度的通知</item>
+        <item>确定进度的通知</item>
+    </array>
+
     <!-- 百度地图 -->
     <array name="baidu_map_category">
         <item>基础地图练习</item>
