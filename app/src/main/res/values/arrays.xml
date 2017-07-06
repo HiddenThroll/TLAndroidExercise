@@ -107,6 +107,7 @@
         <item>高优先级，无法通过左右滑动清除的通知</item>
         <item>不确定进度的通知</item>
         <item>确定进度的通知</item>
+        <item>自定义View的通知</item>
     </array>
 
     <!-- 百度地图 -->

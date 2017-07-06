@@ -3,9 +3,10 @@ package com.tanlong.exercise.ui.activity.view.notification;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
@@ -22,11 +24,14 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.ViewCategoryActivity;
 import com.tanlong.exercise.util.NumberUtil;
+import com.tanlong.exercise.util.ToastHelp;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+
+import static com.baidu.location.g.h.t;
 
 /**
  * Created by 龙 on 2017/7/5.
@@ -44,13 +49,23 @@ public class NotificationCategoryActivity extends BaseActivity {
     ListView lvActivityCategory;
 
     NotificationManager notificationManager;
-    NotificationCompat.Builder builder;
 
     private final int NORMAL_NOTIFICATION = 1;
     private final int NO_CLEAR_NOTIFICATION = 2;
     private final int INDETERMINATE_NOTIFICATION = 3;
     private final int SPECIFIC_NOTIFICATION = 4;
+    private final int CUSTOM_VIEW_NOTIFICATION = 5;
 
+    private final String ACTION_MUSIC = "action_music";
+    private final int ACTION_PLAY = 1;
+    private final int ACTION_PAUSE = 2;
+    private final int ACTION_NEXT = 3;
+    private final int ACTION_CLOSE = 4;
+
+    private int curMusicState = ACTION_PLAY;
+    NotificationCompat.Builder musicBuilder;
+    RemoteViews musicRemoteViews;
+    MusicBroadcastReceiver musicBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +75,14 @@ public class NotificationCategoryActivity extends BaseActivity {
 
         initView();
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);//获得NotificationManager
-        builder = new NotificationCompat.Builder(this);
+        musicBroadcastReceiver = new MusicBroadcastReceiver();
+        registerReceiver(musicBroadcastReceiver, new IntentFilter(ACTION_MUSIC));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(musicBroadcastReceiver);
     }
 
     public void initView() {
@@ -98,7 +120,9 @@ public class NotificationCategoryActivity extends BaseActivity {
             case 3://显示具体进度的通知
                 showSpecificNotification();
                 break;
-
+            case 4://显示自定义View的通知
+                showCustomViewNotification();
+                break;
         }
     }
 
@@ -106,6 +130,7 @@ public class NotificationCategoryActivity extends BaseActivity {
      * 显示普通通知
      */
     private void showNormalNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         Intent intent = new Intent(this, ViewCategoryActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, NORMAL_NOTIFICATION, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -125,6 +150,7 @@ public class NotificationCategoryActivity extends BaseActivity {
      * 显示无法通过左右滑动消除的通知，适用于高优先级通知
      */
     private void showNoClearNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         Intent intent = new Intent(this, ViewCategoryActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, NO_CLEAR_NOTIFICATION, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -144,6 +170,7 @@ public class NotificationCategoryActivity extends BaseActivity {
      * 显示不带具体进度值的通知
      */
     private void showIndeterminateNotification() {
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, INDETERMINATE_NOTIFICATION, new Intent(),
                 PendingIntent.FLAG_ONE_SHOT);
         Notification notification = builder.setContentTitle("通知标题")
@@ -174,6 +201,7 @@ public class NotificationCategoryActivity extends BaseActivity {
      * 显示具体进度的通知
      */
     public void showSpecificNotification() {
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, SPECIFIC_NOTIFICATION, new Intent(),
                 PendingIntent.FLAG_ONE_SHOT);
         Notification notification = builder.setContentTitle("通知标题")
@@ -210,8 +238,80 @@ public class NotificationCategoryActivity extends BaseActivity {
         countDownTimer.start();
     }
 
+    public void showCustomViewNotification() {
+        musicBuilder = new NotificationCompat.Builder(this);
+        musicRemoteViews = new RemoteViews(getPackageName(), R.layout.layout_custom_notification);
+        //点击事件处理
+        initMusicPendingIntent();
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, CUSTOM_VIEW_NOTIFICATION,
+                new Intent(), PendingIntent.FLAG_UPDATE_CURRENT);
+        Notification notification = musicBuilder.setContent(musicRemoteViews)
+                .setContentIntent(pendingIntent)
+                .setOngoing(true)
+                .setTicker("开始播放")
+                .setSmallIcon(R.mipmap.ic_launcher)//必须要设置，否则无法显示通知
+                .build();
+        notification.flags = NotificationCompat.FLAG_NO_CLEAR;
+
+        notificationManager.notify(CUSTOM_VIEW_NOTIFICATION, notification);
+    }
+
+    private void initMusicPendingIntent() {
+        //播放/暂停按钮
+        Intent startIntent = new Intent(ACTION_MUSIC);
+        Logger.e("curMusicState is " + curMusicState);
+        startIntent.putExtra(ACTION_MUSIC, curMusicState);
+        PendingIntent startPendingIntent = PendingIntent.getBroadcast(this, curMusicState,
+                startIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        musicRemoteViews.setOnClickPendingIntent(R.id.iv_start, startPendingIntent);
+        //下一首
+        startIntent.putExtra(ACTION_MUSIC, ACTION_NEXT);
+        PendingIntent nextPendingIntent = PendingIntent.getBroadcast(this, ACTION_NEXT,
+                startIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        musicRemoteViews.setOnClickPendingIntent(R.id.iv_next, nextPendingIntent);
+
+        startIntent.putExtra(ACTION_MUSIC, ACTION_CLOSE);
+        PendingIntent closePendingIntent = PendingIntent.getBroadcast(this, ACTION_CLOSE,
+                startIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        musicRemoteViews.setOnClickPendingIntent(R.id.iv_close, closePendingIntent);
+    }
+
     private void showTips() {
 
+    }
+
+    private class MusicBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (ACTION_MUSIC.equals(action)) {
+                int result = intent.getIntExtra(ACTION_MUSIC, 0);
+                Logger.e("result is " + result);
+                switch (result) {
+                    case ACTION_PLAY:
+                        ToastHelp.showShortMsg(context, "暂停播放");
+                        curMusicState = ACTION_PAUSE;
+                        initMusicPendingIntent();
+                        musicRemoteViews.setImageViewResource(R.id.iv_start, android.R.drawable.ic_media_play);
+                        notificationManager.notify(CUSTOM_VIEW_NOTIFICATION, musicBuilder.setContent(musicRemoteViews).build());
+                        break;
+                    case ACTION_PAUSE:
+                        ToastHelp.showShortMsg(context, "开始播放");
+                        curMusicState = ACTION_PLAY;
+                        initMusicPendingIntent();
+                        musicRemoteViews.setImageViewResource(R.id.iv_start, android.R.drawable.ic_media_pause);
+                        notificationManager.notify(CUSTOM_VIEW_NOTIFICATION, musicBuilder.setContent(musicRemoteViews).build());
+                        break;
+                    case ACTION_NEXT:
+                        ToastHelp.showShortMsg(context, "播放下一首歌曲");
+                        break;
+                    case ACTION_CLOSE:
+                        notificationManager.cancel(CUSTOM_VIEW_NOTIFICATION);
+                        break;
+                }
+            }
+        }
     }
 
 }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dp"
+    android:background="@color/color_black"
+    >
+
+    <ImageView
+        android:id="@+id/iv_music"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@mipmap/ic_guide_1"
+        />
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        />
+
+    <ImageView
+        android:id="@+id/iv_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_media_next"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/iv_close"
+        android:layout_marginRight="8dp"
+        />
+
+    <ImageView
+        android:id="@+id/iv_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_media_pause"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/iv_next"
+        android:layout_marginRight="4dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_music_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Just Last One Dance"
+        android:textColor="@color/color_white"
+        android:textSize="20sp"
+        android:layout_alignTop="@id/iv_music"
+        android:layout_toRightOf="@id/iv_music"
+        android:layout_toLeftOf="@id/iv_start"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sarah Connor"
+        android:textColor="#A0A0A0"
+        android:textSize="18sp"
+        android:layout_below="@id/tv_music_name"
+        android:layout_alignLeft="@id/tv_music_name"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_toLeftOf="@id/iv_start"
+        android:maxLines="1"
+        android:ellipsize="end"
+        />
+
+</RelativeLayout>
