@@ -82,6 +82,8 @@
     <string name="svg_animator_exercise">SVG动画练习</string>
     <string name="draw_setting_animator">绘制设置Icon</string>
 
+    <string name="activity_transition_exercise">Activity转场动画练习</string>
+    <string name="activity_transition">Activity转场动画</string>
     <string name="share_activity">share_transition</string>
 
     <string name="notification_exercise">通知练习</string>
@@ -108,4 +110,5 @@
     <string name="aidl_ipc">使用AIDL实现IPC</string>
     <string name="later_is_batter_than_never">Later is batter than Never!!!</string>
     <string name="simple_cardview_exercise">简单CardView练习</string>
+
 </resources>
