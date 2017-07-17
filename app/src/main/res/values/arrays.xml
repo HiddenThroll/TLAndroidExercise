@@ -89,6 +89,7 @@
         <item>属性动画</item>
         <item>SVG矢量动画</item>
         <item>Activity过场动画</item>
+        <item>Material Design动画效果</item>
     </array>
 
     <array name="property_animator_category">
@@ -96,6 +97,10 @@
         <item>小球落地</item>
         <item>灵动菜单</item>
         <item>平滑显示/隐藏布局</item>
+    </array>
+
+    <array name="material_design_animator_category">
+        <item>Ripple效果</item>
     </array>
 
     <array name="svg_animator_category">

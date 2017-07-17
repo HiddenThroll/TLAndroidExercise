@@ -1,4 +1,4 @@
-package com.tanlong.exercise.ui.activity.view.animator;
+package com.tanlong.exercise.ui.activity.view.animator.mdanimator;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,6 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.ui.activity.view.animator.activityanimator.ActivityAnimatorCategoryActivity;
-import com.tanlong.exercise.ui.activity.view.animator.mdanimator.MDAnimatorCategoryActivity;
-import com.tanlong.exercise.ui.activity.view.animator.propertyanimator.PropertyAnimatorCategoryActivity;
-import com.tanlong.exercise.ui.activity.view.animator.svganimator.SvgAnimatorCategoryActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,10 +16,10 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 /**
- * Created by Administrator on 2017/5/7.
+ * Created by Administrator on 2017/7/17.
  */
 
-public class AnimatorCategoryActivity extends BaseActivity {
+public class MDAnimatorCategoryActivity extends BaseActivity {
 
     @Bind(R.id.lv_activity_category)
     ListView mLvCategory;
@@ -39,7 +35,7 @@ public class AnimatorCategoryActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         initView();
-        String[] items = getResources().getStringArray(R.array.animator_category);
+        String[] items = getResources().getStringArray(R.array.material_design_animator_category);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_category, items);
         mLvCategory.setAdapter(adapter);
     }
@@ -58,16 +54,13 @@ public class AnimatorCategoryActivity extends BaseActivity {
         Intent intent = new Intent();
         switch (position) {
             case 0:
-                intent.setClass(this, PropertyAnimatorCategoryActivity.class);
+                intent.setClass(this, RippleActivity.class);
                 break;
             case 1:
-                intent.setClass(this, SvgAnimatorCategoryActivity.class);
+
                 break;
             case 2:
-                intent.setClass(this, ActivityAnimatorCategoryActivity.class);
-                break;
-            case 3:
-                intent.setClass(this, MDAnimatorCategoryActivity.class);
+
                 break;
         }
 
@@ -77,4 +70,5 @@ public class AnimatorCategoryActivity extends BaseActivity {
             showShortMessage(R.string.no_available_activity);
         }
     }
+
 }

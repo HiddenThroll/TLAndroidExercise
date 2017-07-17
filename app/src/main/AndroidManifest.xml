@@ -231,6 +231,7 @@
             android:launchMode="singleTop"
             android:configChanges="keyboard"
             />
+
         <!-- ViewPager练习相关 -->
         <activity android:name=".ui.activity.view.viewpager.ViewPagerCategoryActivity"
             android:screenOrientation="portrait"
@@ -272,6 +273,7 @@
             android:launchMode="singleTop"
             android:configChanges="keyboard"
             />
+
         <!-- RecyclerView练习相关-->
         <activity android:name=".ui.activity.view.recyclerview.RecyclerViewCategoryActivity"
             android:screenOrientation="portrait"
@@ -378,6 +380,17 @@
             android:configChanges="keyboard"
             />
         <activity android:name=".ui.activity.view.animator.activityanimator.TransitionActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
+        <!-- Material Design动画效果 -->
+        <activity android:name=".ui.activity.view.animator.mdanimator.MDAnimatorCategoryActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard"
+            />
+        <activity android:name=".ui.activity.view.animator.mdanimator.RippleActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:configChanges="keyboard"
