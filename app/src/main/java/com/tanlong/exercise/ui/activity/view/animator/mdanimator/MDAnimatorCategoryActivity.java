@@ -57,7 +57,7 @@ public class MDAnimatorCategoryActivity extends BaseActivity {
                 intent.setClass(this, RippleActivity.class);
                 break;
             case 1:
-
+                intent.setClass(this, CircularRevealActivity.class);
                 break;
             case 2:
 
