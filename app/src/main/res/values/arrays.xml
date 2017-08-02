@@ -18,6 +18,7 @@
         <item>动画练习</item>
         <item>CardView练习</item>
         <item>通知练习</item>
+        <item>ConstraintLayout练习</item>
     </array>
 
     <array name="custom_view_category">
@@ -114,6 +115,10 @@
         <item>不确定进度的通知</item>
         <item>确定进度的通知</item>
         <item>自定义View的通知</item>
+    </array>
+
+    <array name="constraint_layout_category">
+        <item>简单示例</item>
     </array>
 
     <!-- 百度地图 -->
