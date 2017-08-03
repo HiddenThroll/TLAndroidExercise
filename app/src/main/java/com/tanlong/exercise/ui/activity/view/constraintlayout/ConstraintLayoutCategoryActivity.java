@@ -65,7 +65,15 @@ public class ConstraintLayoutCategoryActivity extends BaseActivity {
         Intent intent = new Intent();
         switch (position) {
             case 0:
-            intent.setClass(this, SimpleConstraintActivity.class);
+                intent.setClass(this, SimpleConstraintActivity.class);
+                break;
+            case 1:
+                intent.setClass(this, ConstraintAnimationActivity.class);
+                break;
+            case 2:
+                intent.setClass(this, ConstraintChangeActivity.class);
+                break;
+
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {

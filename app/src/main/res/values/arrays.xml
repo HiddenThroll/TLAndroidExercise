@@ -119,6 +119,8 @@
 
     <array name="constraint_layout_category">
         <item>简单示例</item>
+        <item>简单动画</item>
+        <item>布局切换</item>
     </array>
 
     <!-- 百度地图 -->
