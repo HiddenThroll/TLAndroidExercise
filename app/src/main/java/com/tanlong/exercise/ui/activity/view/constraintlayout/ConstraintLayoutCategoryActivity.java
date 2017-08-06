@@ -1,4 +1,4 @@
-package com.tanlong.exercise.ui.activity.view;
+package com.tanlong.exercise.ui.activity.view.constraintlayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.animator.AnimatorCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.cardview.SimpleCardViewActivity;
-import com.tanlong.exercise.ui.activity.view.constraintlayout.ConstraintLayoutCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.customview.CustomViewCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.customviewgroup.CustomViewGroupCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.fragment.FragmentCategoryActivity;
@@ -28,10 +27,10 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 /**
- *
- * Created by 龙 on 2016/6/24.
+ * Created by 龙 on 2017/8/2.
  */
-public class ViewCategoryActivity extends BaseActivity {
+
+public class ConstraintLayoutCategoryActivity extends BaseActivity {
 
     @Bind(R.id.lv_activity_category)
     ListView mLvCategory;
@@ -47,7 +46,7 @@ public class ViewCategoryActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         initView();
-        String[] items = getResources().getStringArray(R.array.view_category);
+        String[] items = getResources().getStringArray(R.array.constraint_layout_category);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_category, items);
         mLvCategory.setAdapter(adapter);
     }
@@ -66,40 +65,13 @@ public class ViewCategoryActivity extends BaseActivity {
         Intent intent = new Intent();
         switch (position) {
             case 0:
-                intent.setClass(this, CustomViewCategoryActivity.class);
+                intent.setClass(this, SimpleConstraintActivity.class);
                 break;
             case 1:
-                intent.setClass(this, CustomViewGroupCategoryActivity.class);
+                intent.setClass(this, ConstraintAnimationActivity.class);
                 break;
             case 2:
-                intent.setClass(this, ListViewCategoryActivity.class);
-                break;
-            case 3:
-                intent.setClass(this, ViewEffectCategory.class);
-                break;
-            case 4:
-                intent.setClass(this, FragmentCategoryActivity.class);
-                break;
-            case 5:
-                intent.setClass(this, ViewPagerCategoryActivity.class);
-                break;
-            case 6:
-                intent.setClass(this, RecyclerViewCategoryActivity.class);
-                break;
-            case 7:
-                intent.setClass(this, SurfaceViewCategoryActivity.class);
-                break;
-            case 8:
-                intent.setClass(this, AnimatorCategoryActivity.class);
-                break;
-            case 9:
-                intent.setClass(this, SimpleCardViewActivity.class);
-                break;
-            case 10:
-                intent.setClass(this, NotificationCategoryActivity.class);
-                break;
-            case 11:
-                intent.setClass(this, ConstraintLayoutCategoryActivity.class);
+                intent.setClass(this, ConstraintChangeActivity.class);
                 break;
 
         }
@@ -110,4 +82,5 @@ public class ViewCategoryActivity extends BaseActivity {
             showShortMessage(R.string.no_available_activity);
         }
     }
+
 }

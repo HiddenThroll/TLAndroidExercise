@@ -31,8 +31,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 
-import static com.baidu.location.g.h.t;
-
 /**
  * Created by 龙 on 2017/7/5.
  */
@@ -277,6 +275,8 @@ public class NotificationCategoryActivity extends BaseActivity {
     }
 
     private void showTips() {
+        StringBuilder stringBuilder = new StringBuilder();
+
 
     }
 
