@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_notification_expand"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:scaleType="fitCenter"
+        />
+
+    <TextView
+        android:id="@+id/tv_expanded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="展开时显示的通知"
+        android:textColor="@color/color_black"
+        android:layout_toRightOf="@id/iv_notification_expand"
+        android:layout_centerVertical="true"
+        />
+
+    <ImageView
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:scaleType="fitCenter"
+        android:layout_below="@id/iv_notification_expand"
+        />
+
+</RelativeLayout>

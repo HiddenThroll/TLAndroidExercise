@@ -116,6 +116,7 @@
         <item>不确定进度的通知</item>
         <item>确定进度的通知</item>
         <item>自定义View的通知</item>
+        <item>折叠式通知</item>
     </array>
 
     <array name="constraint_layout_category">

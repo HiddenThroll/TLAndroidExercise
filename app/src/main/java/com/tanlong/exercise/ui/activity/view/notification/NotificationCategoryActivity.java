@@ -1,5 +1,6 @@
 package com.tanlong.exercise.ui.activity.view.notification;
 
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -7,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -53,6 +55,7 @@ public class NotificationCategoryActivity extends BaseActivity {
     private final int INDETERMINATE_NOTIFICATION = 3;
     private final int SPECIFIC_NOTIFICATION = 4;
     private final int CUSTOM_VIEW_NOTIFICATION = 5;
+    private final int COLLAPSED_NOTIFICATION = 6;
 
     private final String ACTION_MUSIC = "action_music";
     private final int ACTION_PLAY = 1;
@@ -120,6 +123,9 @@ public class NotificationCategoryActivity extends BaseActivity {
                 break;
             case 4://显示自定义View的通知
                 showCustomViewNotification();
+                break;
+            case 5://显示折叠式通知
+                showExpandNotification();
                 break;
         }
     }
@@ -236,6 +242,9 @@ public class NotificationCategoryActivity extends BaseActivity {
         countDownTimer.start();
     }
 
+    /**
+     * 显示自定义View的通知
+     */
     public void showCustomViewNotification() {
         musicBuilder = new NotificationCompat.Builder(this);
         musicRemoteViews = new RemoteViews(getPackageName(), R.layout.layout_custom_notification);
@@ -272,6 +281,27 @@ public class NotificationCategoryActivity extends BaseActivity {
         PendingIntent closePendingIntent = PendingIntent.getBroadcast(this, ACTION_CLOSE,
                 startIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         musicRemoteViews.setOnClickPendingIntent(R.id.iv_close, closePendingIntent);
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void showExpandNotification() {
+        Intent intent = new Intent(this, ViewCategoryActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, NORMAL_NOTIFICATION, intent,
+                PendingIntent.FLAG_ONE_SHOT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        Notification notification = builder.setContentText("折叠式通知描述")
+                .setContentTitle("折叠式通知标题")
+                .setSmallIcon(R.mipmap.ic_launcher)//必须要设置，否则无法显示通知
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .build();
+
+        notification.flags = Notification.FLAG_AUTO_CANCEL;//设置通知点击后自动取消
+        RemoteViews expandedView = new RemoteViews(getPackageName(), R.layout.layout_notification_expanded);
+        expandedView.setTextViewText(R.id.tv_expanded, "展开时显示的通知");
+        notification.bigContentView = expandedView;
+
+        notificationManager.notify(COLLAPSED_NOTIFICATION, notification);
     }
 
     private void showTips() {
