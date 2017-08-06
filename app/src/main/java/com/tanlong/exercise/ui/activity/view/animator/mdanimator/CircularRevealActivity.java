@@ -69,7 +69,7 @@ public class CircularRevealActivity extends BaseActivity {
                 .append("参数意义分别是\n")
                 .append("(1) 目标View\n")
                 .append("(2) 动画开始中心点X\n")
-                .append("(3) 动画开始中心点X\n")
+                .append("(3) 动画开始中心点Y\n")
                 .append("(4) 动画开始半径\n")
                 .append("(5) 动画结束半径");
         ShowTipsFragment.newInstance(stringBuilder.toString()).show(getSupportFragmentManager(), "");

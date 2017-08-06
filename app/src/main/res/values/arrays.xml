@@ -102,6 +102,7 @@
     <array name="material_design_animator_category">
         <item>Ripple效果</item>
         <item>Circular Reveal效果</item>
+        <item>StateListAnimator</item>
     </array>
 
     <array name="svg_animator_category">

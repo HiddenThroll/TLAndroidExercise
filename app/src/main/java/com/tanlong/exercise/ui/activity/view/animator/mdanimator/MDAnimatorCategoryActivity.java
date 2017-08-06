@@ -60,7 +60,7 @@ public class MDAnimatorCategoryActivity extends BaseActivity {
                 intent.setClass(this, CircularRevealActivity.class);
                 break;
             case 2:
-
+                intent.setClass(this, StateListAnimatorActivity.class);
                 break;
         }
 
