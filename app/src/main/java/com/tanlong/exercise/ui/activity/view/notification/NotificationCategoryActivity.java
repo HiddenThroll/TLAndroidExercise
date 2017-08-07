@@ -56,6 +56,7 @@ public class NotificationCategoryActivity extends BaseActivity {
     private final int SPECIFIC_NOTIFICATION = 4;
     private final int CUSTOM_VIEW_NOTIFICATION = 5;
     private final int COLLAPSED_NOTIFICATION = 6;
+    private final int HANDS_UP_NOTIFICATION = 7;
 
     private final String ACTION_MUSIC = "action_music";
     private final int ACTION_PLAY = 1;
@@ -126,6 +127,9 @@ public class NotificationCategoryActivity extends BaseActivity {
                 break;
             case 5://显示折叠式通知
                 showExpandNotification();
+                break;
+            case 6://显示悬挂式通知
+                showHandsupNotification();
                 break;
         }
     }
@@ -283,7 +287,6 @@ public class NotificationCategoryActivity extends BaseActivity {
         musicRemoteViews.setOnClickPendingIntent(R.id.iv_close, closePendingIntent);
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void showExpandNotification() {
         Intent intent = new Intent(this, ViewCategoryActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, NORMAL_NOTIFICATION, intent,
@@ -299,9 +302,32 @@ public class NotificationCategoryActivity extends BaseActivity {
         notification.flags = Notification.FLAG_AUTO_CANCEL;//设置通知点击后自动取消
         RemoteViews expandedView = new RemoteViews(getPackageName(), R.layout.layout_notification_expanded);
         expandedView.setTextViewText(R.id.tv_expanded, "展开时显示的通知");
-        notification.bigContentView = expandedView;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            notification.bigContentView = expandedView;
+        } else {
+            notification.contentView = expandedView;
+        }
 
         notificationManager.notify(COLLAPSED_NOTIFICATION, notification);
+    }
+
+    private void showHandsupNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setSmallIcon(R.mipmap.ic_launcher)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setContentTitle("Handsup Notification")
+                .setContentText("I am a Handsup notification");
+
+        Intent push = new Intent();
+        push.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        push.setClass(this, ViewCategoryActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, HANDS_UP_NOTIFICATION, push,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+        builder.setContentText("Hands Up Notification on Android")
+                .setFullScreenIntent(pendingIntent, true);
+
+        notificationManager.notify(HANDS_UP_NOTIFICATION, builder.build());
     }
 
     private void showTips() {
