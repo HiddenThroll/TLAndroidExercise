@@ -130,6 +130,7 @@
     <array name="baidu_map_category">
         <item>基础地图练习</item>
         <item>路径规划练习</item>
+        <item>点聚合练习</item>
     </array>
 
     <array name="ipc_category">
