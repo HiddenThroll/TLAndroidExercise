@@ -19,6 +19,7 @@ import com.woasis.taxi.maplibrary.impl.OnLocationListener;
 import com.woasis.taxi.maplibrary.impl.OnSearchDrivingRouteListener;
 import com.woasis.taxi.maplibrary.model.LatLngData;
 import com.woasis.taxi.maplibrary.overlay.DrivingRouteOverlay;
+import com.woasis.taxi.maplibrary.service.BDLocNaviService;
 import com.woasis.taxi.maplibrary.service.BDRoutePlanService;
 
 import butterknife.Bind;
@@ -43,6 +44,7 @@ public class RoutePlanActivity extends BaseActivity implements View.OnClickListe
     MapView mvBaiduMap;
 
     BaiduMapService mapService;
+    BDLocNaviService locNaviService;
     BDRoutePlanService routePlanService;
     DrivingRouteResult drivingRouteResult;
     DrivingRouteOverlay drivingRouteOverlay;
@@ -63,8 +65,9 @@ public class RoutePlanActivity extends BaseActivity implements View.OnClickListe
         mapService = new BaiduMapService(this);
         mapService.initBaiduMap(mvBaiduMap);
         routePlanService = new BDRoutePlanService(mvBaiduMap);
+        locNaviService = new BDLocNaviService(this, mvBaiduMap.getMap());
 
-        mapService.startLocationAndMoveCenter(new OnLocationListener() {
+        locNaviService.startLocationAndMoveCenter(new OnLocationListener() {
             @Override
             public void onLocation(BDLocation bdLocation) {
                 LatLngData src = new LatLngData(bdLocation.getLatitude(), bdLocation.getLongitude(),

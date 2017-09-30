@@ -2,12 +2,8 @@ package com.tanlong.exercise.ui.activity.map.basemap;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.map.MapView;
@@ -15,11 +11,11 @@ import com.baidu.mapapi.map.Polyline;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.util.LogTool;
-import com.tanlong.exercise.util.ToastHelp;
 import com.woasis.taxi.maplibrary.BaiduMapService;
 import com.woasis.taxi.maplibrary.impl.OnLocationListener;
 import com.woasis.taxi.maplibrary.model.LatLngData;
 import com.woasis.taxi.maplibrary.service.BDGeometryService;
+import com.woasis.taxi.maplibrary.service.BDLocNaviService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +34,7 @@ public class BaseMapActivity extends BaseActivity {
 
     BaiduMapService mMapService;
     BDGeometryService geometryService;
+    BDLocNaviService locNaviService;
 
     int fillColor;
     int strokeColor;
@@ -82,6 +79,7 @@ public class BaseMapActivity extends BaseActivity {
         mMapService = new BaiduMapService(this);
         mMapService.initBaiduMap(mBaiduMap);
         geometryService = new BDGeometryService(this, mBaiduMap);
+        locNaviService = new BDLocNaviService(this, mBaiduMap.getMap());
 
         fillColor = ContextCompat.getColor(BaseMapActivity.this, R.color.color_282c76);
         strokeColor = ContextCompat.getColor(BaseMapActivity.this, R.color.color_86d0ab);
@@ -106,7 +104,7 @@ public class BaseMapActivity extends BaseActivity {
     }
 
     private void startLocation() {
-        mMapService.startLocationAndMoveCenter(new OnLocationListener() {
+        locNaviService.startLocationAndMoveCenter(new OnLocationListener() {
             @Override
             public void onLocation(BDLocation bdLocation) {
                 LatLngData center = new LatLngData(bdLocation.getLatitude(), bdLocation.getLongitude(),
