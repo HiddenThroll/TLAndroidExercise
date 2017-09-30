@@ -19,8 +19,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.baidu.location.g.h.t;
-
 /**
  * AIDL服务Demo
  * Created by 龙 on 2017/4/7.

@@ -1,7 +1,5 @@
 package com.tanlong.exercise.model.entity;
 
-import static com.baidu.location.g.h.S;
-
 /**
  * Created by 龙 on 2017/3/2.
  */

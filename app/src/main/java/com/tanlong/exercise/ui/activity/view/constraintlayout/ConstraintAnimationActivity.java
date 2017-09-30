@@ -15,8 +15,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.baidu.location.g.h.C;
-
 /**
  * Created by 龙 on 2017/8/3.
  */

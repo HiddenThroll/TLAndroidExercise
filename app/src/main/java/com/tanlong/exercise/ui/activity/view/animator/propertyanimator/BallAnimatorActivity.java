@@ -22,9 +22,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.baidu.location.g.h.A;
-import static com.baidu.location.g.h.n;
-
 /**
  * Created by 龙 on 2017/5/11.
  */

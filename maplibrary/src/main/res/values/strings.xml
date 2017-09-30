@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MapLibrary</string>
+    <string name="app_name">maplibrary</string>
 
     <string name="location_failed">定位失败, 请检查网络连接或稍候重试</string>
     <string name="no_baidu_map_installed">未安装百度地图</string>

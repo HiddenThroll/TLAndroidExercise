@@ -44,8 +44,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.baoyz.swipemenulistview:library:1.3.0'
     compile 'com.google.code.gson:gson:2.7'
-    // 引入maplibrary
-    compile project(':maplibrary')
     //
     compile 'com.android.support:design:23.3.0'
     // 引入图片加载框架
@@ -64,5 +62,5 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.3.0'
     // 引入ConstraintLayout
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-
+    compile project(':maplibrary')
 }

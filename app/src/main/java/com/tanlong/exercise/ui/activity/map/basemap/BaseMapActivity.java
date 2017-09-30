@@ -16,11 +16,10 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.util.LogTool;
 import com.tanlong.exercise.util.ToastHelp;
-import com.tanlong.maplibrary.BaiduMapService;
-import com.tanlong.maplibrary.baiduImpl.OnLocationListener;
-import com.tanlong.maplibrary.model.LatLngData;
-import com.tanlong.maplibrary.service.BDGeometryService;
-import com.tanlong.maplibrary.service.BDMarkerService;
+import com.woasis.taxi.maplibrary.BaiduMapService;
+import com.woasis.taxi.maplibrary.impl.OnLocationListener;
+import com.woasis.taxi.maplibrary.model.LatLngData;
+import com.woasis.taxi.maplibrary.service.BDGeometryService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ public class BaseMapActivity extends BaseActivity {
 
     BaiduMapService mMapService;
     BDGeometryService geometryService;
-    BDMarkerService markerService;
+
     int fillColor;
     int strokeColor;
     int tempColor;
@@ -76,7 +75,6 @@ public class BaseMapActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mMapService.closeTimingLocation();
         mBaiduMap.onDestroy();
     }
 
@@ -84,7 +82,6 @@ public class BaseMapActivity extends BaseActivity {
         mMapService = new BaiduMapService(this);
         mMapService.initBaiduMap(mBaiduMap);
         geometryService = new BDGeometryService(this, mBaiduMap);
-        markerService = new BDMarkerService(this, mBaiduMap);
 
         fillColor = ContextCompat.getColor(BaseMapActivity.this, R.color.color_282c76);
         strokeColor = ContextCompat.getColor(BaseMapActivity.this, R.color.color_86d0ab);
@@ -114,7 +111,7 @@ public class BaseMapActivity extends BaseActivity {
             public void onLocation(BDLocation bdLocation) {
                 LatLngData center = new LatLngData(bdLocation.getLatitude(), bdLocation.getLongitude(),
                         LatLngData.LatLngType.BAIDU);
-                markerService.addMarker(locationView, center, null);
+                mMapService.addMarker(locationView, center, null);
             }
 
             @Override
@@ -157,33 +154,4 @@ public class BaseMapActivity extends BaseActivity {
         }
     }
 
-    private void showInfoWindow(LatLngData tar, int yOff) {
-        View view = LayoutInflater.from(this).inflate(R.layout.layout_info_window, null);
-        final TextView tvName1 = (TextView) view.findViewById(R.id.tv_info_1);
-        EditText etContent = (EditText) view.findViewById(R.id.et_info_2);
-        tvName1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastHelp.showShortMsg(BaseMapActivity.this, tvName1.getText().toString());
-            }
-        });
-        etContent.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                ToastHelp.showShortMsg(BaseMapActivity.this, "输入的内容是" + s.toString());
-            }
-        });
-
-        mMapService.showInfoWindow(tar, view, yOff);
-    }
 }

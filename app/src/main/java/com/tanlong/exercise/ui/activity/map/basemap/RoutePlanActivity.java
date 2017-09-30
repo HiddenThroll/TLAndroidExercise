@@ -14,12 +14,12 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.util.LogTool;
 import com.tanlong.exercise.util.ToastHelp;
-import com.tanlong.maplibrary.BaiduMapService;
-import com.tanlong.maplibrary.baiduImpl.OnLocationListener;
-import com.tanlong.maplibrary.baiduImpl.OnSearchDrivingRouteListener;
-import com.tanlong.maplibrary.model.LatLngData;
-import com.tanlong.maplibrary.overlay.DrivingRouteOverlay;
-import com.tanlong.maplibrary.service.BDRoutePlanService;
+import com.woasis.taxi.maplibrary.BaiduMapService;
+import com.woasis.taxi.maplibrary.impl.OnLocationListener;
+import com.woasis.taxi.maplibrary.impl.OnSearchDrivingRouteListener;
+import com.woasis.taxi.maplibrary.model.LatLngData;
+import com.woasis.taxi.maplibrary.overlay.DrivingRouteOverlay;
+import com.woasis.taxi.maplibrary.service.BDRoutePlanService;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
