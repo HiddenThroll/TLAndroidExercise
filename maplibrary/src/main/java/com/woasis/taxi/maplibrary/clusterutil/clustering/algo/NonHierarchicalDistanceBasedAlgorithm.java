@@ -35,6 +35,7 @@ import java.util.Set;
  * Clusters have the center of the first element (not the centroid of the items within it).
  */
 public class NonHierarchicalDistanceBasedAlgorithm<T extends ClusterItem> implements Algorithm<T> {
+//    private final String TAG = getClass().getSimpleName();
     public static final int MAX_DISTANCE_AT_ZOOM = 100; // essentially 100 dp.
 
     /**
@@ -80,52 +81,58 @@ public class NonHierarchicalDistanceBasedAlgorithm<T extends ClusterItem> implem
     }
 
     /**
-     *  cluster算法核心
+     * cluster算法核心
      * @param zoom map的级别
      * @return
      */
     @Override
     public Set<? extends Cluster<T>> getClusters(double zoom) {
         final int discreteZoom = (int) zoom;
-
+        //可以进行聚合的距离
         final double zoomSpecificSpan = MAX_DISTANCE_AT_ZOOM / Math.pow(2, discreteZoom) / 256;
-
+        //遍历QuadItem时保存被遍历过的Item
         final Set<QuadItem<T>> visitedCandidates = new HashSet<QuadItem<T>>();
+        //保存要返回的cluster簇，每个cluster中包含若干个MyItem对象
         final Set<Cluster<T>> results = new HashSet<Cluster<T>>();
+        //Key：Item对象 --> Value：此Item与所属的cluster中心点的距离
         final Map<QuadItem<T>, Double> distanceToCluster = new HashMap<QuadItem<T>, Double>();
+        //Key：Item对象 --> Value：此Item所属的cluster
         final Map<QuadItem<T>, StaticCluster<T>> itemToCluster = new HashMap<>();
 
         synchronized (mQuadTree) {
-            for (QuadItem<T> candidate : mItems) {
-                if (visitedCandidates.contains(candidate)) {
+            for (QuadItem<T> candidate : mItems) {//遍历所有的QuadItem
+                if (visitedCandidates.contains(candidate)) {//如果该QuadItem已经属于其他的Cluster
                     // Candidate is already part of another cluster.
                     continue;
                 }
-
+                //以QuadItem的坐标为中心，创建一个矩形区域来框住其他的QuadItem
                 Bounds searchBounds = createBoundsFromSpan(candidate.getPoint(), zoomSpecificSpan);
                 Collection<QuadItem<T>> clusterItems;
-                // search 某边界范围内的clusterItems
+                // search出该边界范围内的QuadItems，并存入clusterItems
                 clusterItems = mQuadTree.search(searchBounds);
-                if (clusterItems.size() == 1) {
+                if (clusterItems.size() == 1) {//只有当前Quaditem在范围内，将它添加到results中
                     // Only the current marker is in range. Just add the single item to the results.
                     results.add(candidate);
                     visitedCandidates.add(candidate);
                     distanceToCluster.put(candidate, 0d);
-                    continue;
+                    continue;//结束此次循环
                 }
+                // 指定边界范围内有多个QuadItem
                 StaticCluster<T> cluster =
                         new StaticCluster<>(candidate.mClusterItem.getPosition());
                 results.add(cluster);
 
                 for (QuadItem<T> clusterItem : clusterItems) {
+                    //此QuadItem与原Cluster中心的距离，（如果该Item之前被框住过）
                     Double existingDistance = distanceToCluster.get(clusterItem);
                     double distance = distanceSquared(clusterItem.getPoint(), candidate.getPoint());
-                    if (existingDistance != null) {
+                    if (existingDistance != null) {//之前被框住过
                         // Item already belongs to another cluster. Check if it's closer to this cluster.
-                        if (existingDistance < distance) {
+                        if (existingDistance < distance) {//判断 之前距离 是否 小于 当前距离
                             continue;
                         }
                         // Move item to the closer cluster.
+                        // 当前距离 小于 之前距离，将clusterItem从之前的Cluster中移除
                         itemToCluster.get(clusterItem).remove(clusterItem.mClusterItem);
                     }
                     distanceToCluster.put(clusterItem, distance);
@@ -149,10 +156,22 @@ public class NonHierarchicalDistanceBasedAlgorithm<T extends ClusterItem> implem
         return items;
     }
 
+    /**
+     * 计算两点之间的距离（差值X平方 + 差值Y平方）
+     * @param a
+     * @param b
+     * @return
+     */
     private double distanceSquared(Point a, Point b) {
         return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
     }
 
+    /**
+     * 针对坐标点p，以给定的距离span生成一个矩形Bounds
+     * @param p -- 矩形的中心点
+     * @param span -- 给定的距离
+     * @return
+     */
     private Bounds createBoundsFromSpan(Point p, double span) {
         // TODO: Use a span that takes into account the visual size of the marker, not just its
         // LatLng.

@@ -113,6 +113,10 @@ public class ClusterManager<T extends ClusterItem> implements
         }
     }
 
+    /**
+     * 添加要聚合的Marker集合
+     * @param items
+     */
     public void addItems(Collection<T> items) {
         mAlgorithmLock.writeLock().lock();
         try {

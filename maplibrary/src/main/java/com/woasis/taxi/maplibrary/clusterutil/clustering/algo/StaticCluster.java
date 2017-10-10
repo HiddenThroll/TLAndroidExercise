@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * A cluster whose center is determined upon creation.
+ * 创建时就确定中心位置的Cluster
  */
 public class StaticCluster<T extends ClusterItem> implements Cluster<T> {
     private final LatLng mCenter;

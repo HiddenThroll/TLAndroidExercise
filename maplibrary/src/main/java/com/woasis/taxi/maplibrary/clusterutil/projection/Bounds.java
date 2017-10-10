@@ -3,6 +3,7 @@ package com.woasis.taxi.maplibrary.clusterutil.projection;
 
 /**
  * Represents an area in the cartesian plane.
+ * 代表平面坐标系中的一块区域
  */
 public class Bounds {
     public final double minX;

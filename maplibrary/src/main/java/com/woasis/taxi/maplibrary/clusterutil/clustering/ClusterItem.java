@@ -7,9 +7,11 @@ package com.woasis.taxi.maplibrary.clusterutil.clustering;
 
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.model.LatLng;
+import com.woasis.taxi.maplibrary.model.MarkDataBase;
 
 /**
- * ClusterItem represents a marker on the map.
+ * ClusterItem 代表 地图上的一个Marker
+ * 包含2个方法，分别是 返回Marker坐标、返回Marker的BitmapDescriptor
  */
 public interface ClusterItem {
 

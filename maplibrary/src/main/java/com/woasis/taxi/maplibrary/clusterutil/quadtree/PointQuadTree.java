@@ -184,6 +184,7 @@ public class PointQuadTree<T extends PointQuadTree.Item> {
 
     /**
      * Search for all items within a given bounds.
+     * 搜索指定Bounds内的所有Item
      */
     public Collection<T> search(Bounds searchBounds) {
         final List<T> results = new ArrayList<T>();
