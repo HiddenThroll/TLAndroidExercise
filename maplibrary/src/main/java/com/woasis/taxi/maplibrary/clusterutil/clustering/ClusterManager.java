@@ -7,6 +7,7 @@ package com.woasis.taxi.maplibrary.clusterutil.clustering;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.util.Log;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatus;
@@ -41,6 +42,7 @@ public class ClusterManager<T extends ClusterItem> implements
 
     private BaiduMap mMap;
     private MapStatus mPreviousCameraPosition;
+    private MapStatus mPreMapStatus;
     private ClusterTask mClusterTask;
     private final ReadWriteLock mClusterTaskLock = new ReentrantReadWriteLock();
 
@@ -174,9 +176,13 @@ public class ClusterManager<T extends ClusterItem> implements
     @Override
     public void onMapStatusChange(MapStatus mapStatus) {
         if (mRenderer instanceof BaiduMap.OnMapStatusChangeListener) {
+            Log.e("test", "mRenderer is OnMapStatusChangeListener");
             ((BaiduMap.OnMapStatusChangeListener) mRenderer).onMapStatusChange(mapStatus);
         }
+    }
 
+    @Override
+    public void onMapStatusChangeFinish(MapStatus mapStatus) {
         // Don't re-compute clusters if the map has just been panned/tilted/rotated.
         MapStatus position = mMap.getMapStatus();
         if (mPreviousCameraPosition != null && mPreviousCameraPosition.zoom == position.zoom) {
@@ -184,12 +190,11 @@ public class ClusterManager<T extends ClusterItem> implements
         }
         mPreviousCameraPosition = mMap.getMapStatus();
 
-        cluster();
-    }
-
-    @Override
-    public void onMapStatusChangeFinish(MapStatus mapStatus) {
-
+        if (mPreMapStatus == null || mPreMapStatus.zoom != mapStatus.zoom) {
+            cluster();
+            Log.e("test", "cluster()" + mapStatus.zoom);
+        }
+        mPreMapStatus = mapStatus;
     }
 
     @Override

@@ -36,7 +36,7 @@ import java.util.Set;
  */
 public class NonHierarchicalDistanceBasedAlgorithm<T extends ClusterItem> implements Algorithm<T> {
 //    private final String TAG = getClass().getSimpleName();
-    public static final int MAX_DISTANCE_AT_ZOOM = 100; // essentially 100 dp.
+    public static final int MAX_DISTANCE_AT_ZOOM = 200; // essentially 100 dp.
 
     /**
      * Any modifications should be synchronized on mQuadTree.

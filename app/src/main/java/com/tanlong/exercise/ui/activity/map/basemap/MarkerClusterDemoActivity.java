@@ -6,6 +6,7 @@ package com.tanlong.exercise.ui.activity.map.basemap;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;

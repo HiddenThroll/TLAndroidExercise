@@ -20,6 +20,7 @@ public class MarkerManager implements BaiduMap.OnMarkerClickListener, BaiduMap.O
     private final BaiduMap mMap;
 
     private final Map<String, Collection> mNamedCollections = new HashMap<>();
+    // 记录 Marker --> 缓存它的Collection
     private final Map<Marker, Collection> mAllMarkers = new HashMap<>();
 
     public MarkerManager(BaiduMap map) {
@@ -99,7 +100,7 @@ public class MarkerManager implements BaiduMap.OnMarkerClickListener, BaiduMap.O
     }
 
     public class Collection {
-        private final Set<Marker> mMarkers = new HashSet<>();
+        private final Set<Marker> mMarkers = new HashSet<>();//缓存Marker
         private BaiduMap.OnMarkerClickListener mMarkerClickListener;
         private BaiduMap.OnMarkerDragListener mMarkerDragListener;
 

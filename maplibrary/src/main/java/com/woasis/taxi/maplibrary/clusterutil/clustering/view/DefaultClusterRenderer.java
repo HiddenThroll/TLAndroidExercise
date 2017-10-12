@@ -21,6 +21,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.MessageQueue;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -92,12 +93,12 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
     /**
      * If cluster size is less than this size, display individual markers.
      */
-    private static final int MIN_CLUSTER_SIZE = 4;
+    private static final int MIN_CLUSTER_SIZE = 1;
 
     /**
      * The currently displayed set of clusters.
      */
-    private Set<? extends Cluster<T>> mClusters;
+    private Set<? extends Cluster<T>> mClusters;//缓存的上一次Cluster
 
     /**
      * Lookup between markers and the associated cluster.
@@ -215,7 +216,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
     private class ViewModifier extends Handler {
         private static final int RUN_TASK = 0;
         private static final int TASK_FINISHED = 1;
-        private boolean mViewModificationInProgress = false;
+        private boolean mViewModificationInProgress = false;//是否正在运行
         private RenderTask mNextClusters = null;
 
         @Override
@@ -235,7 +236,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
                 return;
             }
 
-            if (mNextClusters == null) {//要改变的Cluster是否为空
+            if (mNextClusters == null) {//要运行的线程（改变Cluster）是否为空
                 // Nothing to do.
                 return;
             }
@@ -295,7 +296,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
      * out, existing clusters are animated to the nearest new cluster.
      */
     private class RenderTask implements Runnable {
-        final Set<? extends Cluster<T>> clusters;
+        final Set<? extends Cluster<T>> clusters;//传入的Cluster（新）
         private Runnable mCallback;
         private Projection mProjection;
         private SphericalMercatorProjection mSphericalMercatorProjection;
@@ -334,8 +335,8 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
 
             final MarkerModifier markerModifier = new MarkerModifier();//这个类处理显示和动画
 
-            final float zoom = mMapZoom;
-            final boolean zoomingIn = zoom > mZoom;//是否是地图放大（“-”）操作，mZoom是上次保存的地图层级
+            final float zoom = mMapZoom;//zoom当前地图缩放级别
+            final boolean zoomingIn = zoom > mZoom;//是否是地图放大（“+”）操作，mZoom是上次保存的地图层级
             final float zoomDelta = zoom - mZoom;//zoom变化量级，超过一定量级就不执行动画了
 
             final Set<MarkerWithPosition> markersToRemove = mMarkers;//需要删除的Marker
@@ -349,9 +350,9 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
             if (DefaultClusterRenderer.this.mClusters != null && SHOULD_ANIMATE) {
                 existingClustersOnScreen = new ArrayList<Point>();
                 for (Cluster<T> c : DefaultClusterRenderer.this.mClusters) {//遍历上一次保存的每一个Cluster
-                    if (shouldRenderAsCluster(c) && visibleBounds.contains(c.getPosition())) {
+                    if (shouldRenderAsCluster(c) && visibleBounds.contains(c.getPosition())) {//应该显示为Cluster并且在屏幕范围内
                         Point point = mSphericalMercatorProjection.toPoint(c.getPosition());
-                        existingClustersOnScreen.add(point);
+                        existingClustersOnScreen.add(point);//保留这样的Cluster
                     }
                 }
             }
@@ -359,14 +360,14 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
             // Create the new markers and animate them to their new positions.
             // 创建新的Marker并以动画的方式将它们放置到新的位置
             final Set<MarkerWithPosition> newMarkers = Collections.newSetFromMap(
-                    new ConcurrentHashMap<MarkerWithPosition, Boolean>());
+                    new ConcurrentHashMap<MarkerWithPosition, Boolean>());//新添加的Marker（包括聚合点和单独的Marker）
             for (Cluster<T> c : clusters) {//遍历传入的每一个Cluster
-                boolean onScreen = visibleBounds.contains(c.getPosition());
-                if (zoomingIn && onScreen && SHOULD_ANIMATE) {//地图放大 并且 该Cluster在屏幕中 并且 允许动画
+                boolean onScreen = visibleBounds.contains(c.getPosition());//该cluster是否在屏幕可见范围内
+                if (zoomingIn && onScreen && SHOULD_ANIMATE) {//地图放大操作 并且 该Cluster在屏幕中 并且 允许动画
                     Point point = mSphericalMercatorProjection.toPoint(c.getPosition());
                     // 从屏幕上已存在的Cluster中找出距离 该Cluster 最近的点（cluster）
                     Point closest = findClosestCluster(existingClustersOnScreen, point);
-                    if (closest != null) {//存在，则实现动画
+                    if (closest != null) {//存在距离最近的cluster，则实现动画
                         LatLng animateTo = mSphericalMercatorProjection.toLatLng(closest);
                         markerModifier.add(true, new CreateMarkerTask(c, newMarkers, animateTo));
                     } else {//不存在，则直接添加不生成动画
@@ -393,7 +394,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
             if (SHOULD_ANIMATE) {
                 newClustersOnScreen = new ArrayList<Point>();
                 for (Cluster<T> c : clusters) {
-                    if (shouldRenderAsCluster(c) && visibleBounds.contains(c.getPosition())) {
+                    if (shouldRenderAsCluster(c) && visibleBounds.contains(c.getPosition())) {//应该显示为Cluster并且在屏幕范围内
                         Point p = mSphericalMercatorProjection.toPoint(c.getPosition());
                         newClustersOnScreen.add(p);
                     }
@@ -406,22 +407,22 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
                 boolean onScreen = visibleBounds.contains(marker.position);
                 // Don't animate when zooming out more than 3 zoom levels.
                 // TODO: drop animation based on speed of device & number of markers to animate.
-                if (!zoomingIn && zoomDelta > -3 && onScreen && SHOULD_ANIMATE) {
+                if (!zoomingIn && zoomDelta > -3 && onScreen && SHOULD_ANIMATE) {//地图缩小（“-”操作）缩放级别不超过3 在屏幕范围内
                     final Point point = mSphericalMercatorProjection.toPoint(marker.position);
-                    final Point closest = findClosestCluster(newClustersOnScreen, point);
-                    if (closest != null) {
+                    final Point closest = findClosestCluster(newClustersOnScreen, point);// 从屏幕上新添加的Cluster中找出距离 该Cluster 最近的点（cluster）
+                    if (closest != null) {//存在这样的点
                         LatLng animateTo = mSphericalMercatorProjection.toLatLng(closest);
-                        markerModifier.animateThenRemove(marker, marker.position, animateTo);
+                        markerModifier.animateThenRemove(marker, marker.position, animateTo);//动画形式删除
                     } else {
-                        markerModifier.remove(true, marker.marker);
+                        markerModifier.remove(true, marker.marker);//直接删除
                     }
                 } else {
-                    markerModifier.remove(onScreen, marker.marker);
+                    markerModifier.remove(onScreen, marker.marker);//直接删除
                 }
             }
-
+            // 等待删除点的任务完成
             markerModifier.waitUntilFree();
-
+            // 缓存数据
             mMarkers = newMarkers;
             DefaultClusterRenderer.this.mClusters = clusters;
             mZoom = zoom;
@@ -577,6 +578,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
         @Override
         public void handleMessage(Message msg) {
             if (!mListenerAdded) {
+                //向主线程添加IdleHandler
                 Looper.myQueue().addIdleHandler(this);
                 mListenerAdded = true;
             }
@@ -585,9 +587,8 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
             lock.lock();
             try {
 
-                // Perform up to 10 tasks at once.
-                // Consider only performing 10 remove tasks, not adds and animations.
-                // Removes are relatively slow and are much better when batched.
+                // 立刻执行10个任务。
+                // 考虑仅执行10个移除Marker任务，而不是添加Marker和动画，因为移除Marker相对缓慢，最好批量操作
                 for (int i = 0; i < 10; i++) {
                     performNextTask();
                 }
@@ -595,11 +596,10 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
                 if (!isBusy()) {
                     mListenerAdded = false;
                     Looper.myQueue().removeIdleHandler(this);
-                    // Signal any other threads that are waiting.
+                    // 唤醒所有等待线程
                     busyCondition.signalAll();
                 } else {
-                    // Sometimes the idle queue may not be called - schedule up some work regardless
-                    // of whether the UI thread is busy or not.
+                    // 有时系统空闲状态下不会调用queueIdle方法，这里手动发送消息，而不考虑主线程是否busy
                     // TODO: try to remove this.
                     sendEmptyMessageDelayed(BLANK, 10);
                 }
@@ -610,6 +610,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
 
         /**
          * Perform the next task. Prioritise any on-screen work.
+         * 执行任务，优先考虑处理屏幕范围内可见的Marker
          */
         private void performNextTask() {
             if (!mOnScreenRemoveMarkerTasks.isEmpty()) {
@@ -673,7 +674,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
         public boolean queueIdle() {
             // When the UI is not busy, schedule some work.
             sendEmptyMessage(BLANK);
-            return true;
+            return true;//保留，当queueIdle执行完毕之后，不会移除这个IdleHandler，可以反复使用
         }
     }
 
@@ -801,7 +802,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
 
         private void perform(MarkerModifier markerModifier) {
             // Don't show small clusters. Render the markers inside, instead.
-            if (!shouldRenderAsCluster(cluster)) {//显示Marker的处理
+            if (!shouldRenderAsCluster(cluster)) {//显示独立Marker的处理
                 for (T item : cluster.getItems()) {
                     Marker marker = mMarkerCache.get(item);
                     MarkerWithPosition markerWithPosition;
