@@ -45,6 +45,7 @@ import com.woasis.taxi.maplibrary.clusterutil.util.IconGenerator;
 import com.woasis.taxi.maplibrary.clusterutil.util.SquareTextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -133,7 +134,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
         mClusterManager.getMarkerCollection().setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                return mItemClickListener != null && mItemClickListener.onClusterItemClick(mMarkerCache.get(marker));
+                return mItemClickListener != null && mItemClickListener.onClusterItemClick(mMarkerCache.get(marker), marker);
             }
         });
 

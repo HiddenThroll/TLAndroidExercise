@@ -6,6 +6,7 @@ package com.tanlong.exercise.ui.activity.map.basemap;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,11 +18,13 @@ import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.model.entity.StationInfo;
+import com.tanlong.exercise.util.ToastHelp;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.Cluster;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.ClusterItem;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.ClusterManager;
@@ -39,6 +42,7 @@ import java.util.List;
  * 此Demo用来说明点聚合功能
  */
 public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCallback, OnLocationListener {
+    private final String TAG = getClass().getSimpleName();
 
     MapView mMapView;
     BaiduMap mBaiduMap;
@@ -47,6 +51,9 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
 
     List<StationInfo> stationInfoList;
     private BDLocNaviService locNaviService;
+
+    private boolean isAddTestMarker = false;
+    private String addTestMarkerName = "测试添加Marker";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,10 +86,21 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
         });
         mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
             @Override
-            public boolean onClusterItemClick(MyItem item) {
-                StationInfo stationInfo = item.getMarkDataBase().getData();
+            public boolean onClusterItemClick(MyItem item, final Marker marker) {
+                StationInfo stationInfo = (StationInfo) item.getBundle().getSerializable(MyItem.STATION_INFO);
                 Toast.makeText(MarkerClusterDemoActivity.this,
                         "点击" + stationInfo.getStationname(), Toast.LENGTH_SHORT).show();
+
+                // 测试改变Marker
+                marker.setAlpha(0.5f);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        marker.setAlpha(1);
+                    }
+                }, 500);
+                // 测试添加Marker 并 手动触发cluster运算
+                testAddMarker();
 
                 return false;
             }
@@ -142,6 +160,18 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
         mClusterManager.addItems(items);
     }
 
+    private void testAddMarker() {
+        if (!isAddTestMarker) {
+            isAddTestMarker = true;
+            LatLng latLng = new LatLng(29.613586, 106.553256);
+            StationInfo stationInfo = new StationInfo(addTestMarkerName,
+                    String.valueOf(latLng.longitude), String.valueOf(latLng.latitude));
+            MyItem myItem = new MyItem(latLng, stationInfo);
+            mClusterManager.addItem(myItem);
+            mClusterManager.cluster();//手动触发点聚合计算
+        }
+    }
+
     @Override
     public void onLocation(BDLocation bdLocation) {
 
@@ -157,12 +187,12 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
      */
     public class MyItem implements ClusterItem {
         private final LatLng mPosition;
-        private final MarkDataBase<StationInfo> markDataBase;
+        private StationInfo mStationInfo;
+        public static final String STATION_INFO = "station_info";
 
         public MyItem(LatLng latLng, StationInfo stationInfo) {
             mPosition = latLng;
-            markDataBase = new MarkDataBase<>();
-            markDataBase.setData(stationInfo);
+            mStationInfo = stationInfo;
         }
 
         @Override
@@ -176,9 +206,13 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
                     .fromResource(R.mipmap.icon_gcoding);
         }
 
-        public MarkDataBase<StationInfo> getMarkDataBase() {
-            return markDataBase;
+        @Override
+        public Bundle getBundle() {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(STATION_INFO, mStationInfo);
+            return bundle;
         }
+
     }
 
     @Override

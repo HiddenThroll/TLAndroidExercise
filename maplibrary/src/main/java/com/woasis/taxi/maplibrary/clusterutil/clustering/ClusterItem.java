@@ -5,6 +5,8 @@
 package com.woasis.taxi.maplibrary.clusterutil.clustering;
 
 
+import android.os.Bundle;
+
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.model.LatLng;
 import com.woasis.taxi.maplibrary.model.MarkDataBase;
@@ -21,4 +23,6 @@ public interface ClusterItem {
     LatLng getPosition();
 
     BitmapDescriptor getBitmapDescriptor();
+
+    Bundle getBundle();
 }

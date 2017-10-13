@@ -1,14 +1,22 @@
 package com.tanlong.exercise.model.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by 龙 on 2017/10/10.
  */
 
-public class StationInfo {
+public class StationInfo implements Serializable{
 
     private String stationname;
     private String longtitude;
     private String latitude;
+
+    public StationInfo(String stationname, String longtitude, String latitude) {
+        this.stationname = stationname;
+        this.longtitude = longtitude;
+        this.latitude = latitude;
+    }
 
     public String getStationname() {
         return stationname;
