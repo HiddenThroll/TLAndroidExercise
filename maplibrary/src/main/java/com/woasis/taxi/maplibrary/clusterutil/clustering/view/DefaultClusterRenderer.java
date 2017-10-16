@@ -21,7 +21,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.MessageQueue;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -39,13 +38,13 @@ import com.woasis.taxi.maplibrary.clusterutil.MarkerManager;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.Cluster;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.ClusterItem;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.ClusterManager;
+import com.woasis.taxi.maplibrary.clusterutil.clustering.algo.NonHierarchicalDistanceBasedAlgorithm;
 import com.woasis.taxi.maplibrary.clusterutil.projection.Point;
 import com.woasis.taxi.maplibrary.clusterutil.projection.SphericalMercatorProjection;
 import com.woasis.taxi.maplibrary.clusterutil.util.IconGenerator;
 import com.woasis.taxi.maplibrary.clusterutil.util.SquareTextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -57,9 +56,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
-import static com.woasis.taxi.maplibrary.clusterutil.clustering.algo.NonHierarchicalDistanceBasedAlgorithm.MAX_DISTANCE_AT_ZOOM;
-
 
 /**
  * The default view for a ClusterManager. Markers are animated in and out of clusters.
@@ -74,6 +70,10 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
 
     private static final int[] BUCKETS = {10, 20, 50, 100, 200, 500, 1000};
     private ShapeDrawable mColoredCircleBackground;
+    /**
+     * 是否开启聚合动画，默认false
+     */
+    protected boolean isAnimate = false;
 
     /**
      * Markers that are currently on the map.
@@ -94,7 +94,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
     /**
      * If cluster size is less than this size, display individual markers.
      */
-    private static final int MIN_CLUSTER_SIZE = 1;
+    private int minClusterSize = 1;
 
     /**
      * The currently displayed set of clusters.
@@ -275,7 +275,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
      * @return true -- 显示为Cluster false -- 独立的Marker
      */
     protected boolean shouldRenderAsCluster(Cluster<T> cluster) {
-        return cluster.getSize() > MIN_CLUSTER_SIZE;
+        return cluster.getSize() > minClusterSize;
     }
 
     /**
@@ -348,7 +348,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
             // markers to animate from.
             // 找出屏幕上已存在的Cluster（中心点），它们是Marker动画的候选来源
             List<Point> existingClustersOnScreen = null;
-            if (DefaultClusterRenderer.this.mClusters != null && SHOULD_ANIMATE) {
+            if (DefaultClusterRenderer.this.mClusters != null && SHOULD_ANIMATE && isAnimate) {
                 existingClustersOnScreen = new ArrayList<Point>();
                 for (Cluster<T> c : DefaultClusterRenderer.this.mClusters) {//遍历上一次保存的每一个Cluster
                     if (shouldRenderAsCluster(c) && visibleBounds.contains(c.getPosition())) {//应该显示为Cluster并且在屏幕范围内
@@ -364,7 +364,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
                     new ConcurrentHashMap<MarkerWithPosition, Boolean>());//新添加的Marker（包括聚合点和单独的Marker）
             for (Cluster<T> c : clusters) {//遍历传入的每一个Cluster
                 boolean onScreen = visibleBounds.contains(c.getPosition());//该cluster是否在屏幕可见范围内
-                if (zoomingIn && onScreen && SHOULD_ANIMATE) {//地图放大操作 并且 该Cluster在屏幕中 并且 允许动画
+                if (zoomingIn && onScreen && SHOULD_ANIMATE && isAnimate) {//地图放大操作 并且 该Cluster在屏幕中 并且 允许动画
                     Point point = mSphericalMercatorProjection.toPoint(c.getPosition());
                     // 从屏幕上已存在的Cluster中找出距离 该Cluster 最近的点（cluster）
                     Point closest = findClosestCluster(existingClustersOnScreen, point);
@@ -392,7 +392,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
             // markers to animate from.
             // 获得所有新添加到屏幕上的Cluster
             List<Point> newClustersOnScreen = null;
-            if (SHOULD_ANIMATE) {
+            if (SHOULD_ANIMATE && isAnimate) {
                 newClustersOnScreen = new ArrayList<Point>();
                 for (Cluster<T> c : clusters) {
                     if (shouldRenderAsCluster(c) && visibleBounds.contains(c.getPosition())) {//应该显示为Cluster并且在屏幕范围内
@@ -408,7 +408,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
                 boolean onScreen = visibleBounds.contains(marker.position);
                 // Don't animate when zooming out more than 3 zoom levels.
                 // TODO: drop animation based on speed of device & number of markers to animate.
-                if (!zoomingIn && zoomDelta > -3 && onScreen && SHOULD_ANIMATE) {//地图缩小（“-”操作）缩放级别不超过3 在屏幕范围内
+                if (!zoomingIn && zoomDelta > -3 && onScreen && SHOULD_ANIMATE && isAnimate) {//地图缩小（“-”操作）缩放级别不超过3 在屏幕范围内
                     final Point point = mSphericalMercatorProjection.toPoint(marker.position);
                     final Point closest = findClosestCluster(newClustersOnScreen, point);// 从屏幕上新添加的Cluster中找出距离 该Cluster 最近的点（cluster）
                     if (closest != null) {//存在这样的点
@@ -475,7 +475,8 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
         }
 
         // TODO: make this configurable.
-        double minDistSquared = MAX_DISTANCE_AT_ZOOM * MAX_DISTANCE_AT_ZOOM;
+        double minDistSquared = NonHierarchicalDistanceBasedAlgorithm.getMaxDistanceAtZoom() *
+                NonHierarchicalDistanceBasedAlgorithm.getMaxDistanceAtZoom();
         Point closest = null;
         for (Point candidate : markers) {
             double dist = distanceSquared(candidate, point);//获得两个点的距离
@@ -938,5 +939,21 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
             LatLng position = new LatLng(lat, lng);
             marker.setPosition(position);
         }
+    }
+
+    public boolean isAnimate() {
+        return isAnimate;
+    }
+
+    public void setAnimate(boolean animate) {
+        isAnimate = animate;
+    }
+
+    public int getMinClusterSize() {
+        return minClusterSize;
+    }
+
+    public void setMinClusterSize(int minClusterSize) {
+        this.minClusterSize = minClusterSize;
     }
 }

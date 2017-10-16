@@ -114,6 +114,7 @@ public class PointQuadTree<T extends PointQuadTree.Item> {
 
     /**
      * Split this quad.
+     * 分裂 quad
      */
     private void split() {
         mChildren = new ArrayList<PointQuadTree<T>>(4);

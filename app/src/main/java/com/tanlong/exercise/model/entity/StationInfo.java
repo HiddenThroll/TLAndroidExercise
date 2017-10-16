@@ -11,6 +11,10 @@ public class StationInfo implements Serializable{
     private String stationname;
     private String longtitude;
     private String latitude;
+    private int canusenum;
+
+    public StationInfo() {
+    }
 
     public StationInfo(String stationname, String longtitude, String latitude) {
         this.stationname = stationname;
@@ -42,7 +46,17 @@ public class StationInfo implements Serializable{
         this.latitude = latitude;
     }
 
+
+    public int getCanusenum() {
+        return canusenum;
+    }
+
+    public void setCanusenum(int canusenum) {
+        this.canusenum = canusenum;
+    }
+
     @Override
+
     public String toString() {
         return "StationInfo{" +
                 "stationname='" + stationname + '\'' +

@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.model.entity.StationInfo;
+import com.tanlong.exercise.ui.activity.map.render.CustomClusterRenderer;
 import com.tanlong.exercise.util.ToastHelp;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.Cluster;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.ClusterItem;
@@ -54,6 +55,8 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
 
     private boolean isAddTestMarker = false;
     private String addTestMarkerName = "测试添加Marker";
+
+    private CustomClusterRenderer<MyItem> customClusterRenderer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +68,8 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
         mBaiduMap.setOnMapLoadedCallback(this);
         // 定义点聚合管理类ClusterManager
         mClusterManager = new ClusterManager<MyItem>(this, mBaiduMap);
+        customClusterRenderer = new CustomClusterRenderer<>(this, mBaiduMap, mClusterManager);
+        mClusterManager.setRenderer(customClusterRenderer);
 
         // 添加Marker点
         getData();

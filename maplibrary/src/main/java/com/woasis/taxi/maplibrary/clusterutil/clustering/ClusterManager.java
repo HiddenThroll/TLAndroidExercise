@@ -285,4 +285,12 @@ public class ClusterManager<T extends ClusterItem> implements
     public interface OnClusterItemInfoWindowClickListener<T extends ClusterItem> {
         public void onClusterItemInfoWindowClick(T item);
     }
+
+    public static int getMaxDistanceAtZoom() {
+        return NonHierarchicalDistanceBasedAlgorithm.getMaxDistanceAtZoom();
+    }
+
+    public static void setMaxDistanceAtZoom(int maxDistanceAtZoom) {
+        NonHierarchicalDistanceBasedAlgorithm.setMaxDistanceAtZoom(maxDistanceAtZoom);
+    }
 }

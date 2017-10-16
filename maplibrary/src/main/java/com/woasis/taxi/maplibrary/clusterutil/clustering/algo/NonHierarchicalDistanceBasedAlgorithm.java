@@ -36,7 +36,7 @@ import java.util.Set;
  */
 public class NonHierarchicalDistanceBasedAlgorithm<T extends ClusterItem> implements Algorithm<T> {
 //    private final String TAG = getClass().getSimpleName();
-    public static final int MAX_DISTANCE_AT_ZOOM = 200; // essentially 100 dp.
+    private static int maxDistanceAtZoom = 200; // essentially 100 dp.
 
     /**
      * Any modifications should be synchronized on mQuadTree.
@@ -89,7 +89,7 @@ public class NonHierarchicalDistanceBasedAlgorithm<T extends ClusterItem> implem
     public Set<? extends Cluster<T>> getClusters(double zoom) {
         final int discreteZoom = (int) zoom;
         //可以进行聚合的距离
-        final double zoomSpecificSpan = MAX_DISTANCE_AT_ZOOM / Math.pow(2, discreteZoom) / 256;
+        final double zoomSpecificSpan = maxDistanceAtZoom / Math.pow(2, discreteZoom) / 256;
         //遍历QuadItem时保存被遍历过的Item
         final Set<QuadItem<T>> visitedCandidates = new HashSet<QuadItem<T>>();
         //保存要返回的cluster簇，每个cluster中包含若干个MyItem对象
@@ -213,5 +213,42 @@ public class NonHierarchicalDistanceBasedAlgorithm<T extends ClusterItem> implem
         public int getSize() {
             return 1;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            QuadItem<?> quadItem = (QuadItem<?>) o;
+
+            Point point = quadItem.getPoint();
+            LatLng position = quadItem.getPosition();
+
+            if (!mPoint.equals(point)) {
+                return false;
+            }
+
+            if (Double.compare(position.latitude, mPosition.latitude) != 0 ||
+                    Double.compare(position.longitude, position.longitude) != 0) {
+                return false;
+            }
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = mPoint != null ? mPoint.hashCode() : 0;
+            result = 31 * result + (mPosition != null ? mPosition.hashCode() : 0);
+            return result;
+        }
+    }
+
+    public static int getMaxDistanceAtZoom() {
+        return maxDistanceAtZoom;
+    }
+
+    public static void setMaxDistanceAtZoom(int maxDistanceAtZoom) {
+        NonHierarchicalDistanceBasedAlgorithm.maxDistanceAtZoom = maxDistanceAtZoom;
     }
 }
