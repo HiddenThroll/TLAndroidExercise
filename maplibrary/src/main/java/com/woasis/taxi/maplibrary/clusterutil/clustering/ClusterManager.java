@@ -138,10 +138,11 @@ public class ClusterManager<T extends ClusterItem> implements
         }
     }
 
-    public void removeItem(T item) {
+    public void removeItem(T item, Marker marker) {
         mAlgorithmLock.writeLock().lock();
         try {
             mAlgorithm.removeItem(item);
+            mMarkerManager.remove(marker);
         } finally {
             mAlgorithmLock.writeLock().unlock();
         }

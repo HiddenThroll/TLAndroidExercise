@@ -4,6 +4,8 @@
 
 package com.woasis.taxi.maplibrary.clusterutil.clustering.algo;
 
+import android.util.Log;
+
 import com.baidu.mapapi.model.LatLng;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.Cluster;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.ClusterItem;
@@ -77,7 +79,12 @@ public class NonHierarchicalDistanceBasedAlgorithm<T extends ClusterItem> implem
     @Override
     public void removeItem(T item) {
         // TODO: delegate QuadItem#hashCode and QuadItem#equals to its item.
-        throw new UnsupportedOperationException("NonHierarchicalDistanceBasedAlgorithm.remove not implemented");
+//        throw new UnsupportedOperationException("NonHierarchicalDistanceBasedAlgorithm.remove not implemented");
+        final QuadItem<T> quadItem = new QuadItem<T>(item);
+        synchronized (mQuadTree) {
+            mItems.remove(quadItem);
+            mQuadTree.remove(quadItem);
+        }
     }
 
     /**

@@ -96,16 +96,7 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
                 Toast.makeText(MarkerClusterDemoActivity.this,
                         "点击" + stationInfo.getStationname(), Toast.LENGTH_SHORT).show();
 
-                // 测试改变Marker
-                marker.setAlpha(0.5f);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        marker.setAlpha(1);
-                    }
-                }, 500);
-                // 测试添加Marker 并 手动触发cluster运算
-                testAddMarker();
+                mClusterManager.removeItem(item, marker);
 
                 return false;
             }
