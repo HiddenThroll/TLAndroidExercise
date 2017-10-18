@@ -1,8 +1,11 @@
 package com.woasis.taxi.maplibrary.clusterutil;
 
+import android.util.SparseArray;
+
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.woasis.taxi.maplibrary.clusterutil.clustering.ClusterItem;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -104,13 +107,25 @@ public class MarkerManager implements BaiduMap.OnMarkerClickListener, BaiduMap.O
         private BaiduMap.OnMarkerClickListener mMarkerClickListener;
         private BaiduMap.OnMarkerDragListener mMarkerDragListener;
 
+        private final SparseArray<Marker> markerSparseArray = new SparseArray<>();//用于查找单独Marker
+
         public Collection() {
         }
 
-        public Marker addMarker(MarkerOptions opts) {
+        public Marker addMarker(MarkerOptions opts, ClusterItem clusterItem) {
             Marker marker = (Marker) mMap.addOverlay(opts);
             mMarkers.add(marker);
             mAllMarkers.put(marker, Collection.this);
+
+            if (clusterItem != null) {
+                if (clusterItem.getBundle() != null) {
+                    int key = clusterItem.getBundle().getInt(ClusterItem.MARKER_IDENTITY, Integer.MIN_VALUE);
+                    if (key != Integer.MIN_VALUE) {
+                        markerSparseArray.put(key, marker);
+                    }
+                }
+            }
+
             return marker;
         }
 
@@ -129,6 +144,7 @@ public class MarkerManager implements BaiduMap.OnMarkerClickListener, BaiduMap.O
                 mAllMarkers.remove(marker);
             }
             mMarkers.clear();
+            markerSparseArray.clear();
         }
 
         public java.util.Collection<Marker> getMarkers() {
@@ -141,6 +157,10 @@ public class MarkerManager implements BaiduMap.OnMarkerClickListener, BaiduMap.O
 
         public void setOnMarkerDragListener(BaiduMap.OnMarkerDragListener markerDragListener) {
             mMarkerDragListener = markerDragListener;
+        }
+
+        public SparseArray<Marker> getMarkerSparseArray() {
+            return markerSparseArray;
         }
     }
 

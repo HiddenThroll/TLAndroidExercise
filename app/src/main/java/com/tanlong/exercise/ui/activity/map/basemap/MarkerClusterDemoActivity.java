@@ -6,7 +6,6 @@ package com.tanlong.exercise.ui.activity.map.basemap;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,12 +24,10 @@ import com.google.gson.reflect.TypeToken;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.model.entity.StationInfo;
 import com.tanlong.exercise.ui.activity.map.render.CustomClusterRenderer;
-import com.tanlong.exercise.util.ToastHelp;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.Cluster;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.ClusterItem;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.ClusterManager;
 import com.woasis.taxi.maplibrary.impl.OnLocationListener;
-import com.woasis.taxi.maplibrary.model.MarkDataBase;
 import com.woasis.taxi.maplibrary.service.BDLocNaviService;
 
 import org.json.JSONObject;
@@ -51,6 +48,7 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
     private ClusterManager<MyItem> mClusterManager;
 
     List<StationInfo> stationInfoList;
+    List<MyItem> items;
     private BDLocNaviService locNaviService;
 
     private boolean isAddTestMarker = false;
@@ -96,7 +94,20 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
                 Toast.makeText(MarkerClusterDemoActivity.this,
                         "点击" + stationInfo.getStationname(), Toast.LENGTH_SHORT).show();
 
-                mClusterManager.removeItem(item, marker);
+                //查找指定Marker(684)并改变
+                Marker testMarker = mClusterManager.getMarkerByIdentify(684);
+                if (testMarker != null) {
+                    Log.e(TAG, "change testMarker");
+                    for (MyItem myItem : items) {
+                        StationInfo temp = (StationInfo) myItem.getBundle().getSerializable(MyItem.STATION_INFO);
+                        if (temp.getSsid() == 684) {
+                            myItem.setmBitmapDescriptor(R.mipmap.ic_launcher);
+                        }
+                    }
+                    testMarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
+                } else {
+                    Log.e(TAG, "testMarker is null");
+                }
 
                 return false;
             }
@@ -147,7 +158,7 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
      * 向地图添加Marker点
      */
     private void addMarker() {
-        List<MyItem> items = new ArrayList<>();
+        items = new ArrayList<>();
         for (StationInfo stationInfo : stationInfoList) {
             LatLng latLng = new LatLng(Double.valueOf(stationInfo.getLatitude()),
                     Double.valueOf(stationInfo.getLongtitude()));
@@ -185,10 +196,16 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
         private final LatLng mPosition;
         private StationInfo mStationInfo;
         public static final String STATION_INFO = "station_info";
+        private BitmapDescriptor mBitmapDescriptor;
 
         public MyItem(LatLng latLng, StationInfo stationInfo) {
             mPosition = latLng;
             mStationInfo = stationInfo;
+            mBitmapDescriptor = BitmapDescriptorFactory.fromResource(R.mipmap.icon_gcoding);
+        }
+
+        public void setmBitmapDescriptor(int res) {
+            mBitmapDescriptor = BitmapDescriptorFactory.fromResource(res);
         }
 
         @Override
@@ -198,17 +215,32 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
 
         @Override
         public BitmapDescriptor getBitmapDescriptor() {
-            return BitmapDescriptorFactory
-                    .fromResource(R.mipmap.icon_gcoding);
+            return mBitmapDescriptor;
         }
 
         @Override
         public Bundle getBundle() {
             Bundle bundle = new Bundle();
             bundle.putSerializable(STATION_INFO, mStationInfo);
+            bundle.putInt(MARKER_IDENTITY, mStationInfo.getSsid());
             return bundle;
         }
 
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            MyItem myItem = (MyItem) o;
+
+            return mStationInfo != null ? mStationInfo.equals(myItem.mStationInfo) : myItem.mStationInfo == null;
+
+        }
+
+        @Override
+        public int hashCode() {
+            return mStationInfo != null ? mStationInfo.hashCode() : 0;
+        }
     }
 
     @Override

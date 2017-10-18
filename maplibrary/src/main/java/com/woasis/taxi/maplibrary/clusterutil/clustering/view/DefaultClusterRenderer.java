@@ -818,7 +818,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
                             markerOptions.icon(item.getBitmapDescriptor());
                         }
                         onBeforeClusterItemRendered(item, markerOptions);
-                        marker = mClusterManager.getMarkerCollection().addMarker(markerOptions);
+                        marker = mClusterManager.getMarkerCollection().addMarker(markerOptions, item);
                         markerWithPosition = new MarkerWithPosition(marker);
                         mMarkerCache.put(item, marker);
                         if (animateFrom != null) {
@@ -838,7 +838,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
 
             onBeforeClusterRendered(cluster, markerOptions);
 
-            Marker marker = mClusterManager.getClusterMarkerCollection().addMarker(markerOptions);
+            Marker marker = mClusterManager.getClusterMarkerCollection().addMarker(markerOptions, null);
             mMarkerToCluster.put(marker, cluster);
             mClusterToMarker.put(cluster, marker);
             MarkerWithPosition markerWithPosition = new MarkerWithPosition(marker);

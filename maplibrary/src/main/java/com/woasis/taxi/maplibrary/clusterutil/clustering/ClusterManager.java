@@ -149,6 +149,15 @@ public class ClusterManager<T extends ClusterItem> implements
     }
 
     /**
+     * 通过MarkerIdentify查找marker
+     * @param markerIdentify -- ClusterItem的getBundle中设置
+     * @return
+     */
+    public Marker getMarkerByIdentify(int markerIdentify) {
+        return getMarkerCollection().getMarkerSparseArray().get(markerIdentify, null);
+    }
+
+    /**
      * Force a re-cluster. You may want to call this after adding new item(s).
      */
     public void cluster() {

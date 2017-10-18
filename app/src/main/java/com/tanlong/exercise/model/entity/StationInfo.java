@@ -11,6 +11,7 @@ public class StationInfo implements Serializable{
     private String stationname;
     private String longtitude;
     private String latitude;
+    private int ssid;
     private int canusenum;
 
     public StationInfo() {
@@ -20,6 +21,14 @@ public class StationInfo implements Serializable{
         this.stationname = stationname;
         this.longtitude = longtitude;
         this.latitude = latitude;
+    }
+
+    public int getSsid() {
+        return ssid;
+    }
+
+    public void setSsid(int ssid) {
+        this.ssid = ssid;
     }
 
     public String getStationname() {
@@ -63,5 +72,21 @@ public class StationInfo implements Serializable{
                 ", longtitude='" + longtitude + '\'' +
                 ", latitude='" + latitude + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StationInfo that = (StationInfo) o;
+
+        return ssid == that.ssid;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return ssid;
     }
 }
