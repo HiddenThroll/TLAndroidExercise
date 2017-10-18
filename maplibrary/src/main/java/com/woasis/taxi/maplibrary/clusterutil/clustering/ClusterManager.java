@@ -18,6 +18,7 @@ import com.woasis.taxi.maplibrary.clusterutil.clustering.algo.NonHierarchicalDis
 import com.woasis.taxi.maplibrary.clusterutil.clustering.algo.PreCachingAlgorithmDecorator;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.view.ClusterRenderer;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.view.DefaultClusterRenderer;
+import com.woasis.taxi.maplibrary.impl.OnMapStatusChangeListener;
 
 import java.util.Collection;
 import java.util.Set;
@@ -42,7 +43,8 @@ public class ClusterManager<T extends ClusterItem> implements
 
     private BaiduMap mMap;
     private MapStatus mPreviousCameraPosition;
-    private MapStatus mPreMapStatus;
+    private MapStatus mPreMapStatus;//Cluster使用的
+    private MapStatus mOldMapStatus;// 正常缩放使用的
     private ClusterTask mClusterTask;
     private final ReadWriteLock mClusterTaskLock = new ReentrantReadWriteLock();
 
@@ -50,6 +52,8 @@ public class ClusterManager<T extends ClusterItem> implements
     private OnClusterInfoWindowClickListener<T> mOnClusterInfoWindowClickListener;
     private OnClusterItemInfoWindowClickListener<T> mOnClusterItemInfoWindowClickListener;
     private OnClusterClickListener<T> mOnClusterClickListener;
+
+    private OnMapStatusChangeListener mOnMapStatusChangeListener;
 
     public ClusterManager(Context context, BaiduMap map) {
         this(context, map, new MarkerManager(map));
@@ -180,20 +184,31 @@ public class ClusterManager<T extends ClusterItem> implements
 
     @Override
     public void onMapStatusChangeStart(MapStatus mapStatus) {
-
+        mOldMapStatus = mapStatus;
+        if (mOnMapStatusChangeListener != null) {
+            mOnMapStatusChangeListener.onMapStatusChangeStart(mapStatus);
+        }
     }
 
     @Override
     public void onMapStatusChange(MapStatus mapStatus) {
-        if (mRenderer instanceof BaiduMap.OnMapStatusChangeListener) {
-            Log.e("test", "mRenderer is OnMapStatusChangeListener");
-            ((BaiduMap.OnMapStatusChangeListener) mRenderer).onMapStatusChange(mapStatus);
+        if (mOnMapStatusChangeListener != null) {
+            mOnMapStatusChangeListener.onMapStatusChange(mapStatus);
         }
     }
 
     @Override
     public void onMapStatusChangeFinish(MapStatus mapStatus) {
         // Don't re-compute clusters if the map has just been panned/tilted/rotated.
+
+        if (mOldMapStatus != null) {
+            if (mOldMapStatus.zoom == mapStatus.zoom) {
+                mOnMapStatusChangeListener.onMapMoveFinish(mapStatus);
+            } else {
+                mOnMapStatusChangeListener.onMapZoomChange(mOldMapStatus, mapStatus);
+            }
+        }
+
         MapStatus position = mMap.getMapStatus();
         if (mPreviousCameraPosition != null && mPreviousCameraPosition.zoom == position.zoom) {
             return;
@@ -202,7 +217,6 @@ public class ClusterManager<T extends ClusterItem> implements
 
         if (mPreMapStatus == null || mPreMapStatus.zoom != mapStatus.zoom) {
             cluster();
-            Log.e("test", "cluster()" + mapStatus.zoom);
         }
         mPreMapStatus = mapStatus;
     }
@@ -266,6 +280,10 @@ public class ClusterManager<T extends ClusterItem> implements
     public void setOnClusterItemInfoWindowClickListener(OnClusterItemInfoWindowClickListener<T> listener) {
         mOnClusterItemInfoWindowClickListener = listener;
         mRenderer.setOnClusterItemInfoWindowClickListener(listener);
+    }
+
+    public void setmOnMapStatusChangeListener(OnMapStatusChangeListener mOnMapStatusChangeListener) {
+        this.mOnMapStatusChangeListener = mOnMapStatusChangeListener;
     }
 
     /**
