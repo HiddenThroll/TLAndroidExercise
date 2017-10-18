@@ -28,6 +28,7 @@ import com.woasis.taxi.maplibrary.clusterutil.clustering.Cluster;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.ClusterItem;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.ClusterManager;
 import com.woasis.taxi.maplibrary.impl.OnLocationListener;
+import com.woasis.taxi.maplibrary.impl.OnMapStatusChangeListener;
 import com.woasis.taxi.maplibrary.service.BDLocNaviService;
 
 import org.json.JSONObject;
@@ -128,6 +129,7 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
 
     @Override
     protected void onDestroy() {
+        mClusterManager.releaseResource();
         mMapView.onDestroy();
         super.onDestroy();
     }

@@ -120,6 +120,15 @@ public class ClusterManager<T extends ClusterItem> implements
     }
 
     /**
+     * 释放资源，不再显示地图时调用
+     */
+    public void releaseResource() {
+        clearItems();
+        mClusterMarkers.clear();
+        mMarkers.clear();
+    }
+
+    /**
      * 添加要聚合的Marker集合
      * @param items
      */
@@ -201,7 +210,7 @@ public class ClusterManager<T extends ClusterItem> implements
     public void onMapStatusChangeFinish(MapStatus mapStatus) {
         // Don't re-compute clusters if the map has just been panned/tilted/rotated.
 
-        if (mOldMapStatus != null) {
+        if (mOldMapStatus != null && mOnMapStatusChangeListener != null) {
             if (mOldMapStatus.zoom == mapStatus.zoom) {
                 mOnMapStatusChangeListener.onMapMoveFinish(mapStatus);
             } else {
