@@ -7,7 +7,6 @@ package com.woasis.taxi.maplibrary.clusterutil.clustering;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.util.Log;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatus;
@@ -19,6 +18,7 @@ import com.woasis.taxi.maplibrary.clusterutil.clustering.algo.PreCachingAlgorith
 import com.woasis.taxi.maplibrary.clusterutil.clustering.view.ClusterRenderer;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.view.DefaultClusterRenderer;
 import com.woasis.taxi.maplibrary.impl.OnMapStatusChangeListener;
+import com.woasis.taxi.maplibrary.impl.OnMarkerClickListener;
 
 import java.util.Collection;
 import java.util.Set;
@@ -293,6 +293,14 @@ public class ClusterManager<T extends ClusterItem> implements
 
     public void setmOnMapStatusChangeListener(OnMapStatusChangeListener mOnMapStatusChangeListener) {
         this.mOnMapStatusChangeListener = mOnMapStatusChangeListener;
+    }
+
+    /**
+     * 这里的Marker是指 Cluster 和 ClusterItem 之外的Marker
+     * @param onSingleMarkerClickListener
+     */
+    public void setOnSingleMarkerClickListener(OnMarkerClickListener onSingleMarkerClickListener) {
+        mMarkerManager.setmOnMarkerClickListener(onSingleMarkerClickListener);
     }
 
     /**

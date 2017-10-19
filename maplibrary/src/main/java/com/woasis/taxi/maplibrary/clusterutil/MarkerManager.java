@@ -6,6 +6,8 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.ClusterItem;
+import com.woasis.taxi.maplibrary.impl.OnMarkerClickListener;
+import com.woasis.taxi.maplibrary.model.MarkDataBase;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,6 +27,8 @@ public class MarkerManager implements BaiduMap.OnMarkerClickListener, BaiduMap.O
     private final Map<String, Collection> mNamedCollections = new HashMap<>();
     // 记录 Marker --> 缓存它的Collection
     private final Map<Marker, Collection> mAllMarkers = new HashMap<>();
+
+    private OnMarkerClickListener mOnMarkerClickListener;
 
     public MarkerManager(BaiduMap map) {
         this.mMap = map;
@@ -63,6 +67,11 @@ public class MarkerManager implements BaiduMap.OnMarkerClickListener, BaiduMap.O
             return collection.mMarkerClickListener.onMarkerClick(marker);
         } else  {
             ; // click single maker out of cluster
+            if(mOnMarkerClickListener != null) {
+                MarkDataBase markDataBase = (MarkDataBase) marker.getExtraInfo()
+                        .getSerializable(MarkDataBase.MARKER_DATA);
+                mOnMarkerClickListener.onMarkerClick(markDataBase, marker);
+            }
         }
         return false;
     }
@@ -164,4 +173,7 @@ public class MarkerManager implements BaiduMap.OnMarkerClickListener, BaiduMap.O
         }
     }
 
+    public void setmOnMarkerClickListener(OnMarkerClickListener mOnMarkerClickListener) {
+        this.mOnMarkerClickListener = mOnMarkerClickListener;
+    }
 }

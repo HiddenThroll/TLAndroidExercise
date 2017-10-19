@@ -24,11 +24,16 @@ import com.google.gson.reflect.TypeToken;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.model.entity.StationInfo;
 import com.tanlong.exercise.ui.activity.map.render.CustomClusterRenderer;
+import com.tanlong.exercise.util.ToastHelp;
+import com.woasis.taxi.maplibrary.BaiduMapService;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.Cluster;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.ClusterItem;
 import com.woasis.taxi.maplibrary.clusterutil.clustering.ClusterManager;
 import com.woasis.taxi.maplibrary.impl.OnLocationListener;
 import com.woasis.taxi.maplibrary.impl.OnMapStatusChangeListener;
+import com.woasis.taxi.maplibrary.impl.OnMarkerClickListener;
+import com.woasis.taxi.maplibrary.model.LatLngData;
+import com.woasis.taxi.maplibrary.model.MarkDataBase;
 import com.woasis.taxi.maplibrary.service.BDLocNaviService;
 
 import org.json.JSONObject;
@@ -51,6 +56,7 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
     List<StationInfo> stationInfoList;
     List<MyItem> items;
     private BDLocNaviService locNaviService;
+    private BaiduMapService baiduMapService;
 
     private boolean isAddTestMarker = false;
     private String addTestMarkerName = "测试添加Marker";
@@ -64,6 +70,10 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
         mBaiduMap = mMapView.getMap();
         locNaviService = new BDLocNaviService(this, mBaiduMap);
         locNaviService.startLocationAndMoveCenter(this);
+
+        baiduMapService = new BaiduMapService(this);
+        baiduMapService.initBaiduMap(mMapView);
+
         mBaiduMap.setOnMapLoadedCallback(this);
         // 定义点聚合管理类ClusterManager
         mClusterManager = new ClusterManager<MyItem>(this, mBaiduMap);
@@ -78,6 +88,13 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
         mBaiduMap.setOnMapStatusChangeListener(mClusterManager);
         // 设置maker点击时的响应
         mBaiduMap.setOnMarkerClickListener(mClusterManager);
+
+        mClusterManager.setOnSingleMarkerClickListener(new OnMarkerClickListener() {
+            @Override
+            public void onMarkerClick(MarkDataBase markDataBase, Marker marker) {
+                ToastHelp.showShortMsg(MarkerClusterDemoActivity.this, (String)markDataBase.getData());
+            }
+        });
 
         mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>() {
             @Override
@@ -183,7 +200,11 @@ public class MarkerClusterDemoActivity extends Activity implements OnMapLoadedCa
 
     @Override
     public void onLocation(BDLocation bdLocation) {
-
+        LatLngData target = new LatLngData(bdLocation.getLatitude(), bdLocation.getLongitude(),
+                LatLngData.LatLngType.BAIDU);
+        MarkDataBase<String> markDataBase = new MarkDataBase<>();
+        markDataBase.setData("测试数据");
+        baiduMapService.addMarker(R.mipmap.ic_launcher, target, markDataBase, 0);
     }
 
     @Override

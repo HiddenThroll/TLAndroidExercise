@@ -28,6 +28,8 @@ import com.woasis.taxi.maplibrary.model.LatLngData;
 import com.woasis.taxi.maplibrary.model.MarkDataBase;
 import com.woasis.taxi.maplibrary.util.MapUtils;
 
+import static com.woasis.taxi.maplibrary.model.MarkDataBase.MARKER_DATA;
+
 /**
  * 提供基础地图服务
  * Created by 龙 on 2017/5/12.
@@ -35,7 +37,6 @@ import com.woasis.taxi.maplibrary.util.MapUtils;
 
 public class BaiduMapService {
     private final String TAG = getClass().getSimpleName();
-    public static final String MARKER_DATA = "marker_data";
     private Context mContext;
 
     private BaiduMap mBaiduMap;

@@ -304,7 +304,7 @@ public class BDLocNaviService {
      *
      * @param zoom -- 缩放等级
      */
-    public void setMapZoom(float zoom) {
+    private void setMapZoom(float zoom) {
         MapStatus.Builder builder = new MapStatus.Builder();
         builder.zoom(zoom);
         MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(builder.build());
@@ -316,7 +316,7 @@ public class BDLocNaviService {
      *
      * @return -- 缩放级别
      */
-    public float getMapZoom() {
+    private float getMapZoom() {
         return getMapZoom(15);
     }
 
@@ -339,7 +339,7 @@ public class BDLocNaviService {
      *
      * @return
      */
-    public boolean isBaiduMapInstall() {
+    private boolean isBaiduMapInstall() {
         boolean result = isAppInstalled(mContext, "com.baidu.BaiduMap");
         if (!result) {
             Toast.makeText(mContext, R.string.no_baidu_map_installed, Toast.LENGTH_SHORT).show();
@@ -352,7 +352,7 @@ public class BDLocNaviService {
      *
      * @return
      */
-    public boolean isAMapInstall() {
+    private boolean isAMapInstall() {
         boolean result = isAppInstalled(mContext, "com.autonavi.minimap");
         if (!result) {
             Toast.makeText(mContext, R.string.no_a_map_installed, Toast.LENGTH_SHORT).show();

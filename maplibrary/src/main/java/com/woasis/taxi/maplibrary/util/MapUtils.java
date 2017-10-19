@@ -1,24 +1,11 @@
 package com.woasis.taxi.maplibrary.util;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Point;
-import android.location.LocationManager;
-import android.provider.Settings;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.search.route.DrivingRouteLine;
 import com.baidu.mapapi.utils.CoordinateConverter;
-import com.baidu.mapapi.utils.DistanceUtil;
 import com.woasis.taxi.maplibrary.model.LatLngData;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * 地图相关工具类
@@ -160,45 +147,6 @@ public class MapUtils {
     public Point changeLatLngToPoint(LatLngData srcLatLng, BaiduMap mBaiduMap) {
         LatLng temp = changeCoordinateToBaidu(srcLatLng);
         return mBaiduMap.getProjection().toScreenLocation(temp);
-    }
-
-    /**
-     * 扩充坐标
-     *
-     * @param srcLatLng -- 源坐标
-     * @param tarLatLng -- 目的地坐标
-     * @param timeBase  -- 分解坐标的时间基数，以毫秒为单位
-     * @return -- 扩充后的坐标数据
-     * @throws Exception
-     */
-    public List<LatLngData> fillLatLng(LatLngData srcLatLng, LatLngData tarLatLng, long timeBase)
-            throws Exception {
-        long timeDifference = tarLatLng.getTimeStamp() - srcLatLng.getTimeStamp();// 时间差，毫秒为单位
-        if (timeDifference <= 0) {
-            throw new Exception("tarTime不能小于srcTime!");
-        }
-        int count = 1;// 坐标扩展次数
-        if (timeDifference <= timeBase) {
-            count = 1;
-        } else {
-            count = (int) (timeDifference / timeBase);
-            if (timeDifference % timeBase >= timeBase / 2) {
-                count++;
-            }
-        }
-        double latDiff = (tarLatLng.getmLatitude() - srcLatLng.getmLatitude()) / count;
-        double longDiff = (tarLatLng.getmLongitude() - srcLatLng.getmLongitude()) / count;
-        float dirDiff = (tarLatLng.getDirection() - srcLatLng.getDirection()) / count;
-        List<LatLngData> result = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            LatLngData data = new LatLngData();
-            data.setmLatitude(srcLatLng.getmLatitude() + i * latDiff);
-            data.setmLongitude(srcLatLng.getmLongitude() + i * longDiff);
-            data.setDirection(srcLatLng.getDirection() + i * dirDiff);
-            data.setmType(LatLngData.LatLngType.BAIDU);
-            result.add(data);
-        }
-        return result;
     }
 
     /**
