@@ -13,6 +13,7 @@ public class User extends BaseObservable{
 
     private String name;
     private Integer age;
+    private String icon;
 
     @Bindable
     public String getName() {
@@ -32,5 +33,15 @@ public class User extends BaseObservable{
     public void setAge(Integer age) {
         this.age = age;
         notifyPropertyChanged(BR.age);
+    }
+
+    @Bindable
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+        notifyPropertyChanged(BR.icon);
     }
 }

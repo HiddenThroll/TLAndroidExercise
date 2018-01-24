@@ -20,6 +20,7 @@ public class SimpleDataBindingActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_simple_data_binding);
 
         user.setName("Test");
+        user.setIcon("http://avatar.csdn.net/4/0/7/1_zhuhai__yizhi.jpg");
         binding.setUser(user);
         binding.setSimpleActivity(this);
     }

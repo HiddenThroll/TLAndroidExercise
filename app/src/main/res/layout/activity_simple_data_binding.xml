@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:bind="http://schemas.android.com/tools">
     <data>
         <import type="android.view.View"/>
         <variable
@@ -34,6 +34,10 @@
             android:layout_margin="8dp"
             android:text="改变"
             android:onClick="@{()->simpleActivity.changeUserName()}"
+            />
+
+        <include layout="@layout/item_databingding"
+            bind:user="@{user}"
             />
     </LinearLayout>
 

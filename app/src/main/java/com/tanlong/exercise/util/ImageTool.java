@@ -2,9 +2,14 @@ package com.tanlong.exercise.util;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.databinding.BindingAdapter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -130,4 +135,21 @@ public class ImageTool {
         return imageFile;
     }
 
+    /**
+     * 展示网络图片
+     *
+     * @param view        图片控件
+     * @param imageUrl    图片加载地址
+     * @param placeHolder 图片占位符
+     * @param error       图片失败的占位符
+     */
+    @BindingAdapter({"imageUrl", "placeHolder", "errorHolder"})
+    public static void loadImage(ImageView view, String imageUrl, Drawable placeHolder, Drawable error) {
+        Glide.with(view.getContext())
+                .load(imageUrl)
+                .placeholder(placeHolder)
+                .error(error)
+                .centerCrop()
+                .into(view);
+    }
 }
