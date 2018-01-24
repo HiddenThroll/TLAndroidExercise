@@ -16,7 +16,7 @@ android {
         }
     }
     compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.tanlong.exercise"
         minSdkVersion 15
@@ -34,6 +34,10 @@ android {
         main {
             jniLibs.srcDirs = ['baidulibs']
         }
+    }
+
+    dataBinding{
+        enabled=true
     }
 }
 
