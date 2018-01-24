@@ -4,6 +4,7 @@
         <item>View</item>
         <item>百度地图</item>
         <item>进程间通信IPC</item>
+        <item>DataBinding</item>
     </array>
 
     <array name="view_category">
@@ -136,5 +137,9 @@
     <array name="ipc_category">
         <item>Messenger实现IPC</item>
         <item>AIDL实现IPC--BOOK练习</item>
+    </array>
+
+    <array name="databinding_category">
+        <item>简单示例</item>
     </array>
 </resources>

@@ -3,18 +3,18 @@
     package="com.tanlong.exercise">
 
     <!-- 百度地图需求权限 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-    <!-- 蒙版效果需要-->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <!-- 蒙版效果需要 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".app.MyApplication"
@@ -23,486 +23,451 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <!-- 百度地图API KEY -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="vzL8atCFg6MZmG4R8jTTwoiSnPABGYkU"
-            />
+            android:value="vzL8atCFg6MZmG4R8jTTwoiSnPABGYkU" />
 
         <activity
             android:name=".ui.activity.MainActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"
             android:configChanges="keyboard"
-            >
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.activity.view.ViewCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
-        <!-- 自定义View相关-->
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 自定义View相关 -->
         <activity
             android:name=".ui.activity.view.customview.CustomViewCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.customview.CustomTitleViewActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.customview.CustomImageViewActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.customview.CustomCircleViewActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.customview.CustomVolumeBarActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.customview.CustomArcShowActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.customview.ScheduleChartActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.customview.CustomSimpleClockActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.customview.CustomSignViewActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.customview.CustomSignViewActivity"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
-        <!-- 自定义ViewGroup相关-->
+        <!-- 自定义ViewGroup相关 -->
         <activity
             android:name=".ui.activity.view.customviewgroup.CustomViewGroupCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.customviewgroup.VerticalLinearLayoutActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.customviewgroup.ViewDragHelperActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.customviewgroup.LeftDrawerLayoutActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.customviewgroup.GestureLockActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
-        <!-- ListView相关-->
+        <!-- ListView相关 -->
         <activity
             android:name=".ui.activity.view.listview.ListViewCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.listview.SwipeRefreshListViewActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.listview.LoadMoreListViewActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.listview.SwipeRefreshLoadMoreListViewActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
-        <!-- View效果相关-->
+        <!-- View效果相关 -->
         <activity
             android:name=".ui.activity.view.vieweffect.ViewEffectCategory"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.vieweffect.MaskEffectActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.vieweffect.ShadowBackgroundActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.vieweffect.ShadowBackgroundActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.vieweffect.RoundImageByXfermodeActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.vieweffect.RoundImageByXfermodeActivity"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.vieweffect.ScratchCardActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.vieweffect.PaletteExerciseActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.vieweffect.PaletteExerciseActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.vieweffect.TintingAndClippingActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.vieweffect.TintingAndClippingActivity"
             android:configChanges="keyboard"
-            />
-
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <!-- Fragment练习相关 -->
         <activity
             android:name=".ui.activity.view.fragment.FragmentCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.fragment.DialogFragmentActivity"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.activity.view.fragment.datatransfer.ListArticleActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.fragment.datatransfer.ArticleContentActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.view.fragment.dataload.LoadDataActivity"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop" />
 
         <!-- ViewPager练习相关 -->
-        <activity android:name=".ui.activity.view.viewpager.ViewPagerCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
+        <activity
+            android:name=".ui.activity.view.viewpager.ViewPagerCategoryActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.viewpager.ViewPagerWelcomeActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.viewpager.ViewPagerWelcomeActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.viewpager.ViewPagerRealUnlimitedScrollActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.viewpager.ViewPagerRealUnlimitedScrollActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.viewpager.ViewPagerFakeUnlimitedScrollActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.viewpager.ViewPagerFakeUnlimitedScrollActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.viewpager.ViewPagerTabLayoutActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.viewpager.ViewPagerTabLayoutActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.viewpager.ViewPagerFragmentPagerAdapterActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.viewpager.ViewPagerFragmentPagerAdapterActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.viewpager.ViewPagerFragmentPagerNotifyAdapterActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.viewpager.ViewPagerFragmentPagerNotifyAdapterActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.viewpager.ViewPagerFragmentStatePagerAdapterActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.viewpager.ViewPagerFragmentStatePagerAdapterActivity"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
-        <!-- RecyclerView练习相关-->
-        <activity android:name=".ui.activity.view.recyclerview.RecyclerViewCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
+        <!-- RecyclerView练习相关 -->
+        <activity
+            android:name=".ui.activity.view.recyclerview.RecyclerViewCategoryActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.recyclerview.RecyclerViewBaseUseActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.recyclerview.RecyclerViewBaseUseActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.recyclerview.RecyclerViewItemDecorationActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.recyclerview.RecyclerViewItemDecorationActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.recyclerview.RecyclerViewStaggeredActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.recyclerview.RecyclerViewStaggeredActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.recyclerview.RecyclerViewMultiItemActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.recyclerview.RecyclerViewMultiItemActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.recyclerview.RecyclerViewRefreshActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.recyclerview.RecyclerViewRefreshActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.recyclerview.RecyclerViewSectionActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.recyclerview.RecyclerViewSectionActivity"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <!-- SurfaceView相关 -->
-        <activity android:name=".ui.activity.view.surfaceview.SurfaceViewCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
+        <activity
+            android:name=".ui.activity.view.surfaceview.SurfaceViewCategoryActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.surfaceview.CustomSurfaceClockActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.surfaceview.CustomSurfaceClockActivity"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <!-- 动画相关 -->
         <activity
             android:name=".ui.activity.view.animator.AnimatorCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <!-- 属性动画 -->
         <activity
             android:name=".ui.activity.view.animator.propertyanimator.PropertyAnimatorCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.animator.propertyanimator.SimpleAnimatorActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.animator.propertyanimator.SimpleAnimatorActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.animator.propertyanimator.BallAnimatorActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.animator.propertyanimator.BallAnimatorActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.animator.propertyanimator.SmartMenuActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.animator.propertyanimator.SmartMenuActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.animator.propertyanimator.SmoothHideActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.animator.propertyanimator.SmoothHideActivity"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <!-- 矢量动画 -->
-        <activity android:name=".ui.activity.view.animator.svganimator.SvgAnimatorCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
+        <activity
+            android:name=".ui.activity.view.animator.svganimator.SvgAnimatorCategoryActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.animator.svganimator.DrawSettingActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.animator.svganimator.DrawSettingActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.cardview.SimpleCardViewActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.cardview.SimpleCardViewActivity"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <!-- Activity过场动画 -->
-        <activity android:name=".ui.activity.view.animator.activityanimator.ActivityAnimatorCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
+        <activity
+            android:name=".ui.activity.view.animator.activityanimator.ActivityAnimatorCategoryActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.animator.activityanimator.TransitionActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.animator.activityanimator.TransitionActivity"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <!-- Material Design动画效果 -->
-        <activity android:name=".ui.activity.view.animator.mdanimator.MDAnimatorCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
+        <activity
+            android:name=".ui.activity.view.animator.mdanimator.MDAnimatorCategoryActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.animator.mdanimator.RippleActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.animator.mdanimator.RippleActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.animator.mdanimator.CircularRevealActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.animator.mdanimator.CircularRevealActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.animator.mdanimator.StateListAnimatorActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.animator.mdanimator.StateListAnimatorActivity"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <!-- 通知相关 -->
         <activity
             android:name=".ui.activity.view.notification.NotificationCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <!-- 约束性布局相关 -->
-        <activity android:name=".ui.activity.view.constraintlayout.ConstraintLayoutCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
+        <activity
+            android:name=".ui.activity.view.constraintlayout.ConstraintLayoutCategoryActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.constraintlayout.SimpleConstraintActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.constraintlayout.SimpleConstraintActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.constraintlayout.ConstraintAnimationActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.constraintlayout.ConstraintAnimationActivity"
             android:configChanges="keyboard"
-            />
-        <activity android:name=".ui.activity.view.constraintlayout.ConstraintChangeActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.view.constraintlayout.ConstraintChangeActivity"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <!-- 百度地图相关 -->
         <activity
             android:name=".ui.activity.map.MapCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.map.basemap.BaseMapActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.map.basemap.RoutePlanActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.map.basemap.MarkerClusterDemoActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
-        <!-- IPC相关-->
+        <!-- IPC相关 -->
         <activity
             android:name=".ui.activity.ipc.IPCCategoryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ipc.messenger.MessengerIPCActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ipc.aidl.AIDLIPCActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"
             android:configChanges="keyboard"
-            />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".service.MessengerServiceDemo"
             android:enabled="true"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.tanlong.exercise.messenger.demo"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.tanlong.exercise.messenger.demo" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
-
         <service
             android:name=".service.AIDLService"
             android:enabled="true"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.tanlong.exercise.aidl.book"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.tanlong.exercise.aidl.book" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+
+        <activity android:name=".ui.activity.databinding.DataBindingCategoryActivity"/>
+        <activity android:name=".ui.activity.databinding.SimpleDataBindingActivity"
+            android:exported="true"
+            />
     </application>
 
 </manifest>

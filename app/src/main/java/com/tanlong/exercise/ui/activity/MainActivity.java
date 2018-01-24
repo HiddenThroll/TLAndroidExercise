@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
+import com.tanlong.exercise.ui.activity.databinding.DataBindingCategoryActivity;
 import com.tanlong.exercise.ui.activity.ipc.IPCCategoryActivity;
 import com.tanlong.exercise.ui.activity.map.MapCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.ViewCategoryActivity;
@@ -58,7 +59,11 @@ public class MainActivity extends BaseActivity {
             case 2:
                 intent.setClass(this, IPCCategoryActivity.class);
                 break;
-
+            case 3:
+                intent.setClass(this, DataBindingCategoryActivity.class);
+                break;
+            default:
+                break;
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {
