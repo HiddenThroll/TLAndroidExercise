@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -29,19 +29,19 @@ import butterknife.ButterKnife;
  */
 public class ScheduleChartActivity extends BaseActivity implements View.OnClickListener {
 
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.schedule_chart)
+    @BindView(R.id.schedule_chart)
     ScheduleChart scheduleChart;
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_schedule_time_start)
+    @BindView(R.id.tv_schedule_time_start)
     TextView tvScheduleTimeStart;
-    @Bind(R.id.tv_schedule_time_end)
+    @BindView(R.id.tv_schedule_time_end)
     TextView tvScheduleTimeEnd;
-    @Bind(R.id.tv_select_time_start)
+    @BindView(R.id.tv_select_time_start)
     TextView tvSelectTimeStart;
-    @Bind(R.id.tv_select_time_end)
+    @BindView(R.id.tv_select_time_end)
     TextView tvSelectTimeEnd;
 
     @Override

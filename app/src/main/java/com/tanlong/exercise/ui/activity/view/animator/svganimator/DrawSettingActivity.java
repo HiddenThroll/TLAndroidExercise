@@ -11,7 +11,8 @@ import com.eftimoff.androipathview.PathView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -21,13 +22,13 @@ import butterknife.OnClick;
 
 public class DrawSettingActivity extends BaseActivity {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
-    @Bind(R.id.pv_setting)
+    @BindView(R.id.pv_setting)
     PathView pvSetting;
 
     @Override

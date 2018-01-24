@@ -12,7 +12,8 @@ import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.animator.propertyanimator.BallAnimatorActivity;
 import com.tanlong.exercise.ui.activity.view.animator.propertyanimator.SimpleAnimatorActivity;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
@@ -22,11 +23,11 @@ import butterknife.OnItemClick;
  */
 
 public class SvgAnimatorCategoryActivity extends BaseActivity {
-    @Bind(R.id.lv_activity_category)
+    @BindView(R.id.lv_activity_category)
     ListView mLvCategory;
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView mIvBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView mTvTitle;
 
     @Override

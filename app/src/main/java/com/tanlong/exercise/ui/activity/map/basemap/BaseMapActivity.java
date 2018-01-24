@@ -20,7 +20,7 @@ import com.woasis.taxi.maplibrary.service.BDLocNaviService;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
  */
 public class BaseMapActivity extends BaseActivity {
 
-    @Bind(R.id.mv_baidu_map)
+    @BindView(R.id.mv_baidu_map)
     MapView mBaiduMap;
 
     BaiduMapService mMapService;

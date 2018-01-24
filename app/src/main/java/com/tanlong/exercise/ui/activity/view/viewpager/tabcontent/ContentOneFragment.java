@@ -14,9 +14,11 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.fragment.base.BaseFragment;
 import com.tanlong.exercise.util.LogTool;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Created by 龙 on 2016/11/14.
@@ -24,14 +26,16 @@ import butterknife.OnClick;
 
 public class ContentOneFragment extends BaseFragment {
 
-    @Bind(R.id.tv_update_content)
+    @BindView(R.id.tv_update_content)
     TextView tvUpdateContent;
-    @Bind(R.id.tv_fragment_id)
+    @BindView(R.id.tv_fragment_id)
     TextView tvFragmentId;
 
     public static final String FRAGMENT_IDTENTIFICATION = "fragment_idtentification";
-    @Bind(R.id.btn_refresh)
+    @BindView(R.id.btn_refresh)
     Button btnRefresh;
+
+    Unbinder unbinder;
     public interface OnRefreshFragment {
         void onRefreshFragment();
         String getUpdateContent();
@@ -52,7 +56,7 @@ public class ContentOneFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LogTool.e(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_one, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         String idContent = getArguments().getString(FRAGMENT_IDTENTIFICATION);
         tvFragmentId.setText(idContent);
@@ -111,7 +115,7 @@ public class ContentOneFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         LogTool.e(TAG, "onDestroyView");
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

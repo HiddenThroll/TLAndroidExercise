@@ -9,7 +9,7 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.view.customviewgroup.GestureLockViewGroup;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -18,11 +18,11 @@ import butterknife.OnClick;
  */
 public class GestureLockActivity extends BaseActivity {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView mIvBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @Bind(R.id.id_gestureLockViewGroup)
+    @BindView(R.id.id_gestureLockViewGroup)
     GestureLockViewGroup mGestureLockViewGroup;
 
     @Override

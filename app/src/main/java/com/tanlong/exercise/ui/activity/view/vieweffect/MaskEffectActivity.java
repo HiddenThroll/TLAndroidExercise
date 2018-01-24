@@ -18,7 +18,8 @@ import com.tanlong.exercise.util.DisplayUtil;
 import com.tanlong.exercise.util.LogTool;
 import com.tanlong.exercise.util.VersionUtil;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -29,14 +30,14 @@ import butterknife.OnClick;
 
 public class MaskEffectActivity extends BaseActivity {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
 
     ImageView ivMask;
     WindowManager windowManager;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
 
     @Override

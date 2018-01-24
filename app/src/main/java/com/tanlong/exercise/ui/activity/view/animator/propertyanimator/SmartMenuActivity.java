@@ -16,7 +16,8 @@ import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.util.ToastHelp;
 import com.tanlong.exercise.util.VersionUtil;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -27,21 +28,21 @@ import butterknife.OnClick;
 
 public class SmartMenuActivity extends BaseActivity {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
-    @Bind(R.id.iv_menu_root)
+    @BindView(R.id.iv_menu_root)
     ImageView ivMenuRoot;
-    @Bind(R.id.iv_menu_one)
+    @BindView(R.id.iv_menu_one)
     ImageView ivMenuOne;
-    @Bind(R.id.iv_menu_two)
+    @BindView(R.id.iv_menu_two)
     ImageView ivMenuTwo;
-    @Bind(R.id.iv_menu_three)
+    @BindView(R.id.iv_menu_three)
     ImageView ivMenuThree;
-    @Bind(R.id.iv_menu_four)
+    @BindView(R.id.iv_menu_four)
     ImageView ivMenuFour;
 
     private boolean isShow;

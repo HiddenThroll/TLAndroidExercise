@@ -11,7 +11,7 @@ import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.ui.view.customviewgroup.VerticalLinearLayout;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -20,13 +20,13 @@ import butterknife.OnClick;
  */
 public class VerticalLinearLayoutActivity extends BaseActivity {
 
-    @Bind(R.id.vll_activity_vertical_linear_layout)
+    @BindView(R.id.vll_activity_vertical_linear_layout)
     VerticalLinearLayout mVerticalLinearLayout;
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView mIvBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
 
     @Override

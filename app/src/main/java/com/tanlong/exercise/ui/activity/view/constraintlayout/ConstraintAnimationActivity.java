@@ -11,7 +11,8 @@ import android.view.View;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -21,7 +22,7 @@ import butterknife.OnClick;
 
 public class ConstraintAnimationActivity extends BaseActivity {
 
-    @Bind(R.id.cl_main)
+    @BindView(R.id.cl_main)
     ConstraintLayout clMain;
 
     ConstraintSet applyConstraintSet = new ConstraintSet();

@@ -15,7 +15,8 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.util.DisplayUtil;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -25,15 +26,15 @@ import butterknife.OnClick;
 
 public class TintingAndClippingActivity extends BaseActivity {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
-    @Bind(R.id.tv_clip_1)
+    @BindView(R.id.tv_clip_1)
     TextView tvClip1;
-    @Bind(R.id.tv_clip_2)
+    @BindView(R.id.tv_clip_2)
     TextView tvClip2;
 
     ViewOutlineProvider providerRoundRect;

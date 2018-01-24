@@ -30,7 +30,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -42,15 +43,15 @@ import static android.media.CamcorderProfile.get;
 
 public class PaletteExerciseActivity extends BaseActivity {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
-    @Bind(R.id.vp_palette)
+    @BindView(R.id.vp_palette)
     ViewPager vpPalette;
-    @Bind(R.id.tb_toolbar)
+    @BindView(R.id.tb_toolbar)
     Toolbar tbToolbar;
 
     List<View> viewList;

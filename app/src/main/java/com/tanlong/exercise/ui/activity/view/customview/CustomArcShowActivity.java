@@ -15,7 +15,8 @@ import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.ui.view.customview.CustomArcShowView;
 import com.tanlong.exercise.util.LogTool;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -24,21 +25,21 @@ import butterknife.OnClick;
  */
 public class CustomArcShowActivity extends BaseActivity {
 
-    @Bind(R.id.cas_activity_custom_arc_show)
+    @BindView(R.id.cas_activity_custom_arc_show)
     CustomArcShowView mCustomArcShowView;
-    @Bind(R.id.btn_activity_custom_arc_show_Add)
+    @BindView(R.id.btn_activity_custom_arc_show_Add)
     Button mBtnAdd;
-    @Bind(R.id.btn_activity_custom_arc_show_Reduce)
+    @BindView(R.id.btn_activity_custom_arc_show_Reduce)
     Button mBtnReduce;
-    @Bind(R.id.et_activity_custom_arc_show_Count)
+    @BindView(R.id.et_activity_custom_arc_show_Count)
     EditText mEtCount;
-    @Bind(R.id.btn_activity_custom_arc_show_Set)
+    @BindView(R.id.btn_activity_custom_arc_show_Set)
     Button mBtnSet;
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView mIvBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
 
     @Override

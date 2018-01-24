@@ -22,7 +22,8 @@ import com.woasis.taxi.maplibrary.overlay.DrivingRouteOverlay;
 import com.woasis.taxi.maplibrary.service.BDLocNaviService;
 import com.woasis.taxi.maplibrary.service.BDRoutePlanService;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -30,17 +31,17 @@ import butterknife.ButterKnife;
  */
 public class RoutePlanActivity extends BaseActivity implements View.OnClickListener{
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.et_start_point)
+    @BindView(R.id.et_start_point)
     EditText etStartPoint;
-    @Bind(R.id.et_end_point)
+    @BindView(R.id.et_end_point)
     EditText etEndPoint;
-    @Bind(R.id.btn_drive_search)
+    @BindView(R.id.btn_drive_search)
     Button btnDriveSearch;
-    @Bind(R.id.mv_baidu_map)
+    @BindView(R.id.mv_baidu_map)
     MapView mvBaiduMap;
 
     BaiduMapService mapService;

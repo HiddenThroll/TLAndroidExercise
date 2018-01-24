@@ -11,7 +11,7 @@ import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.ui.view.customview.CustomVolumeBar;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -20,17 +20,17 @@ import butterknife.OnClick;
  */
 public class CustomVolumeBarActivity extends BaseActivity {
 
-    @Bind(R.id.cvb_custom_volume_bar)
+    @BindView(R.id.cvb_custom_volume_bar)
     CustomVolumeBar mCustomVolumeBar;
-    @Bind(R.id.btn_Reduce_Bar)
+    @BindView(R.id.btn_Reduce_Bar)
     Button mReduce;
-    @Bind(R.id.btn_Add_Bar)
+    @BindView(R.id.btn_Add_Bar)
     Button mAdd;
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView mIvBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
 
     @Override

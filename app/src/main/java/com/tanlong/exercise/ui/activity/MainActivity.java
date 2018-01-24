@@ -14,17 +14,18 @@ import com.tanlong.exercise.ui.activity.ipc.IPCCategoryActivity;
 import com.tanlong.exercise.ui.activity.map.MapCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.ViewCategoryActivity;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 
 public class MainActivity extends BaseActivity {
 
-    @Bind(R.id.lv_activity_category)
+    @BindView(R.id.lv_activity_category)
     ListView mLvCategory;
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView mIvBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView mTvTitle;
 
     @Override
