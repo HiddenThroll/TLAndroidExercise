@@ -21,11 +21,18 @@ public class SimpleDataBindingActivity extends AppCompatActivity {
 
         user.setName("Test");
         user.setIcon("http://avatar.csdn.net/4/0/7/1_zhuhai__yizhi.jpg");
+        user.setAge(1);
         binding.setUser(user);
         binding.setSimpleActivity(this);
     }
 
     public void changeUserName() {
         user.setName("Test " + new Random().nextInt(10));
+        if (user.getAge() > 18) {
+            user.setAge(1);
+        } else {
+            user.setAge(19);
+        }
+
     }
 }

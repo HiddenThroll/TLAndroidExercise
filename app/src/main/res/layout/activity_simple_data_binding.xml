@@ -27,6 +27,20 @@
             android:layout_margin="8dp"
             />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/app_name}"
+            android:textSize="@dimen/text_size_info_normal"
+            android:layout_margin="8dp"
+            />
+
+        <View
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@{user.age > 18 ? @color/color_86d0ab : @color/color_fb9b10}"
+            />
+
         <Button
             android:id="@+id/btn_change_name"
             android:layout_width="match_parent"
