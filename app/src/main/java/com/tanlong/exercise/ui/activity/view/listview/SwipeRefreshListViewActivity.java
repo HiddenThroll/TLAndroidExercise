@@ -17,7 +17,7 @@ import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -27,15 +27,15 @@ import butterknife.OnClick;
  */
 public class SwipeRefreshListViewActivity extends BaseActivity {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView mIvBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @Bind(R.id.lv_swipe_refresh)
+    @BindView(R.id.lv_swipe_refresh)
     ListView mLvSwipeRefresh;
-    @Bind(R.id.srl_swipe_refresh_layout)
+    @BindView(R.id.srl_swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
 
     private List<String> mItems;

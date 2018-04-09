@@ -15,7 +15,7 @@ import com.tanlong.exercise.ui.activity.view.fragment.dataload.LoadDataActivity;
 import com.tanlong.exercise.ui.activity.view.fragment.datatransfer.ListArticleActivity;
 import com.tanlong.exercise.util.ToastHelp;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -24,11 +24,11 @@ import butterknife.ButterKnife;
 
 public class FragmentCategoryActivity extends BaseActivity {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.lv_activity_category)
+    @BindView(R.id.lv_activity_category)
     ListView lvActivityCategory;
 
     @Override

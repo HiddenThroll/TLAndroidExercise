@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="user"
+            type="com.tanlong.exercise.model.entity.User"/>
+        <variable
+            name="simpleActivity"
+            type="com.tanlong.exercise.ui.activity.databinding.SimpleDataBindingActivity"/>
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        >
+        <include layout="@layout/layout_toolbar"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.name}"
+            android:textSize="@dimen/text_size_info_normal"
+            android:layout_margin="8dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/app_name}"
+            android:textSize="@dimen/text_size_info_normal"
+            android:layout_margin="8dp"
+            />
+
+        <View
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@{user.age > 18 ? @color/color_86d0ab : @color/color_fb9b10}"
+            />
+
+        <Button
+            android:id="@+id/btn_change_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="改变"
+            android:onClick="@{()->simpleActivity.changeUserName()}"
+            />
+
+        <include layout="@layout/item_databingding"
+            bind:user="@{user}"
+            />
+    </LinearLayout>
+
+</layout>

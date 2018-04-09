@@ -17,8 +17,9 @@ import com.tanlong.exercise.util.DisplayUtil;
 import com.tanlong.exercise.util.LogTool;
 import com.tanlong.exercise.util.VersionUtil;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -28,9 +29,10 @@ import butterknife.ButterKnife;
 
 public class ShowTipsFragment extends DialogFragment {
     private final String TAG = getClass().getSimpleName();
-    @Bind(R.id.tv_tips)
+    @BindView(R.id.tv_tips)
     TextView tvTips;
     public static final String SHOW_TIPS = "showtipsfragment";
+    Unbinder unbinder;
 
     public static ShowTipsFragment newInstance(String content) {
         ShowTipsFragment fragment = new ShowTipsFragment();
@@ -45,7 +47,7 @@ public class ShowTipsFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         final View rootView = inflater.inflate(R.layout.dialog_show_tips, container);
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
         if (getArguments() != null) {
             String content = getArguments().getString(SHOW_TIPS, "暂无内容");
@@ -69,25 +71,24 @@ public class ShowTipsFragment extends DialogFragment {
                     if (dialog != null) {
                         DisplayMetrics displayMetrics = new DisplayMetrics();
                         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                        dialog.getWindow().setLayout((int)(displayMetrics.widthPixels * 0.75),
+                        dialog.getWindow().setLayout((int) (displayMetrics.widthPixels * 0.75),
                                 ViewGroup.LayoutParams.WRAP_CONTENT);
                     }
                 } else {
                     if (dialog != null) {
                         DisplayMetrics displayMetrics = new DisplayMetrics();
                         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                        dialog.getWindow().setLayout((int)(displayMetrics.widthPixels * 0.75), halfScreenHeight);
+                        dialog.getWindow().setLayout((int) (displayMetrics.widthPixels * 0.75), halfScreenHeight);
                     }
                 }
             }
         });
-
         return rootView;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

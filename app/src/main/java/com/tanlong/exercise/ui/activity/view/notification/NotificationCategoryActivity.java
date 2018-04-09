@@ -28,7 +28,7 @@ import com.tanlong.exercise.ui.activity.view.ViewCategoryActivity;
 import com.tanlong.exercise.util.NumberUtil;
 import com.tanlong.exercise.util.ToastHelp;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
@@ -39,13 +39,13 @@ import butterknife.OnItemClick;
 
 public class NotificationCategoryActivity extends BaseActivity {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
-    @Bind(R.id.lv_activity_category)
+    @BindView(R.id.lv_activity_category)
     ListView lvActivityCategory;
 
     NotificationManager notificationManager;

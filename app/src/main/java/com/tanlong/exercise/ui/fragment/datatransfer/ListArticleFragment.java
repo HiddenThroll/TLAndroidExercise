@@ -16,13 +16,13 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.view.fragment.datatransfer.ArticleContentActivity;
 import com.tanlong.exercise.ui.fragment.base.BaseFragment;
 import com.tanlong.exercise.util.LogTool;
-import com.tanlong.exercise.util.ToastHelp;
 
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * 文章列表Fragment
@@ -31,18 +31,20 @@ import butterknife.ButterKnife;
 
 public class ListArticleFragment extends BaseFragment implements AdapterView.OnItemClickListener{
 
-    @Bind(R.id.lv_list_title)
+    @BindView(R.id.lv_list_title)
     ListView lvListTitle;
     List<String> titles = Arrays.asList("Hello", "World", "Peace");
     ArrayAdapter<String> adapter;
     private int mCurPosition;
+
+    Unbinder unbinder;
 
     public static final int REQUEST_CONTENT = 1;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_list_article, null);
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
 
         adapter = new ArrayAdapter<>(mFragmentContext, R.layout.item_category,
@@ -56,7 +58,7 @@ public class ListArticleFragment extends BaseFragment implements AdapterView.OnI
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

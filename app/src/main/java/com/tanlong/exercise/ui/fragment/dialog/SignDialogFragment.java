@@ -15,8 +15,10 @@ import com.tanlong.exercise.R;
 
 import java.util.UUID;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by 龙 on 2017/4/25.
@@ -27,9 +29,10 @@ public class SignDialogFragment extends BaseDialogFragment {
 
     public static final String SIGN_PIC_URL = "sign_pic_url";
 
-    @Bind(R.id.iv_sign)
+    @BindView(R.id.iv_sign)
     ImageView ivSign;
     private String mPicUrl;
+    Unbinder unbinder;
 
     public static SignDialogFragment newInstance(String picUrl) {
         SignDialogFragment fragment = new SignDialogFragment();
@@ -49,7 +52,7 @@ public class SignDialogFragment extends BaseDialogFragment {
     @Override
     protected View initView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.dialog_show_sign, container);
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
         Glide.with(getContext())
                 .load(mPicUrl)
@@ -75,6 +78,6 @@ public class SignDialogFragment extends BaseDialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

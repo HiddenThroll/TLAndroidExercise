@@ -15,9 +15,11 @@ import android.widget.EditText;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.util.ToastHelp;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * 评价对话框
@@ -26,25 +28,25 @@ import butterknife.OnClick;
 
 public class EvaluateDialog extends DialogFragment {
 
-    @Bind(R.id.et_evaluate)
+    @BindView(R.id.et_evaluate)
     EditText etEvaluate;
-    @Bind(R.id.btn_commit)
+    @BindView(R.id.btn_commit)
     Button btnCommit;
-
+    Unbinder unbinder;
     public static final String EVALUATE_RESPONSE = "evaluate_response";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Holo_Dialog_MinWidth);
         View rootView = inflater.inflate(R.layout.fragment_evaluate, null);
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @OnClick(R.id.btn_commit)

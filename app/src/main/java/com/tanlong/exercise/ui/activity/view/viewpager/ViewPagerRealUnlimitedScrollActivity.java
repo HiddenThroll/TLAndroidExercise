@@ -17,7 +17,8 @@ import com.tanlong.exercise.util.LogTool;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -28,13 +29,13 @@ import butterknife.OnClick;
 
 public class ViewPagerRealUnlimitedScrollActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
-    @Bind(R.id.vp_welcome)
+    @BindView(R.id.vp_welcome)
     ViewPager vpWelcome;
 
     List<View> viewList;

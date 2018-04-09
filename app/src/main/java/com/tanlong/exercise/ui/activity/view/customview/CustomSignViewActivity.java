@@ -19,7 +19,8 @@ import com.tanlong.exercise.util.ImageTool;
 import java.io.File;
 import java.lang.ref.WeakReference;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -29,17 +30,17 @@ import butterknife.OnClick;
 
 public class CustomSignViewActivity extends BaseActivity {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
-    @Bind(R.id.cv_sign)
+    @BindView(R.id.cv_sign)
     CustomSignView mCvSign;
-    @Bind(R.id.btn_reset)
+    @BindView(R.id.btn_reset)
     Button btnReset;
-    @Bind(R.id.btn_save)
+    @BindView(R.id.btn_save)
     Button btnSave;
 
     private String mSignFilePath = "pic_sign";

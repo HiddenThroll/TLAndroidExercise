@@ -19,7 +19,7 @@ import com.tanlong.exercise.util.ToastHelp;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -30,25 +30,25 @@ import butterknife.OnClick;
 
 public class RecyclerViewBaseUseActivity extends BaseActivity {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
     List<String> mDatas;
-    @Bind(R.id.btn_list)
+    @BindView(R.id.btn_list)
     Button btnList;
-    @Bind(R.id.btn_grid)
+    @BindView(R.id.btn_grid)
     Button btnGrid;
-    @Bind(R.id.btn_stagger)
+    @BindView(R.id.btn_stagger)
     Button btnStagger;
-    @Bind(R.id.btn_vertical)
+    @BindView(R.id.btn_vertical)
     Button btnVertical;
-    @Bind(R.id.btn_horizontal)
+    @BindView(R.id.btn_horizontal)
     Button btnHorizontal;
 
     SimpleRecyclerViewAdapter mAdapter;

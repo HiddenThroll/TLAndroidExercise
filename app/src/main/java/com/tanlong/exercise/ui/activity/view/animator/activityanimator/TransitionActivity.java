@@ -14,7 +14,8 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -32,13 +33,13 @@ public class TransitionActivity extends BaseActivity {
     public final static int MODE_SHARE = 4;
 
     private final int DURATION_TIME = 500;
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
-    @Bind(R.id.iv_share)
+    @BindView(R.id.iv_share)
     ImageView ivShare;
 
     @Override

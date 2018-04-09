@@ -20,7 +20,8 @@ import com.tanlong.exercise.util.LogTool;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -30,17 +31,17 @@ import butterknife.OnClick;
 
 public class ViewPagerFragmentPagerNotifyAdapterActivity extends BaseActivity implements ContentOneFragment.OnRefreshFragment {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
-    @Bind(R.id.vp_tab_content)
+    @BindView(R.id.vp_tab_content)
     ViewPager vpTabContent;
-    @Bind(R.id.tl_item_container)
+    @BindView(R.id.tl_item_container)
     TabLayout tabContainer;
-    @Bind(R.id.et_update_content)
+    @BindView(R.id.et_update_content)
     EditText etUpdateContent;
 
     List<Fragment> fragmentList;

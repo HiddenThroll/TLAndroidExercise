@@ -14,7 +14,7 @@ import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.fragment.dialog.LoginDialogFragment;
 import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -25,15 +25,15 @@ import butterknife.OnClick;
 
 public class DialogFragmentActivity extends BaseActivity {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.btn_normal_dialog)
+    @BindView(R.id.btn_normal_dialog)
     Button btnNormalDialog;
-    @Bind(R.id.btn_fragment_dialog)
+    @BindView(R.id.btn_fragment_dialog)
     Button btnFragmentDialog;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
 
     @Override

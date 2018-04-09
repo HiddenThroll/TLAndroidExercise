@@ -13,7 +13,7 @@ import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.ui.view.customviewgroup.LeftDrawerLayout;
 import com.tanlong.exercise.util.LogTool;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -23,15 +23,15 @@ import butterknife.OnClick;
  */
 public class LeftDrawerLayoutActivity extends BaseActivity {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView mIvBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @Bind(R.id.left_drawer_layout)
+    @BindView(R.id.left_drawer_layout)
     LeftDrawerLayout mLeftDrawerLayout;
-    @Bind(R.id.rl_container)
+    @BindView(R.id.rl_container)
     RelativeLayout rlContainer;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
 
     @Override

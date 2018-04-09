@@ -20,7 +20,7 @@ import com.tanlong.exercise.util.LogTool;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -29,13 +29,13 @@ import butterknife.OnClick;
  */
 public class LoadMoreListViewActivity extends BaseActivity {
 
-    @Bind(R.id.iv_back)
+    @BindView(R.id.iv_back)
     ImageView mIvBack;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @Bind(R.id.lv_activity_category)
+    @BindView(R.id.lv_activity_category)
     ListView mLvCategory;
-    @Bind(R.id.btn_help)
+    @BindView(R.id.btn_help)
     Button btnHelp;
 
     private List<String> mItems;

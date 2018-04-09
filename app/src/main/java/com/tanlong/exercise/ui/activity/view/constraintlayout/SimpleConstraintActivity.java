@@ -7,7 +7,8 @@ import android.widget.Button;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -17,9 +18,9 @@ import butterknife.OnClick;
 
 public class SimpleConstraintActivity extends BaseActivity {
 
-    @Bind(R.id.button12)
+    @BindView(R.id.button12)
     Button button12;
-    @Bind(R.id.button13)
+    @BindView(R.id.button13)
     Button button13;
 
     @Override

@@ -14,9 +14,11 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.fragment.base.BaseFragment;
 import com.tanlong.exercise.util.ToastHelp;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * 文章内容Fragment
@@ -25,7 +27,7 @@ import butterknife.OnClick;
 
 public class ArticleContentFragment extends BaseFragment {
 
-    @Bind(R.id.tv_article_content)
+    @BindView(R.id.tv_article_content)
     TextView tvArticleContent;
     // 显示内容
     public static final String ARGUMENT_CONTENT = "argument_content";
@@ -33,6 +35,7 @@ public class ArticleContentFragment extends BaseFragment {
     public static final String RESPONSE_EVALUATE = "argument_response";
 
     public static final int REQUEST_EVALUATE = 1;
+    Unbinder unbinder;
 
     public static ArticleContentFragment newInstance(String content) {
         Bundle bundle = new Bundle();
@@ -46,7 +49,7 @@ public class ArticleContentFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_article_content, null);
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
         if (getArguments() != null) {
             String content = getArguments().getString(ARGUMENT_CONTENT, "");
@@ -61,7 +64,7 @@ public class ArticleContentFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @OnClick(R.id.tv_article_content)
