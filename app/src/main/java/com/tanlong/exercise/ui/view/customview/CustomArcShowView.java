@@ -67,6 +67,9 @@ public class CustomArcShowView extends View {
                     break;
                 case R.styleable.CustomArcShow_custom_arc_show_text_size:
                     mTextSize = typedArray.getDimension(index, DisplayUtil.sp2px(context, 18));
+                    break;
+                default:
+                    break;
             }
         }
         typedArray.recycle();

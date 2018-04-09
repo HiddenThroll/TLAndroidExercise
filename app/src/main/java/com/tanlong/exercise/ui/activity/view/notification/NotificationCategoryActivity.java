@@ -320,7 +320,7 @@ public class NotificationCategoryActivity extends BaseActivity {
                 .setContentText("I am a Handsup notification");
 
         Intent push = new Intent();
-        push.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        push.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         push.setClass(this, ViewCategoryActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, HANDS_UP_NOTIFICATION, push,
                 PendingIntent.FLAG_CANCEL_CURRENT);
