@@ -469,10 +469,11 @@
             android:exported="true"
             />
         <activity android:name=".ui.activity.view.coordinatorlayout.HiddenToolbarActivity"
-            android:exported="true"
             />
         <activity android:name=".ui.activity.view.coordinatorlayout.CoordinatorLayoutCategoryActivity" />
-        <activity android:name=".ui.activity.view.coordinatorlayout.CollapsingToolbarActivity" />
+        <activity android:name=".ui.activity.view.coordinatorlayout.CollapsingToolbarActivity"
+            android:exported="true"
+            />
     </application>
 
 </manifest>
