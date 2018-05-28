@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-
+        <variable
+            name="activity"
+            type="com.tanlong.exercise.ui.activity.view.coordinatorlayout.HiddenToolbarActivity"/>
     </data>
     <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,9 +29,15 @@
                     android:textColor="@color/color_white"
                     android:textSize="18sp"
                     android:layout_gravity="center"
-                    android:layout_marginRight="32dp"
                     />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_help"
+                    android:layout_gravity="end"
+                    android:onClick="@{()->activity.showTips()}"
+                    />
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
