@@ -468,6 +468,11 @@
         <activity android:name=".ui.activity.databinding.SimpleDataBindingActivity"
             android:exported="true"
             />
+        <activity android:name=".ui.activity.view.coordinatorlayout.HiddenToolbarActivity"
+            android:exported="true"
+            />
+        <activity android:name=".ui.activity.view.coordinatorlayout.CoordinatorLayoutCategoryActivity" />
+        <activity android:name=".ui.activity.view.coordinatorlayout.CollapsingToolbarActivity" />
     </application>
 
 </manifest>

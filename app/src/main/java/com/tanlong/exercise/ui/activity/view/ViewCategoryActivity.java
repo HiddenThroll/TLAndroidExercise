@@ -12,6 +12,7 @@ import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.animator.AnimatorCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.cardview.SimpleCardViewActivity;
 import com.tanlong.exercise.ui.activity.view.constraintlayout.ConstraintLayoutCategoryActivity;
+import com.tanlong.exercise.ui.activity.view.coordinatorlayout.CoordinatorLayoutCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.customview.CustomViewCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.customviewgroup.CustomViewGroupCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.fragment.FragmentCategoryActivity;
@@ -29,7 +30,6 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 /**
- *
  * Created by 龙 on 2016/6/24.
  */
 public class ViewCategoryActivity extends BaseActivity {
@@ -102,7 +102,11 @@ public class ViewCategoryActivity extends BaseActivity {
             case 11:
                 intent.setClass(this, ConstraintLayoutCategoryActivity.class);
                 break;
-
+            case 12:
+                intent.setClass(this, CoordinatorLayoutCategoryActivity.class);
+                break;
+            default:
+                break;
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {

@@ -20,6 +20,7 @@
         <item>CardView练习</item>
         <item>通知练习</item>
         <item>ConstraintLayout练习</item>
+        <item>CoordinatorLayout练习</item>
     </array>
 
     <array name="custom_view_category">
@@ -125,6 +126,11 @@
         <item>简单示例</item>
         <item>简单动画</item>
         <item>布局切换</item>
+    </array>
+
+    <array name="coordinator_layout_category">
+        <item>可隐藏Toolbar</item>
+        <item>可折叠Toolbar</item>
     </array>
 
     <!-- 百度地图 -->
