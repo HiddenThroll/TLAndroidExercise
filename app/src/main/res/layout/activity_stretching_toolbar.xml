@@ -3,8 +3,9 @@
     <data>
         <variable
             name="activity"
-            type="com.tanlong.exercise.ui.activity.view.coordinatorlayout.CollapsingToolbarActivity"/>
+            type="com.tanlong.exercise.ui.activity.view.coordinatorlayout.StretchingToolbarActivity"/>
     </data>
+
     <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -13,30 +14,21 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="wrap_content">
 
-            <android.support.design.widget.CollapsingToolbarLayout
+            <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:contentScrim="@color/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                android:layout_height="200dp"
+                android:minHeight="?attr/actionBarSize"
                 app:title="@string/app_name"
+                app:titleTextColor="@color/color_white"
+                android:gravity="bottom"
+                android:layout_marginBottom="25dp"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                android:onClick="@{()->activity.showTips()}"
                 >
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@mipmap/ic_launcher"
-                    app:layout_collapseMode="parallax"
-                    />
-
-                <android.support.v7.widget.Toolbar
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    app:layout_collapseMode="pin"
-                    android:onClick="@{()->activity.showTips()}"
-                    />
-            </android.support.design.widget.CollapsingToolbarLayout>
+            </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
 

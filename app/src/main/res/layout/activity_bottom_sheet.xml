@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="activity"
+            type="com.tanlong.exercise.ui.activity.view.coordinatorlayout.BottomSheetActivity"/>
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/layout_toolbar"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="显示/隐藏BottomSheet"
+            android:textColor="@color/color_text_black"
+            android:padding="16dp"
+            android:layout_marginTop="64dp"
+            android:background="@color/color_aaaaaa"
+            android:layout_gravity="center_horizontal"
+            android:onClick="@{()->activity.showHideBottomSheet()}"
+            />
+
+        <FrameLayout
+            android:id="@+id/fl_share_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_text_black"
+            app:layout_behavior="@string/bottom_sheet_behavior"
+            app:behavior_peekHeight="32dp"
+            >
+            <include layout="@layout/layout_sheet_share_dialog"/>
+        </FrameLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

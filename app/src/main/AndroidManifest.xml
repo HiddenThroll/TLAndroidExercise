@@ -474,6 +474,8 @@
         <activity android:name=".ui.activity.view.coordinatorlayout.CollapsingToolbarActivity"
             android:exported="true"
             />
+        <activity android:name=".ui.activity.view.coordinatorlayout.StretchingToolbarActivity" />
+        <activity android:name=".ui.activity.view.coordinatorlayout.BottomSheetActivity" />
     </application>
 
 </manifest>

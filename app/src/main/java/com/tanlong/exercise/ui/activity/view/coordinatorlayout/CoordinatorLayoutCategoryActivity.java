@@ -10,12 +10,16 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.constraintlayout.ConstraintAnimationActivity;
+import com.tanlong.exercise.ui.activity.view.constraintlayout.ConstraintChangeActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 
+/**
+ * @author 龙
+ */
 public class CoordinatorLayoutCategoryActivity extends BaseActivity {
     @BindView(R.id.lv_activity_category)
     ListView mLvCategory;
@@ -55,7 +59,10 @@ public class CoordinatorLayoutCategoryActivity extends BaseActivity {
                 intent.setClass(this, CollapsingToolbarActivity.class);
                 break;
             case 2:
-//                intent.setClass(this, ConstraintChangeActivity.class);
+                intent.setClass(this, StretchingToolbarActivity.class);
+                break;
+            case 3:
+                intent.setClass(this, BottomSheetActivity.class);
                 break;
             default:
                 break;

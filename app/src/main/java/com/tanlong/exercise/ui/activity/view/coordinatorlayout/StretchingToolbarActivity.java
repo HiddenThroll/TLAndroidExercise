@@ -4,7 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
 import com.tanlong.exercise.R;
-import com.tanlong.exercise.databinding.ActivityHiddenToolbarBinding;
+import com.tanlong.exercise.databinding.ActivityStretchingToolbarBinding;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.recyclerview.adapter.SimpleRecyclerViewAdapter;
 import com.tanlong.exercise.ui.activity.view.recyclerview.layoutmanager.MyLinearLayoutManager;
@@ -14,19 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 可隐藏状态栏
+ * 可拉伸Toolbar
  * @author 龙
  */
-public class HiddenToolbarActivity extends BaseActivity {
-
-    private ActivityHiddenToolbarBinding binding;
+public class StretchingToolbarActivity extends BaseActivity {
+    ActivityStretchingToolbarBinding binding;
     private SimpleRecyclerViewAdapter adapter;
     private List<String> mDatas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_hidden_toolbar);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_stretching_toolbar);
         binding.setActivity(this);
         initView();
     }
@@ -43,19 +42,16 @@ public class HiddenToolbarActivity extends BaseActivity {
 
     public void showTips() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("CoordinatorLayout实现可隐藏Toolbar\n")
+        stringBuilder.append("CoordinatorLayout实现可拉伸Toolbar\n")
                 .append("1. 布局结构\n")
                 .append("1.1 根布局使用CoordinatorLayout包裹AppBarLayout\n")
                 .append("1.2 AppBarLayout包裹Toolbar\n")
                 .append("1.3 RecycleView也是CoordinatorLayout的直接子类,与APPBarLayout平级\n")
                 .append("2. 设置相应属性\n")
                 .append("2.1 RecyclerView设置app:layout_behavior=\"@string/appbar_scrolling_view_behavior\"\n")
-                .append("2.2 Toolbar设置app:layout_scrollFlags=\"scroll|enterAlways|snap\"\n")
+                .append("2.2 Toolbar设置app:layout_scrollFlags=\"scroll|enterAlways|enterAlwaysCollapsed\"\n")
                 .append("3. app:layout_scrollFlags属性解释\n")
-                .append("3.1 scroll代表本View(Toolbar)与滚动View(RecyclerView)是一体的,可以将本View视为RecyclerView的第一个Item,跟随滚动View一起滑动\n")
-                .append("3.2 enterAlways代表当滚动View向下滑动时,本View会跟着一起滑动,就像滚动View和本View一起向下滑动,需和scroll一起设置\n")
-                .append("3.3 snap作用是在一次滚动结束时，本 View 很可能只处于“部分显示”的状态,加上这个标记能够达到“要么完全隐藏，要么完全显示”的效果\n")
-                .append("4.app:layout_behavior=\"@string/appbar_scrolling_view_behavior\"的作用是把自己（使用者）放到AppBarLayout的下面\n");
+                .append("3.1 enterAlwaysCollapsed代表滚动View向下滑动时,先将Toolbar滑动至折叠高度(最小高度),然后滑动滚动View,当滚动View到达最上方时,再滑动Toolbar剩余部分,必须和scroll,enterAlways一起使用\n");
         ShowTipsFragment.newInstance(stringBuilder.toString()).show(getSupportFragmentManager(), "");
     }
 }
