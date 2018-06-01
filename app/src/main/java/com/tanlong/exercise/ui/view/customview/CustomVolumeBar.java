@@ -69,6 +69,8 @@ public class CustomVolumeBar extends View {
                 case R.styleable.CustomVolumeBar_custom_volume_bar_split_size:
                     mSplitSize = array.getInteger(index, 20);
                     break;
+                default:
+                    break;
             }
         }
 

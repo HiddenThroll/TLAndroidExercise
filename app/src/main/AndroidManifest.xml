@@ -476,6 +476,8 @@
             />
         <activity android:name=".ui.activity.view.coordinatorlayout.StretchingToolbarActivity" />
         <activity android:name=".ui.activity.view.coordinatorlayout.BottomSheetActivity" />
+        <activity android:name=".ui.activity.view.customview.CustomAudioPulsationActivity" />
+        <activity android:name=".ui.activity.view.coordinatorlayout.BottomSheetDialogActivity" />
     </application>
 
 </manifest>

@@ -32,6 +32,7 @@
         <item>ScheduleChart</item>
         <item>CustomSimpleClock</item>
         <item>CustomSignView</item>
+        <item>音频跳动</item>
     </array>
 
     <array name="custom_view_group_category">
@@ -133,6 +134,7 @@
         <item>可折叠Toolbar</item>
         <item>可拉伸Toolbar</item>
         <item>BottomSheet</item>
+        <item>BottomSheetDialog</item>
     </array>
 
     <!-- 百度地图 -->

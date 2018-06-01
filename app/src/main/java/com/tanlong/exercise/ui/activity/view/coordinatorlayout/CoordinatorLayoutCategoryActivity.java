@@ -64,6 +64,9 @@ public class CoordinatorLayoutCategoryActivity extends BaseActivity {
             case 3:
                 intent.setClass(this, BottomSheetActivity.class);
                 break;
+            case 4:
+                intent.setClass(this, BottomSheetDialogActivity.class);
+                break;
             default:
                 break;
         }
