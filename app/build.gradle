@@ -68,4 +68,5 @@ dependencies {
     // 引入ConstraintLayout
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     api project(':maplibrary')
+    implementation files('libs/sun.misc.BASE64Decoder.jar')
 }
