@@ -73,6 +73,8 @@ public class ActivityAnimatorCategoryActivity extends BaseActivity {
             case R.id.btn_transition_change_bounds:
                 startShareActivityTransitionAnimator();
                 break;
+            default:
+                break;
         }
     }
 

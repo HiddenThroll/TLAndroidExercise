@@ -72,6 +72,8 @@ public class TransitionActivity extends BaseActivity {
                 case MODE_SHARE:
 
                     break;
+                default:
+                    break;
             }
         }
         // 所有操作在设置内容视图之前
@@ -87,6 +89,8 @@ public class TransitionActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_help:
+                break;
+            default:
                 break;
         }
     }

@@ -20,22 +20,22 @@ import Decoder.BASE64Encoder;
  */
 public class TestActivity extends BaseActivity {
 
-    private final String PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCuyZxd4GCkDui/XXxw8k/YoSUK" + "\r" +
-            "5gDwbVdPtl9FkUvpWD7IgxP3iU+OOuivp9a30C/VWsialCVlQoGIgCdZwydvFirR" + "\r" +
-            "qguUkbgvfDuOW1JaH7LYC3qb4+h/YDxX6Ulf1IbvJYiKViFeDizGSfc4MhbZsRhq" + "\r" +
-            "W7vyoXhDc/HO6ZaTWQIDAQAB" + "\r";
+    private final String PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCuyZxd4GCkDui/XXxw8k/YoSUK" + "\n" +
+            "5gDwbVdPtl9FkUvpWD7IgxP3iU+OOuivp9a30C/VWsialCVlQoGIgCdZwydvFirR" + "\n" +
+            "qguUkbgvfDuOW1JaH7LYC3qb4+h/YDxX6Ulf1IbvJYiKViFeDizGSfc4MhbZsRhq" + "\n" +
+            "W7vyoXhDc/HO6ZaTWQIDAQAB" + "\n";
 
     private final String ALGORITHM = "RSA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String content = "123456";
+        String content = "abcdEfp294zIIP";
         Log.e("test", "加密前字符" + content);
 
         RSAUtil rsaUtil = new RSAUtil();
         try {
-            rsaUtil.loadPublicKey(PUBLIC_KEY);
+            rsaUtil.loadPublicKey(getAssets().open("rsa_public_key"));
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("test", "加载公钥失败");
@@ -48,6 +48,8 @@ public class TestActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 
     public PublicKey getPublicKey() throws Exception {
