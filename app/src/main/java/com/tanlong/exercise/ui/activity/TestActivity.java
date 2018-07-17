@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 
+import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.util.RSAUtil;
 
@@ -30,6 +31,8 @@ public class TestActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_test);
         String content = "abcdEfp294zIIP";
         Log.e("test", "加密前字符" + content);
 
