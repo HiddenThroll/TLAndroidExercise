@@ -481,6 +481,8 @@
         <activity android:name=".ui.activity.TestActivity"
             android:exported="true"
             />
+        <activity android:name=".ui.activity.ReflectionTestActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>
