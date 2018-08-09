@@ -75,6 +75,7 @@
         <item>ViewPager+FragmentPagerAdapter实现APP首页Tab效果</item>
         <item>ViewPager+FragmentPagerAdapter实现通过notifyDataSetChange()刷新Fragment</item>
         <item>ViewPager+FragmentStatePagerAdapter实现APP首页Tab效果</item>
+        <item>ViewPager切换效果</item>
     </array>
 
     <array name="recycler_view_category">

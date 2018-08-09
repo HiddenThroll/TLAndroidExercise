@@ -483,6 +483,9 @@
             />
         <activity android:name=".ui.activity.ReflectionTestActivity"
             android:exported="true"/>
+        <activity android:name=".ui.activity.ProxyTestActivity"
+            android:exported="true"/>
+        <activity android:name=".ui.activity.view.viewpager.ViewPagerTransformActivity" />
     </application>
 
 </manifest>
