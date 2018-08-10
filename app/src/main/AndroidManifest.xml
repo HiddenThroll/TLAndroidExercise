@@ -486,6 +486,9 @@
         <activity android:name=".ui.activity.ProxyTestActivity"
             android:exported="true"/>
         <activity android:name=".ui.activity.view.viewpager.ViewPagerTransformActivity" />
+        <activity android:name=".ui.activity.BaseH5WebActivity"
+            android:exported="true"
+            />
     </application>
 
 </manifest>
