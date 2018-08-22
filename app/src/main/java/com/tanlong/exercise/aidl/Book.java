@@ -18,23 +18,6 @@ public class Book implements Parcelable{
 
     }
 
-    protected Book(Parcel in) {
-        name = in.readString();
-        price = in.readInt();
-    }
-
-    public static final Creator<Book> CREATOR = new Creator<Book>() {
-        @Override
-        public Book createFromParcel(Parcel in) {
-            return new Book(in);
-        }
-
-        @Override
-        public Book[] newArray(int size) {
-            return new Book[size];
-        }
-    };
-
     public String getName() {
         return name;
     }
@@ -51,9 +34,9 @@ public class Book implements Parcelable{
         this.price = price;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    protected Book(Parcel in) {
+        name = in.readString();
+        price = in.readInt();
     }
 
     @Override
@@ -66,6 +49,32 @@ public class Book implements Parcelable{
         //注意，此处的读值顺序应当是和writeToParcel()方法中一致的
         name = dest.readString();
         price = dest.readInt();
+    }
+
+    public static final Creator<Book> CREATOR = new Creator<Book>() {
+        /**
+         * 从序列化对象中返回对象
+         * @param in
+         * @return
+         */
+        @Override
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
+
+    /**
+     * 返回当前对象的描述内容
+     * @return 有文件描述符,返回1,否则返回0
+     */
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override

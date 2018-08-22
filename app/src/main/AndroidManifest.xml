@@ -463,6 +463,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+        <service android:name=".service.GameService"
+            android:process=":remote"
+            />
 
         <activity android:name=".ui.activity.databinding.DataBindingCategoryActivity"/>
         <activity android:name=".ui.activity.databinding.SimpleDataBindingActivity"
