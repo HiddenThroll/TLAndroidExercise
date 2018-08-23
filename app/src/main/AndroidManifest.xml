@@ -444,7 +444,7 @@
             android:screenOrientation="portrait" />
 
         <service
-            android:name=".service.MessengerServiceDemo"
+            android:name=".service.MessengerService"
             android:enabled="true"
             android:exported="true"
             android:process=":remote.Messenger"

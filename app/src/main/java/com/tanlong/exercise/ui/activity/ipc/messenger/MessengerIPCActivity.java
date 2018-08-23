@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
@@ -21,7 +22,7 @@ import android.widget.TextView;
 import com.orhanobut.logger.Logger;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.service.MessengerServiceContent;
-import com.tanlong.exercise.service.MessengerServiceDemo;
+import com.tanlong.exercise.service.MessengerService;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 
@@ -76,6 +77,7 @@ public class MessengerIPCActivity extends BaseActivity {
 
     private void initData() {
         mListData = new ArrayList<>();
+        clientMessenger = new Messenger(new ClientHandler());
         bindMessengerService();
     }
 
@@ -91,22 +93,23 @@ public class MessengerIPCActivity extends BaseActivity {
      * 对于华为手机，当bindService失败时，尝试将提供服务的APP设置为全部信任，操。。。
      */
     private void bindMessengerService() {
-        Intent intent = new Intent(this, MessengerServiceDemo.class);
+        Intent intent = new Intent(this, MessengerService.class);
         bindService(intent, serviceConnection, BIND_AUTO_CREATE);
     }
 
+    private Messenger serviceMessenger;
     private Messenger clientMessenger;
 
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            clientMessenger = new Messenger(service);
+            serviceMessenger = new Messenger(service);
             Logger.e("onServiceConnected " + name);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            clientMessenger = null;
+            serviceMessenger = null;
             Logger.e("onServiceDisconnected " + name);
         }
     };
@@ -157,7 +160,7 @@ public class MessengerIPCActivity extends BaseActivity {
             showShortMessage("请输入发送内容");
             return;
         }
-        if (clientMessenger == null) {
+        if (serviceMessenger == null) {
             bindMessengerService();
             return;
         }
@@ -166,10 +169,31 @@ public class MessengerIPCActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putString(MessengerServiceContent.MSG_DATA_KEY, reply);
         msg.setData(bundle);
+        //设置回复消息使用的Messenger
+        msg.replyTo = clientMessenger;
         try {
-            clientMessenger.send(msg);
+            serviceMessenger.send(msg);
         } catch (RemoteException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static class ClientHandler extends Handler {
+        public ClientHandler() {
+            super();
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case MessengerServiceContent.MSG_FROM_SERVER:
+                    String data = msg.getData().getString(MessengerServiceContent.MSG_DATA_KEY);
+                    Logger.e("接收到服务器回复 " + data);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
