@@ -447,7 +447,7 @@
             android:name=".service.MessengerService"
             android:enabled="true"
             android:exported="true"
-            android:process=":remote.Messenger"
+            android:process=":remote.messenger"
             >
             <intent-filter>
                 <action android:name="com.tanlong.exercise.messenger.demo" />
@@ -456,9 +456,11 @@
             </intent-filter>
         </service>
         <service
-            android:name=".service.AIDLService"
+            android:name=".service.BookService"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"
+            android:process=":remote.book"
+            >
             <intent-filter>
                 <action android:name="com.tanlong.exercise.aidl.book" />
 

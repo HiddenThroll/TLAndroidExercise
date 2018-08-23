@@ -6,7 +6,6 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,26 +13,22 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.tanlong.exercise.IGameService;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.aidl.Book;
-import com.tanlong.exercise.model.event.AddBookEvent;
-import com.tanlong.exercise.model.event.SetBookEvent;
-import com.tanlong.exercise.service.AIDLService;
+import com.tanlong.exercise.aidl.BookManager;
+import com.tanlong.exercise.service.BookService;
 import com.tanlong.exercise.service.GameService;
 import com.tanlong.exercise.service.IGameInterface;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.listview.adapter.BookAdapter;
 import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
-import com.tanlong.exercise.util.ToastHelp;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +36,8 @@ import butterknife.OnClick;
 
 
 /**
- * Created by 龙 on 2017/4/10.
+ * @author 龙
+ * @date 2017/4/10
  */
 
 public class AIDLIPCActivity extends BaseActivity {
@@ -65,6 +61,7 @@ public class AIDLIPCActivity extends BaseActivity {
     List<Book> mListBook;
 
     IGameService mRemote;
+    BookManager mRemoteBookManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,20 +69,19 @@ public class AIDLIPCActivity extends BaseActivity {
 
         setContentView(R.layout.activity_aidl_ipc);
         ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
 
         mListBook = new ArrayList<>();
 
-        startBookAIDLService();
-        bindGameService();
+        bindBookService();
+//        bindGameService();
         initView();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
         unbindService(gameServiceConnection);
+        unbindService(bookServiceConnection);
     }
 
     private void initView() {
@@ -95,9 +91,9 @@ public class AIDLIPCActivity extends BaseActivity {
         lvBook.setAdapter(mAdapter);
     }
 
-    private void startBookAIDLService() {
-        Intent intent = new Intent(this, AIDLService.class);
-        startService(intent);
+    private void bindBookService() {
+        Intent intent = new Intent(this, BookService.class);
+        bindService(intent, bookServiceConnection, BIND_AUTO_CREATE);
     }
 
     private void bindGameService() {
@@ -115,13 +111,26 @@ public class AIDLIPCActivity extends BaseActivity {
                 showTips();
                 break;
             case R.id.btn_confirm_book:
-                setBook();
+                addBook();
                 break;
             case R.id.btn_query_game_price:
                 queryGamePrice();
                 break;
             default:
                 break;
+        }
+    }
+
+    private void addBook() {
+        String bookName = etReply.getText().toString();
+        Book book = new Book(bookName, new Random().nextInt());
+        if (mRemoteBookManager != null) {
+            try {
+                mRemoteBookManager.addBook(book);
+                Logger.e("book list is " + new Gson().toJson(mRemoteBookManager.getBooks()));
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -136,23 +145,6 @@ public class AIDLIPCActivity extends BaseActivity {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAddBookEvent(AddBookEvent event) {
-        mListBook.add(event.getData());
-        mAdapter.notifyDataSetChanged();
-    }
-
-    private void setBook() {
-        String price = etReply.getText().toString();
-        if (TextUtils.isEmpty(price)) {
-            ToastHelp.showShortMsg(this, "请输入价格");
-            return;
-        }
-        Book book = new Book();
-        book.setPrice(Integer.valueOf(price));
-        new SetBookEvent().setData(book).post();
-    }
-
     private void showTips() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("详见已收藏文章“Android：学习AIDL，这一篇文章就够了(上)");
@@ -160,8 +152,6 @@ public class AIDLIPCActivity extends BaseActivity {
         ShowTipsFragment fragment = ShowTipsFragment.newInstance(stringBuilder.toString());
         fragment.show(getSupportFragmentManager(), "");
     }
-
-
 
     private ServiceConnection gameServiceConnection = new ServiceConnection() {
         @Override
@@ -174,6 +164,25 @@ public class AIDLIPCActivity extends BaseActivity {
         public void onServiceDisconnected(ComponentName name) {
             mRemote = null;
             Logger.e("game service disconnected " + name);
+        }
+    };
+
+    private ServiceConnection bookServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mRemoteBookManager = BookManager.Stub.asInterface(service);
+            Logger.e("book service connected " + name);
+            try {
+                Logger.e("book list is " + new Gson().toJson(mRemoteBookManager.getBooks()));
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mRemoteBookManager = null;
+            Logger.e("book service connected " + name);
         }
     };
 }

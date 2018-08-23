@@ -30,8 +30,7 @@
             android:textSize="@dimen/text_size_info_normal"
             android:textColor="@color/text_color_info"
             android:textColorHint="@color/text_color_explain"
-            android:hint="请输入图书新价格"
-            android:inputType="number"
+            android:hint="请输入图书名称"
             />
 
         <Button
