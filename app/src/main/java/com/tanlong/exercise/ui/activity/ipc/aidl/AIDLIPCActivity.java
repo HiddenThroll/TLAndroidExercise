@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Parcel;
 import android.os.RemoteException;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,12 +15,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
+import com.tanlong.exercise.IGameService;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.aidl.Book;
 import com.tanlong.exercise.model.event.AddBookEvent;
 import com.tanlong.exercise.model.event.SetBookEvent;
 import com.tanlong.exercise.service.AIDLService;
-import com.tanlong.exercise.service.GameBinderProxy;
 import com.tanlong.exercise.service.GameService;
 import com.tanlong.exercise.service.IGameInterface;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
@@ -35,7 +34,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,7 +64,7 @@ public class AIDLIPCActivity extends BaseActivity {
     BookAdapter mAdapter;
     List<Book> mListBook;
 
-    GameBinderProxy mRemote;
+    IGameService mRemote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,7 +165,7 @@ public class AIDLIPCActivity extends BaseActivity {
     private ServiceConnection gameServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            mRemote = new GameBinderProxy(service);
+            mRemote = IGameService.Stub.asInterface(service);
             Logger.e("game service connected " + name);
         }
 
