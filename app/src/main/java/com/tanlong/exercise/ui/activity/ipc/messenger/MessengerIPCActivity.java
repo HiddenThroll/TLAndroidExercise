@@ -1,7 +1,13 @@
 package com.tanlong.exercise.ui.activity.ipc.messenger;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,20 +18,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.tanlong.exercise.R;
-import com.tanlong.exercise.model.event.GetMsgItemEvent;
-import com.tanlong.exercise.model.event.SetMessageReplyEvent;
+import com.tanlong.exercise.service.MessengerServiceContent;
 import com.tanlong.exercise.service.MessengerServiceDemo;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,7 +63,6 @@ public class MessengerIPCActivity extends BaseActivity {
 
         setContentView(R.layout.activity_messenger_ipc);
         ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
 
         initData();
         initView();
@@ -71,13 +71,12 @@ public class MessengerIPCActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
-        stopService(new Intent(this, MessengerServiceDemo.class));
+        unbindService(serviceConnection);
     }
 
     private void initData() {
         mListData = new ArrayList<>();
-        startMessengerService();
+        bindMessengerService();
     }
 
     private void initView() {
@@ -91,9 +90,26 @@ public class MessengerIPCActivity extends BaseActivity {
      * 对于魅族手机，需要通过startService启动服务后，其他应用才能绑定该服务，操。。。
      * 对于华为手机，当bindService失败时，尝试将提供服务的APP设置为全部信任，操。。。
      */
-    private void startMessengerService() {
-        startService(new Intent(this, MessengerServiceDemo.class));
+    private void bindMessengerService() {
+        Intent intent = new Intent(this, MessengerServiceDemo.class);
+        bindService(intent, serviceConnection, BIND_AUTO_CREATE);
     }
+
+    private Messenger clientMessenger;
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            clientMessenger = new Messenger(service);
+            Logger.e("onServiceConnected " + name);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            clientMessenger = null;
+            Logger.e("onServiceDisconnected " + name);
+        }
+    };
 
     @OnClick({R.id.iv_back, R.id.btn_help, R.id.btn_confirm_reply})
     public void onClick(View view) {
@@ -105,7 +121,9 @@ public class MessengerIPCActivity extends BaseActivity {
                 showTips();
                 break;
             case R.id.btn_confirm_reply:
-                setReplyContent();
+                sendMsgToService();
+                break;
+            default:
                 break;
         }
     }
@@ -133,18 +151,25 @@ public class MessengerIPCActivity extends BaseActivity {
         fragment.show(getSupportFragmentManager(), "");
     }
 
-    private void setReplyContent() {
+    private void sendMsgToService() {
         String reply = etReply.getText().toString();
         if (TextUtils.isEmpty(reply)) {
-            showShortMessage("请输入回复内容");
+            showShortMessage("请输入发送内容");
             return;
         }
-        new SetMessageReplyEvent().setData(reply).post();
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onGetMsgItemEvent(GetMsgItemEvent event) {
-        mListData.add(event.getData().getMsgSend());
-        mAdapter.notifyDataSetChanged();
+        if (clientMessenger == null) {
+            bindMessengerService();
+            return;
+        }
+        Message msg = Message.obtain();
+        msg.what = MessengerServiceContent.MSG_FROM_CLIENT;
+        Bundle bundle = new Bundle();
+        bundle.putString(MessengerServiceContent.MSG_DATA_KEY, reply);
+        msg.setData(bundle);
+        try {
+            clientMessenger.send(msg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }

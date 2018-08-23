@@ -446,7 +446,9 @@
         <service
             android:name=".service.MessengerServiceDemo"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"
+            android:process=":remote.Messenger"
+            >
             <intent-filter>
                 <action android:name="com.tanlong.exercise.messenger.demo" />
 

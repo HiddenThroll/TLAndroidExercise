@@ -85,6 +85,7 @@ public class AIDLIPCActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        unbindService(gameServiceConnection);
     }
 
     private void initView() {

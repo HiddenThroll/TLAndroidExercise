@@ -22,7 +22,7 @@
             android:textSize="@dimen/text_size_info_normal"
             android:textColor="@color/text_color_info"
             android:textColorHint="@color/text_color_explain"
-            android:hint="请输入服务器回复内容"
+            android:hint="请输入发送内容"
             />
 
         <Button
