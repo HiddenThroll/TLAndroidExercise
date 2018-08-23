@@ -21,7 +21,9 @@ import com.tanlong.exercise.aidl.Book;
 import com.tanlong.exercise.model.event.AddBookEvent;
 import com.tanlong.exercise.model.event.SetBookEvent;
 import com.tanlong.exercise.service.AIDLService;
+import com.tanlong.exercise.service.GameBinderProxy;
 import com.tanlong.exercise.service.GameService;
+import com.tanlong.exercise.service.IGameInterface;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.listview.adapter.BookAdapter;
 import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
@@ -64,7 +66,7 @@ public class AIDLIPCActivity extends BaseActivity {
     BookAdapter mAdapter;
     List<Book> mListBook;
 
-    IBinder gameServiceBinder;
+    GameBinderProxy mRemote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,36 +127,14 @@ public class AIDLIPCActivity extends BaseActivity {
     }
 
     private void queryGamePrice() {
-        if (gameServiceBinder == null) {
+        if (mRemote == null) {
             return;
         }
         try {
-            Logger.e("queryGamePrice " + getPrice(GameService.GAME_1));
+            Logger.e("queryGamePrice " + mRemote.getPrice(IGameInterface.GAME_1));
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-    }
-
-    private int getPrice(String gameName) throws RemoteException{
-        //构造输入参数
-        Parcel data = Parcel.obtain();
-        //接收返回值
-        Parcel reply = Parcel.obtain();
-        int result;
-        try {
-            //写输入参数
-            data.writeString(gameName);
-            //通过Binder调用GameService的指定方法, 之后线程挂起
-            Logger.e("client 调用GameService的指定方法");
-            gameServiceBinder.transact(GameService.INDEX_QUERY_GAME_PRICE, data, reply, 0);
-            //接收GameService相应方法返回值
-            Logger.e("client 读取GameService指定方法的返回值");
-            result = reply.readInt();
-        } finally {
-            data.recycle();
-            reply.recycle();
-        }
-        return result;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -187,13 +167,13 @@ public class AIDLIPCActivity extends BaseActivity {
     private ServiceConnection gameServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            gameServiceBinder = service;
+            mRemote = new GameBinderProxy(service);
             Logger.e("game service connected " + name);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            gameServiceBinder = null;
+            mRemote = null;
             Logger.e("game service disconnected " + name);
         }
     };
