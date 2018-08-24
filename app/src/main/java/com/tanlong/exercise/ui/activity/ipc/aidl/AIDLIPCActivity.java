@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.tanlong.exercise.IGameService;
+import com.tanlong.exercise.IOnNewBookArrivedListener;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.aidl.Book;
 import com.tanlong.exercise.aidl.BookManager;
@@ -80,7 +81,15 @@ public class AIDLIPCActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(gameServiceConnection);
+        if (mRemoteBookManager != null && mRemoteBookManager.asBinder().isBinderAlive()) {
+            try {
+                mRemoteBookManager.unregisterListener(bookArrivedListener);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+
+//        unbindService(gameServiceConnection);
         unbindService(bookServiceConnection);
     }
 
@@ -173,6 +182,11 @@ public class AIDLIPCActivity extends BaseActivity {
             mRemoteBookManager = BookManager.Stub.asInterface(service);
             Logger.e("book service connected " + name);
             try {
+                mRemoteBookManager.registerListener(bookArrivedListener);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            try {
                 Logger.e("book list is " + new Gson().toJson(mRemoteBookManager.getBooks()));
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -183,6 +197,13 @@ public class AIDLIPCActivity extends BaseActivity {
         public void onServiceDisconnected(ComponentName name) {
             mRemoteBookManager = null;
             Logger.e("book service connected " + name);
+        }
+    };
+
+    private IOnNewBookArrivedListener bookArrivedListener = new IOnNewBookArrivedListener.Stub() {
+        @Override
+        public void onNewBookArrived(Book newBook) throws RemoteException {
+            Logger.e(Thread.currentThread().getName() + "新到书籍 " + newBook.toString());
         }
     };
 }
