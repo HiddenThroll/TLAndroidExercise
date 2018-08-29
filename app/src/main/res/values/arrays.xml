@@ -148,6 +148,7 @@
     <array name="ipc_category">
         <item>Messenger实现IPC</item>
         <item>AIDL实现IPC--BOOK练习</item>
+        <item>ContentProvider实现IPC--BookProvider</item>
     </array>
 
     <array name="databinding_category">

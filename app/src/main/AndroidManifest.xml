@@ -496,6 +496,13 @@
         <activity android:name=".ui.activity.BaseH5WebActivity"
             android:exported="true"
             />
+        <activity android:name=".ui.activity.contentprovider.BookProviderActivity" />
+
+        <provider
+            android:authorities="com.tanlong.exercise.book.provider"
+            android:name=".contentprovider.BookProvider"
+            android:process=":book.provider"
+            />
     </application>
 
 </manifest>
