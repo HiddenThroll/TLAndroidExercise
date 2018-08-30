@@ -12,7 +12,7 @@ import com.tanlong.exercise.BR;
 public class User extends BaseObservable{
 
     private String name;
-    private Integer age;
+    private int age;
     private String icon;
 
     @Bindable
@@ -26,11 +26,11 @@ public class User extends BaseObservable{
     }
 
     @Bindable
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(int age) {
         this.age = age;
         notifyPropertyChanged(BR.age);
     }

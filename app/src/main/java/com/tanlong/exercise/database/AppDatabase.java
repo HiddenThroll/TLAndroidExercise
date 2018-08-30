@@ -15,7 +15,7 @@ import com.tanlong.exercise.model.entity.EntityFee;
  * 在不指定主键的情况下，默认第一个字段为主键
  * 主键的类型不能是字符类型
  */
-@Database(version = 1, entities = {EntityFee.class})
+@Database(version = 1, entities = {EntityFee.class}, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase instance;

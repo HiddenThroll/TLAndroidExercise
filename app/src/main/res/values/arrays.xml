@@ -95,6 +95,7 @@
         <item>SVG矢量动画</item>
         <item>Activity过场动画</item>
         <item>Material Design动画效果</item>
+        <item>Android Lottie 实现动画</item>
     </array>
 
     <array name="property_animator_category">

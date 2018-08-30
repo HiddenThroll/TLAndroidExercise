@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.animator.activityanimator.ActivityAnimatorCategoryActivity;
+import com.tanlong.exercise.ui.activity.view.animator.lottie.AndroidLottieActivity;
 import com.tanlong.exercise.ui.activity.view.animator.mdanimator.MDAnimatorCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.animator.propertyanimator.PropertyAnimatorCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.animator.svganimator.SvgAnimatorCategoryActivity;
@@ -69,6 +70,11 @@ public class AnimatorCategoryActivity extends BaseActivity {
                 break;
             case 3:
                 intent.setClass(this, MDAnimatorCategoryActivity.class);
+                break;
+            case 4:
+                intent.setClass(this, AndroidLottieActivity.class);
+                break;
+            default:
                 break;
         }
 

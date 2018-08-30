@@ -499,6 +499,9 @@
             android:exported="true"
             />
         <activity android:name=".ui.activity.contentprovider.BookProviderActivity" />
+        <activity android:name=".ui.activity.view.animator.lottie.AndroidLottieActivity"
+            android:exported="true"
+            />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"

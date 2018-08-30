@@ -19,7 +19,7 @@ android {
     buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.tanlong.exercise"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -71,6 +71,9 @@ dependencies {
     implementation files('libs/sun.misc.BASE64Decoder.jar')
 
     //ROOM
-    compile "android.arch.persistence.room:runtime:1.1.1"
+    implementation "android.arch.persistence.room:runtime:1.1.1"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+
+    //Android Lottie
+    implementation 'com.airbnb.android:lottie:2.6.0-beta19'
 }
