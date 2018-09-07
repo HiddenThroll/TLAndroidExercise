@@ -36,5 +36,10 @@
             android:text="定时播放动画"
             android:onClick="@{()->activity.customAnimation()}"
             />
+
+        <com.tanlong.exercise.ui.view.customview.TestRecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </layout>

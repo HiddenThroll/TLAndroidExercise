@@ -69,11 +69,11 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     api project(':maplibrary')
     implementation files('libs/sun.misc.BASE64Decoder.jar')
-
     //ROOM
-    implementation "android.arch.persistence.room:runtime:1.1.1"
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
-
     //Android Lottie
     implementation 'com.airbnb.android:lottie:2.6.0-beta19'
+    //日志模块
+    implementation project(':woasislog')
 }

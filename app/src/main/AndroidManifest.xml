@@ -507,6 +507,7 @@
             android:authorities="com.tanlong.exercise.book.provider"
             android:name=".contentprovider.BookProvider"
             android:process=":book.provider"
+            android:exported="false"
             />
     </application>
 

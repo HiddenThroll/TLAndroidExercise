@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wxlz.woasislog" >
+
+    <application>
+        <provider
+            android:authorities="com.tanlong.exercise.log.provider"
+            android:name="com.wxlz.woasislog.provider.LogProvider"
+            android:process=":log.provider"
+            android:exported="false"/>
+    </application>
+
+</manifest>
