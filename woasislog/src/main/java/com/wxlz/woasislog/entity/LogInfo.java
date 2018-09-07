@@ -10,6 +10,28 @@ public class LogInfo {
     private int type;
     private int level;
 
+//    public LogInfo() {
+//    }
+
+    public LogInfo(long time, long userid, String name, String value, int type, int level) {
+        this.time = time;
+        this.userid = userid;
+        this.name = name;
+        this.value = value;
+        this.type = type;
+        this.level = level;
+    }
+
+    public LogInfo(long id, long time, long userid, String name, String value, int type, int level) {
+        this.id = id;
+        this.time = time;
+        this.userid = userid;
+        this.name = name;
+        this.value = value;
+        this.type = type;
+        this.level = level;
+    }
+
     public long getId() {
         return id;
     }

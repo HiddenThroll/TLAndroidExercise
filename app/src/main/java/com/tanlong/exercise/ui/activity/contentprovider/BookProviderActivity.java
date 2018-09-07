@@ -12,8 +12,11 @@ import com.tanlong.exercise.aidl.Book;
 import com.tanlong.exercise.contentprovider.BookProvider;
 import com.tanlong.exercise.databinding.ActivityBookProviderBinding;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
+import com.wxlz.woasislog.entity.LogInfo;
 import com.wxlz.woasislog.provider.LogProvider;
+import com.wxlz.woasislog.service.WoasisLogService;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -42,15 +45,8 @@ public class BookProviderActivity extends BaseActivity {
     }
 
     public void addInfo() {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("time", "1111");
-        contentValues.put("userid", "2");
-        contentValues.put("name", "addInfo");
-        contentValues.put("value", "addValue");
-        contentValues.put("type", 1);
-        contentValues.put("level", 1);
-
-        getContentResolver().insert(LogProvider.LOG_CONTENT_URI, contentValues);
+        LogInfo logInfo = new LogInfo(System.currentTimeMillis(), 12, "addInfo", "addInfoValue", 1,1);
+        WoasisLogService.getInstance().addLog(this, logInfo);
     }
 
     public void queryBooks() {
@@ -67,12 +63,7 @@ public class BookProviderActivity extends BaseActivity {
     }
 
     private void queryLog() {
-        Cursor cursor = getContentResolver().query(LogProvider.LOG_CONTENT_URI, null,
-                null, null, null);
-        while (cursor.moveToNext()) {
-            String id = cursor.getString(0);
-            Logger.e("id is " + id);
-        }
-        cursor.close();
+        List<LogInfo> logInfoList = WoasisLogService.getInstance().queryAllLog(this);
+        Logger.e("logInfoList is " + new Gson().toJson(logInfoList));
     }
 }
