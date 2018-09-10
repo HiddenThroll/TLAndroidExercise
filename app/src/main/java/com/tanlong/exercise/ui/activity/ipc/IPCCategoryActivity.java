@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.contentprovider.BookProviderActivity;
+import com.tanlong.exercise.ui.activity.contentprovider.LogProviderActivity;
 import com.tanlong.exercise.ui.activity.ipc.aidl.AIDLIPCActivity;
 import com.tanlong.exercise.ui.activity.ipc.messenger.MessengerIPCActivity;
 
@@ -65,6 +66,9 @@ public class IPCCategoryActivity extends BaseActivity {
                 break;
             case 2:
                 intent.setClass(this, BookProviderActivity.class);
+                break;
+            case 3:
+                intent.setClass(this, LogProviderActivity.class);
                 break;
             default:
                 break;

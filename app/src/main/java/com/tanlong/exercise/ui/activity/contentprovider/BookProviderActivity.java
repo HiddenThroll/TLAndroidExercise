@@ -25,7 +25,6 @@ import java.util.Random;
 public class BookProviderActivity extends BaseActivity {
     ActivityBookProviderBinding binding;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,14 +38,6 @@ public class BookProviderActivity extends BaseActivity {
         contentValues.put("_id", id);
         contentValues.put("name", "Android开发艺术探索" + id);
         getContentResolver().insert(BookProvider.BOOK_CONTENT_URI, contentValues);
-
-
-        addInfo();
-    }
-
-    public void addInfo() {
-        LogInfo logInfo = new LogInfo(System.currentTimeMillis(), 12, "addInfo", "addInfoValue", 1,1);
-        WoasisLogService.getInstance().addLog(this, logInfo);
     }
 
     public void queryBooks() {
@@ -58,12 +49,6 @@ public class BookProviderActivity extends BaseActivity {
             Logger.e("book is " + new Gson().toJson(book));
         }
         cursor.close();
-
-        queryLog();
     }
 
-    private void queryLog() {
-        List<LogInfo> logInfoList = WoasisLogService.getInstance().queryAllLog(this);
-        Logger.e("logInfoList is " + new Gson().toJson(logInfoList));
-    }
 }
