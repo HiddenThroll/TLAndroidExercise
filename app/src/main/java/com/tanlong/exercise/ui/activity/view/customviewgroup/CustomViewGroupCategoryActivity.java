@@ -16,7 +16,6 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 /**
- *
  * Created by Administrator on 2016/6/27.
  */
 public class CustomViewGroupCategoryActivity extends BaseActivity {
@@ -63,6 +62,11 @@ public class CustomViewGroupCategoryActivity extends BaseActivity {
                 break;
             case 3:
                 intent.setClass(this, GestureLockActivity.class);
+                break;
+            case 4:
+                intent.setClass(this, ScrollConflictEx1Activity.class);
+                break;
+            default:
                 break;
         }
 

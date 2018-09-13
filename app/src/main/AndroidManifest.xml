@@ -503,6 +503,9 @@
             android:exported="true"
             />
         <activity android:name=".ui.activity.contentprovider.LogProviderActivity" />
+        <activity android:name=".ui.activity.view.customviewgroup.ScrollConflictEx1Activity"
+            android:exported="true"
+            />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"
