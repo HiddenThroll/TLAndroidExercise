@@ -5,6 +5,7 @@
         <item>百度地图</item>
         <item>进程间通信IPC</item>
         <item>DataBinding</item>
+        <item>下载更新</item>
     </array>
 
     <array name="view_category">

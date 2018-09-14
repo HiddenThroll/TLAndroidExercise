@@ -16,6 +16,9 @@
     <!-- 蒙版效果需要 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+    <!-- 在线更新安装包需要 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
@@ -506,6 +509,8 @@
         <activity android:name=".ui.activity.view.customviewgroup.ScrollConflictEx1Activity"
             android:exported="true"
             />
+        <activity android:name=".ui.activity.download.DownloadAppActivity" />
+        <activity android:name=".ui.activity.download.AndroidOInstallPermissionActivity" />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"
@@ -513,6 +518,18 @@
             android:process=":book.provider"
             android:exported="false"
             />
+
+        <provider
+            android:authorities="com.tanlong.exercise.fileProvider"
+            android:name="android.support.v4.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_path"
+                />
+        </provider>
+
     </application>
 
 </manifest>
