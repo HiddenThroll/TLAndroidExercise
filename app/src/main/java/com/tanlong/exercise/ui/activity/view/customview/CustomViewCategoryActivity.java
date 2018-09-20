@@ -83,6 +83,9 @@ public class CustomViewCategoryActivity extends BaseActivity {
             case 8:
                 intent.setClass(this, CustomAudioPulsationActivity.class);
                 break;
+            case 9:
+                intent.setClass(this, SimpleCircleActivity.class);
+                break;
             default:
                 break;
         }

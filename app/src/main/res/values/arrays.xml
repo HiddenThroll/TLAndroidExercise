@@ -34,6 +34,7 @@
         <item>CustomSimpleClock</item>
         <item>CustomSignView</item>
         <item>音频跳动</item>
+        <item>简单圆</item>
     </array>
 
     <array name="custom_view_group_category">

@@ -1,6 +1,5 @@
 package com.tanlong.exercise.ui.activity.download;
 
-
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
@@ -54,7 +53,9 @@ public class AppDownloadManager {
      * 下载任务ID
      */
     private long mReqId;
-
+    /**
+     * 下载APK名称
+     */
     private String apkName;
 
     public AppDownloadManager(Activity activity, String apkName) {
@@ -65,6 +66,10 @@ public class AppDownloadManager {
         this.apkName = apkName;
     }
 
+    /**
+     * 获得APK文件
+     * @return
+     */
     private File getApkFile() {
         File apkFile = new File(weakReference.get().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
                 apkName);
@@ -72,6 +77,12 @@ public class AppDownloadManager {
         return apkFile;
     }
 
+    /**
+     * 下载APK
+     * @param apkUrl -- 下载地址
+     * @param title -- 通知显示标题
+     * @param desc -- 通知显示描述
+     */
     public void downloadApk(String apkUrl, String title, String desc) {
         File apkFile = getApkFile();
         //在下载之前应该删除已有文件
@@ -81,7 +92,7 @@ public class AppDownloadManager {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(apkUrl));
         request.setTitle(title);
         request.setDescription(desc);
-        //设置在下载期间和下载完成后,下载通知均可见
+        //设置在下载期间,通知可见
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
         //设置下载文件的存放位置
         request.setDestinationInExternalFilesDir(weakReference.get(), Environment.DIRECTORY_DOWNLOADS,
@@ -139,11 +150,14 @@ public class AppDownloadManager {
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-            updateView();
+            queryDownloadProgress();
         }
     }
 
-    private void updateView() {
+    /**
+     * 查询下载进度
+     */
+    private void queryDownloadProgress() {
         int[] bytesAndStatus = new int[]{0, 0, 0};
         DownloadManager.Query query = new DownloadManager.Query().setFilterById(mReqId);
         Cursor c = null;
@@ -210,10 +224,19 @@ public class AppDownloadManager {
         }
     }
 
+    /**
+     * 启动申请Android 8.0安装权限界面
+     * @param context
+     */
     private void startAndroidOInstallPermissionActivity(Context context) {
         context.startActivity(new Intent(context, AndroidOInstallPermissionActivity.class));
     }
 
+    /**
+     * 安装Apk
+     * @param context -- 上下文
+     * @param intent -- 携带下载完成信息的Intent
+     */
     private void installApk(Context context, Intent intent) {
         long completeDownLoadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
         Uri uri;
@@ -242,6 +265,12 @@ public class AppDownloadManager {
         }
     }
 
+    /**
+     * Android 6.0使用, 查询下载文件
+     * @param context -- 上下文
+     * @param downloadId -- 下载ID
+     * @return
+     */
     private File queryDownloadedApk(Context context, long downloadId) {
         File targetFile = null;
         DownloadManager.Query query = new DownloadManager.Query();

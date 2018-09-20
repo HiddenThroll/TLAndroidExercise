@@ -65,4 +65,8 @@
     <declare-styleable name="recycler_view">
         <attr name="divider_list" format="reference"/>
     </declare-styleable>
+
+    <declare-styleable name="SimpleCircleView">
+        <attr name="circle_color" format="color"/>
+    </declare-styleable>
 </resources>
