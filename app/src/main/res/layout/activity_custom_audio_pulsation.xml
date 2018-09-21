@@ -7,11 +7,12 @@
         android:background="@color/color_white"
         >
 
-        <com.tanlong.exercise.ui.view.customview.CustomAudioPulsation
+        <com.tanlong.exercise.ui.view.customview.AudioPulsationView
             android:id="@+id/custom_audio_pulsation"
-            android:layout_width="100dp"
-            android:layout_height="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:padding="12dp"
             />
 
     </RelativeLayout>

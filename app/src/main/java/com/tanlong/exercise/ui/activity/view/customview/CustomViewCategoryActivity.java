@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.ui.view.customview.CustomAudioPulsation;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

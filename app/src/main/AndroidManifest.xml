@@ -488,7 +488,9 @@
             />
         <activity android:name=".ui.activity.view.coordinatorlayout.StretchingToolbarActivity" />
         <activity android:name=".ui.activity.view.coordinatorlayout.BottomSheetActivity" />
-        <activity android:name=".ui.activity.view.customview.CustomAudioPulsationActivity" />
+        <activity android:name=".ui.activity.view.customview.CustomAudioPulsationActivity"
+            android:exported="true"
+            />
         <activity android:name=".ui.activity.view.coordinatorlayout.BottomSheetDialogActivity" />
         <activity android:name=".ui.activity.TestActivity"
             android:exported="true"
