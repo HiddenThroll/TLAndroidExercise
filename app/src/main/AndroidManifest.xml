@@ -514,6 +514,9 @@
         <activity android:name=".ui.activity.download.DownloadAppActivity" />
         <activity android:name=".ui.activity.download.AndroidOInstallPermissionActivity" />
         <activity android:name=".ui.activity.view.customview.SimpleCircleActivity" />
+        <activity android:name=".ui.activity.view.drawable.DrawableTestActivity"
+            android:exported="true"
+            />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"
