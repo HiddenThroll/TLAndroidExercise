@@ -1,6 +1,5 @@
 package com.tanlong.exercise.ui.activity.view.notification;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -76,7 +75,8 @@ public class NotificationCategoryActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         initView();
-        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);//获得NotificationManager
+        //获得NotificationManager
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         musicBroadcastReceiver = new MusicBroadcastReceiver();
         registerReceiver(musicBroadcastReceiver, new IntentFilter(ACTION_MUSIC));
     }
@@ -104,32 +104,43 @@ public class NotificationCategoryActivity extends BaseActivity {
             case R.id.btn_help:
                 showTips();
                 break;
+            default:
+                break;
         }
     }
 
     @OnItemClick(R.id.lv_activity_category)
     public void onItemClick(int position) {
         switch (position) {
-            case 0://显示Normal通知
+            case 0:
+                //显示Normal通知
                 showNormalNotification();
                 break;
-            case 1://显示无法左右滑动清除的通知
+            case 1:
+                //显示无法左右滑动清除的通知
                 showNoClearNotification();
                 break;
-            case 2://显示不确定进度的通知
+            case 2:
+                //显示不确定进度的通知
                 showIndeterminateNotification();
                 break;
-            case 3://显示具体进度的通知
+            case 3:
+                //显示具体进度的通知
                 showSpecificNotification();
                 break;
-            case 4://显示自定义View的通知
+            case 4:
+                //显示自定义View的通知
                 showCustomViewNotification();
                 break;
-            case 5://显示折叠式通知
+            case 5:
+                //显示折叠式通知
                 showExpandNotification();
                 break;
-            case 6://显示悬挂式通知
+            case 6:
+                //显示悬挂式通知
                 showHandsupNotification();
+                break;
+            default:
                 break;
         }
     }
@@ -145,12 +156,17 @@ public class NotificationCategoryActivity extends BaseActivity {
         Notification notification = builder.setContentTitle("通知标题")
                 .setContentText("这是一条普通通知")
                 .setContentInfo("右边通知大字内容")
-                .setTicker("有新的通知~")//设置通知第一次在状态栏出现时使用的文字
-                .setSmallIcon(R.mipmap.ic_launcher)//设置小图标
-                .setDefaults(Notification.DEFAULT_LIGHTS|Notification.DEFAULT_SOUND)//向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合
-                .setContentIntent(pendingIntent)//设置点击触发的Intent
+                //设置通知第一次在状态栏出现时使用的文字
+                .setTicker("有新的通知~")
+                //设置小图标
+                .setSmallIcon(R.mipmap.ic_launcher)
+                //向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合
+                .setDefaults(Notification.DEFAULT_LIGHTS|Notification.DEFAULT_SOUND)
+                //设置点击触发的Intent
+                .setContentIntent(pendingIntent)
                 .build();
-        notification.flags = Notification.FLAG_AUTO_CANCEL;//设置通知点击后自动取消
+        //设置通知点击后自动取消
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(NORMAL_NOTIFICATION, notification);
     }
 

@@ -533,6 +533,16 @@
                 />
         </provider>
 
+        <receiver android:name=".widget.MyAppWidgetProvider">
+            <meta-data android:name="android.appwidget.AppWidgetProvider"
+                android:resource="@xml/appwidget_provider_info"
+                />
+            <intent-filter>
+                <action android:name="com.tanlong.exercise.widget.click_action"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
