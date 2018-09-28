@@ -51,7 +51,7 @@ public class BallAnimatorActivity extends BaseActivity {
     private void initView() {
         tvTitle.setText(R.string.ball_fall_animator);
         btnHelp.setVisibility(View.VISIBLE);
-
+        cvPoint.getWidth();
         startAnim();
     }
 
