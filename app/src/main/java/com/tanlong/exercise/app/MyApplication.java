@@ -5,6 +5,7 @@ import android.app.Application;
 import com.anupcowkur.reservoir.Reservoir;
 import com.baidu.mapapi.SDKInitializer;
 import com.orhanobut.logger.Logger;
+import com.tanlong.exercise.util.CrashHandler;
 
 import java.io.IOException;
 
@@ -21,6 +22,7 @@ public class MyApplication extends Application {
         initBaiduMap();
         initLog();
         initReservoir();
+        initCrashHandler();
     }
 
     private void initLog() {
@@ -34,9 +36,14 @@ public class MyApplication extends Application {
 
     private void initReservoir() {
         try {
-            Reservoir.init(this, 1024 * 1024 * 2);//设置缓存大小为 2M
+            //设置缓存大小为 2M
+            Reservoir.init(this, 1024 * 1024 * 2);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void initCrashHandler() {
+        CrashHandler.getInstance().init(this);
     }
 }
