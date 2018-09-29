@@ -111,6 +111,7 @@ public class ViewCategoryActivity extends BaseActivity {
 
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
+            overridePendingTransition(R.anim.anim_activity_in_from_right, R.anim.anim_activity_out_to_left);
         } else {
             showShortMessage(R.string.no_available_activity);
         }
