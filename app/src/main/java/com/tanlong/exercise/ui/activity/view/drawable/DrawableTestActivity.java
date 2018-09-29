@@ -2,6 +2,7 @@ package com.tanlong.exercise.ui.activity.view.drawable;
 
 import android.animation.ValueAnimator;
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
@@ -63,5 +64,10 @@ public class DrawableTestActivity extends BaseActivity {
             }
         });
         valueAnimator.start();
+    }
+
+    public void frameAnimation() {
+        AnimationDrawable animationDrawable = (AnimationDrawable) binding.ivFrame.getBackground();
+        animationDrawable.start();
     }
 }
