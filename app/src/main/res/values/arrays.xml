@@ -62,6 +62,7 @@
         <item>PorterDuffXfermode实现刮刮卡</item>
         <item>根据图片动态改变颜色</item>
         <item>Tint和Clipping</item>
+        <item>可拖动ImageView</item>
     </array>
 
     <array name="fragment_category">

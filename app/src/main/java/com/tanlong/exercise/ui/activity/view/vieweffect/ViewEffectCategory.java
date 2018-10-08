@@ -74,6 +74,9 @@ public class ViewEffectCategory extends BaseActivity {
             case 5:
                 intent.setClass(this, TintingAndClippingActivity.class);
                 break;
+            case 6:
+                intent.setClass(this, DragImageViewActivity.class);
+                break;
             default:
                 break;
         }
