@@ -154,7 +154,9 @@
             android:name=".ui.activity.view.vieweffect.MaskEffectActivity"
             android:configChanges="keyboard"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:exported="true"
+            />
         <activity
             android:name=".ui.activity.view.vieweffect.ShadowBackgroundActivity"
             android:configChanges="keyboard"
@@ -313,7 +315,9 @@
             android:name=".ui.activity.view.animator.propertyanimator.SimpleAnimatorActivity"
             android:configChanges="keyboard"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:exported="true"
+            />
         <activity
             android:name=".ui.activity.view.animator.propertyanimator.BallAnimatorActivity"
             android:configChanges="keyboard"

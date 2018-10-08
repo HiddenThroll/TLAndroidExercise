@@ -89,8 +89,14 @@ public class SimpleAnimatorActivity extends BaseActivity {
         ObjectAnimator rotateAnim = ObjectAnimator.ofFloat(tvSimpleAnimator, "rotation", 0, 360);
         animatorSet = new AnimatorSet();
         animatorSet.setDuration(1000 * 10);
-        animatorSet.play(translationAnim).with(scaleXAnim).with(scaleYAnim)//同时位移和缩放
-                .after(alphaAnim).before(rotateAnim);   //先透明度, 后旋转
+//        animatorSet.play(translationAnim).with(scaleXAnim).with(scaleYAnim)//同时位移和缩放
+//                .after(alphaAnim).before(rotateAnim);   //先透明度, 后旋转
+        animatorSet.play(translationAnim)
+                .with(scaleXAnim)
+                .with(scaleYAnim)
+                .before(rotateAnim)
+                ;
+
         animatorSet.start();
 
     }

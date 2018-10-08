@@ -69,6 +69,7 @@ public class MaskEffectActivity extends BaseActivity {
         ivMask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //要删除一个Window,删除它里面的View即可
                 windowManager.removeView(ivMask);
             }
         });
@@ -89,18 +90,19 @@ public class MaskEffectActivity extends BaseActivity {
     private void showMask() {
         LogTool.e(TAG, "showMask");
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-        // 设置显示的类型，
+        // 设置显示的Window类型为子Window,它将悬浮在应用Window(如Activity)之上
         params.type = WindowManager.LayoutParams.TYPE_APPLICATION_PANEL;
         // 设置显示格式
         params.format = PixelFormat.RGBA_8888;
         // 设置对齐方式
-        params.gravity = Gravity.LEFT | Gravity.TOP;
-        params.width = DisplayUtil.getDisplay(this).x;
-        params.height = DisplayUtil.getDisplay(this).y;
+        params.gravity = Gravity.START | Gravity.TOP;
+        // 设置Window显示的大小
+        params.width = DisplayUtil.getDisplay(this).x / 2;
+        params.height = DisplayUtil.getDisplay(this).y / 2;
         params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                 | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-
+        //添加Window
         windowManager.addView(ivMask, params);
     }
 
@@ -112,6 +114,8 @@ public class MaskEffectActivity extends BaseActivity {
                 break;
             case R.id.btn_help:
                 showTips();
+                break;
+            default:
                 break;
         }
     }

@@ -74,6 +74,8 @@ public class ViewEffectCategory extends BaseActivity {
             case 5:
                 intent.setClass(this, TintingAndClippingActivity.class);
                 break;
+            default:
+                break;
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {

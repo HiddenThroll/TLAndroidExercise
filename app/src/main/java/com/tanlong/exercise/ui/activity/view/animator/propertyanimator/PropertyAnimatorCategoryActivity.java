@@ -66,6 +66,8 @@ public class PropertyAnimatorCategoryActivity extends BaseActivity{
             case 3:
                 intent.setClass(this, SmoothHideActivity.class);
                 break;
+            default:
+                break;
         }
 
         if (intent.resolveActivity(getPackageManager()) != null) {
