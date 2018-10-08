@@ -53,24 +53,25 @@ public class DragImageViewActivity extends BaseActivity implements View.OnClickL
         ivDrag.setOnTouchListener(new View.OnTouchListener() {
             float lastX, lastY;
 
+            int xOffset, yOffset, x, y;
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                float x = event.getX();
-                float y = event.getY();
+
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        lastX = x;
-                        lastY = y;
+                        //滑动前 相对于屏幕的距离
+                        xOffset = (int) event.getRawX();
+                        yOffset = (int) event.getRawY();
+                        x = params.x;
+                        y = params.y;
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        Logger.e("x is " + params.x + " y is " + params.y);
-                        params.x += (x - lastX) / 2;
-                        params.y += (y - lastY) / 2;
+                        params.x = x + (int)event.getRawX() - xOffset;
+                        params.y = y + (int)event.getRawY() - yOffset;
                         windowManager.updateViewLayout(ivDrag, params);
 
-                        lastX = x;
-                        lastY = y;
                         break;
                     default:
                         break;
@@ -110,6 +111,9 @@ public class DragImageViewActivity extends BaseActivity implements View.OnClickL
     }
 
     public void removeDragView() {
-
+        if (params != null) {
+            windowManager.removeView(ivDrag);
+            params = null;
+        }
     }
 }
