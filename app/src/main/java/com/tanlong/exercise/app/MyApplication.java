@@ -5,6 +5,7 @@ import android.app.Application;
 import com.anupcowkur.reservoir.Reservoir;
 import com.baidu.mapapi.SDKInitializer;
 import com.orhanobut.logger.Logger;
+import com.squareup.leakcanary.LeakCanary;
 import com.tanlong.exercise.util.CrashHandler;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class MyApplication extends Application {
         initLog();
         initReservoir();
         initCrashHandler();
+        initLeakCanary();
     }
 
     private void initLog() {
@@ -45,5 +47,13 @@ public class MyApplication extends Application {
 
     private void initCrashHandler() {
         CrashHandler.getInstance().init(this);
+    }
+
+    private void initLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        Logger.e("初始化 initLeakCanary");
+        LeakCanary.install(this);
     }
 }

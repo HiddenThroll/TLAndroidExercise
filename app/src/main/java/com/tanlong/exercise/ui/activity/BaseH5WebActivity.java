@@ -115,7 +115,7 @@ public class BaseH5WebActivity extends BaseActivity {
                 //等待证书响应
                 Logger.e("等待证书响应");
                 handler.proceed();
-//                super.onReceivedSslError(view, handler, error);
+//                super.onReceivedSslError(view, delayHandler, error);
             }
 
             @Override

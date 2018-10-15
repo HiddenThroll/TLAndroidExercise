@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -16,7 +15,7 @@ import com.orhanobut.logger.Logger;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.databinding.ActivityDragImageviewBinding;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
-import com.tanlong.exercise.util.DisplayUtil;
+import com.tanlong.exercise.util.ToastHelp;
 
 /**
  * @author 龙
@@ -51,14 +50,10 @@ public class DragImageViewActivity extends BaseActivity implements View.OnClickL
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         ivDrag.setOnTouchListener(new View.OnTouchListener() {
-            float lastX, lastY;
-
             int xOffset, yOffset, x, y;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
-
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         //滑动前 相对于屏幕的距离
@@ -71,13 +66,19 @@ public class DragImageViewActivity extends BaseActivity implements View.OnClickL
                         params.x = x + (int)event.getRawX() - xOffset;
                         params.y = y + (int)event.getRawY() - yOffset;
                         windowManager.updateViewLayout(ivDrag, params);
-
                         break;
                     default:
                         break;
                 }
 
-                return true;
+                return false;
+            }
+        });
+
+        ivDrag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastHelp.showShortMsg(DragImageViewActivity.this, "点击Drag ImageView");
             }
         });
     }

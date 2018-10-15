@@ -2,6 +2,7 @@ package com.tanlong.exercise.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -16,6 +17,9 @@ import com.tanlong.exercise.ui.activity.ipc.IPCCategoryActivity;
 import com.tanlong.exercise.ui.activity.map.MapCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.ViewCategoryActivity;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,6 +70,9 @@ public class MainActivity extends BaseActivity {
             case 4:
                 intent.setClass(this, DownloadAppActivity.class);
                 break;
+            case 5:
+                intent.setClass(this, HandlerExerciseActivity.class);
+                break;
             default:
                 break;
         }
@@ -75,5 +82,29 @@ public class MainActivity extends BaseActivity {
         } else {
             showShortMessage(R.string.no_available_activity);
         }
+    }
+
+    private void test() {
+        List<Integer> srcList = new ArrayList<>();
+        for (int i = 1; i <= 100; i++) {
+            srcList.add(i);
+        }
+
+        long num = 1;
+        int index = 0;
+
+        while (srcList.size() > 1) {
+            if (num % 7 == 0) {
+                Log.e(TAG, "remove " + srcList.get(index) + " num is " + num);
+                srcList.remove(index);
+                index--;
+            }
+            index++;
+            num++;
+            if (index > srcList.size() - 1) {
+                index = 0;
+            }
+        }
+        Log.e(TAG, "result is " + srcList.get(0));
     }
 }

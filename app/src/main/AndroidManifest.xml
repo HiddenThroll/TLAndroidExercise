@@ -524,6 +524,7 @@
         <activity android:name=".ui.activity.view.vieweffect.DragImageViewActivity"
             android:exported="true"
             />
+        <activity android:name=".ui.activity.HandlerExerciseActivity" />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"

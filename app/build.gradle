@@ -76,4 +76,5 @@ dependencies {
     implementation 'com.airbnb.android:lottie:2.6.0-beta19'
     //日志模块
     implementation project(':woasislog')
+    implementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
 }

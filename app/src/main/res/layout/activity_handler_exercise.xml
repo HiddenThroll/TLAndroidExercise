@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="activity"
+            type="com.tanlong.exercise.ui.activity.HandlerExerciseActivity"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar"/>
+
+        <TextView
+            android:id="@+id/tv_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="待显示"
+            android:textColor="@color/text_color_title"
+            android:textSize="18sp"
+            android:gravity="center"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:onClick="@{()->activity.sendMsgToRefreshUI()}"
+            android:text="Send Message更新UI"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:onClick="@{()->activity.postRunnableToRefreshUI()}"
+            android:text="Post Runnable更新UI"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:onClick="@{()->activity.sendDelayMessage()}"
+            android:text="发送延时消息"
+            />
+    </LinearLayout>
+</layout>
