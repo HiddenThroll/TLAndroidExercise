@@ -16,6 +16,7 @@ import com.tanlong.exercise.ui.activity.view.coordinatorlayout.CoordinatorLayout
 import com.tanlong.exercise.ui.activity.view.customview.CustomViewCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.customviewgroup.CustomViewGroupCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.fragment.FragmentCategoryActivity;
+import com.tanlong.exercise.ui.activity.view.image.ImageLoadCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.listview.ListViewCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.notification.NotificationCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.recyclerview.RecyclerViewCategoryActivity;
@@ -104,6 +105,9 @@ public class ViewCategoryActivity extends BaseActivity {
                 break;
             case 12:
                 intent.setClass(this, CoordinatorLayoutCategoryActivity.class);
+                break;
+            case 13:
+                intent.setClass(this, ImageLoadCategoryActivity.class);
                 break;
             default:
                 break;

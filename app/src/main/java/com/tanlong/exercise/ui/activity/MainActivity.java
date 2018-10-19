@@ -13,6 +13,7 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.databinding.DataBindingCategoryActivity;
 import com.tanlong.exercise.ui.activity.download.DownloadAppActivity;
+import com.tanlong.exercise.ui.activity.handler.HandlerExerciseActivity;
 import com.tanlong.exercise.ui.activity.ipc.IPCCategoryActivity;
 import com.tanlong.exercise.ui.activity.map.MapCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.ViewCategoryActivity;

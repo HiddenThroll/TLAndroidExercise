@@ -524,7 +524,11 @@
         <activity android:name=".ui.activity.view.vieweffect.DragImageViewActivity"
             android:exported="true"
             />
-        <activity android:name=".ui.activity.HandlerExerciseActivity" />
+        <activity android:name=".ui.activity.handler.HandlerExerciseActivity" />
+        <activity android:name=".ui.activity.view.image.ImageLoadCategoryActivity" />
+        <activity android:name=".ui.activity.view.image.CustomImageLoaderActivity"
+            android:exported="true"
+            />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"

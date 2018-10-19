@@ -23,6 +23,7 @@
         <item>通知练习</item>
         <item>ConstraintLayout练习</item>
         <item>CoordinatorLayout练习</item>
+        <item>图片加载</item>
     </array>
 
     <array name="custom_view_category">
@@ -144,6 +145,11 @@
         <item>BottomSheetDialog</item>
     </array>
 
+    <array name="image_load_category">
+        <item>自定义ImageLoader</item>
+        <item>加载高清长图</item>
+    </array>
+
     <!-- 百度地图 -->
     <array name="baidu_map_category">
         <item>基础地图练习</item>
@@ -161,4 +167,6 @@
     <array name="databinding_category">
         <item>简单示例</item>
     </array>
+
+
 </resources>

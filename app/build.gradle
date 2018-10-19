@@ -76,5 +76,8 @@ dependencies {
     implementation 'com.airbnb.android:lottie:2.6.0-beta19'
     //日志模块
     implementation project(':woasislog')
+    //内存泄露检测
     implementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
+    //DiskLruCache
+    implementation 'com.jakewharton:disklrucache:2.0.2'
 }

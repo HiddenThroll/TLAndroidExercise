@@ -1,9 +1,8 @@
-package com.tanlong.exercise.ui.activity;
+package com.tanlong.exercise.ui.activity.handler;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 
 import com.orhanobut.logger.Logger;

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="activity"
-            type="com.tanlong.exercise.ui.activity.HandlerExerciseActivity"/>
+            type="com.tanlong.exercise.ui.activity.handler.HandlerExerciseActivity"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
