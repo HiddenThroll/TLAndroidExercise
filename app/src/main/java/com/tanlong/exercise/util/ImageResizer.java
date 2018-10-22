@@ -67,9 +67,13 @@ public class ImageResizer {
         int inSampleSize = 1;
 
         if (width >= reqWidth || height >= reqHeight) {
-            inSampleSize = Math.min(width / reqWidth, height / reqHeight);
+            //返回最接近参数的long
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+            // 选择宽和高中最小的比率作为inSampleSize的值，这样可以保证最终图片的宽和高
+            // 一定都会大于等于目标的宽和高。
+            inSampleSize = Math.min(widthRatio, heightRatio);
         }
-
         return inSampleSize;
     }
 }

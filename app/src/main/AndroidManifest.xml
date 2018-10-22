@@ -529,6 +529,7 @@
         <activity android:name=".ui.activity.view.image.CustomImageLoaderActivity"
             android:exported="true"
             />
+        <activity android:name=".ui.activity.view.image.LoadSuperBigImageActivity" />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"

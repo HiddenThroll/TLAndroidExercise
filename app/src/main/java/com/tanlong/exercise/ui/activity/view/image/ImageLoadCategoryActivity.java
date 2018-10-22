@@ -55,7 +55,7 @@ public class ImageLoadCategoryActivity extends BaseActivity{
                 intent.setClass(this, CustomImageLoaderActivity.class);
                 break;
             case 1:
-
+                intent.setClass(this, LoadSuperBigImageActivity.class);
                 break;
             default:
                 break;
