@@ -14,12 +14,17 @@ import com.tanlong.exercise.util.MoveGestureDetector;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 显示超大图片的View
  * @author 龙
  */
 public class LargeImageView extends View {
+    /**
+     * 区域加载Bitmap 工具类
+     */
     private BitmapRegionDecoder mDecoder;
     /**
      * 图片的宽度和高度
@@ -31,6 +36,12 @@ public class LargeImageView extends View {
     private volatile Rect mRect = new Rect();
 
     private MoveGestureDetector mDetector;
+    /**
+     * 展示的Bitmap
+     */
+    private Bitmap bm;
+
+    private ExecutorService threadPool;
 
 
     private static final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -42,6 +53,25 @@ public class LargeImageView extends View {
     public LargeImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
+        threadPool = Executors.newSingleThreadExecutor();
+    }
+
+    /**
+     * 在子线程中加载图片,提高UI渲染速度
+     */
+    private void decodeBitmap() {
+        threadPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                bm = mDecoder.decodeRegion(mRect, options);
+                post(new Runnable() {
+                    @Override
+                    public void run() {
+                        invalidate();
+                    }
+                });
+            }
+        });
     }
 
     private void init() {
@@ -54,12 +84,12 @@ public class LargeImageView extends View {
                 if (mImageWidth > getWidth()) {
                     mRect.offset(-moveX, 0);
                     checkWidth();
-                    invalidate();
+                    decodeBitmap();
                 }
                 if (mImageHeight > getHeight()) {
                     mRect.offset(0, -moveY);
                     checkHeight();
-                    invalidate();
+                    decodeBitmap();
                 }
                 return true;
             }
@@ -147,7 +177,10 @@ public class LargeImageView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Bitmap bm = mDecoder.decodeRegion(mRect, options);
+        if (bm == null) {
+            //对应第一次绘制
+            bm = mDecoder.decodeRegion(mRect, options);
+        }
         canvas.drawBitmap(bm, 0, 0, null);
     }
 
@@ -157,4 +190,14 @@ public class LargeImageView extends View {
         return true;
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (bm != null) {
+            bm.recycle();
+        }
+        if (!threadPool.isShutdown()) {
+            threadPool.shutdown();
+        }
+    }
 }
