@@ -42,6 +42,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     public void init(Context context) {
         this.mContext = context.getApplicationContext();
+        //缓存之前的未捕获异常处理器
         mDefaultCrashHandler = Thread.getDefaultUncaughtExceptionHandler();
         //设置线程默认使用的未捕获异常处理器,因为是静态变量,所以可以捕获所有线程的异常
         Thread.setDefaultUncaughtExceptionHandler(this);
@@ -49,19 +50,24 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(Thread t, Throwable ex) {
+        //发送未捕获异常会调用该方法
         //导出异常信息
         dumpExceptionToSdCard(ex);
 
         ex.printStackTrace();
-        //使用系统默认的异常处理器
+        //使用系统默认的异常处理器 处理异常
         if (mDefaultCrashHandler != null) {
             mDefaultCrashHandler.uncaughtException(t, ex);
         } else {
-            //没有,则杀死APP
+            //没有系统默认的异常处理器,则杀死APP
             Process.killProcess(Process.myPid());
         }
     }
 
+    /**
+     * 导出异常信息到SD卡上
+     * @param ex
+     */
     private void dumpExceptionToSdCard(Throwable ex) {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             Log.e(TAG, "SD卡不可用,无法记录Exception");
@@ -102,6 +108,11 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         }
     }
 
+    /**
+     * 将手机信息写入PrintWriter
+     * @param pw
+     * @throws PackageManager.NameNotFoundException
+     */
     private void dumpPhoneInfo(PrintWriter pw) throws PackageManager.NameNotFoundException {
         //1.记录版本信息
         PackageManager packageManager = mContext.getPackageManager();
