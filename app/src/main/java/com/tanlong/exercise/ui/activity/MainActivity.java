@@ -9,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.tanlong.exercise.R;
+import com.tanlong.exercise.ndk.NdkHelper;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.databinding.DataBindingCategoryActivity;
 import com.tanlong.exercise.ui.activity.download.DownloadAppActivity;
@@ -50,6 +52,8 @@ public class MainActivity extends BaseActivity {
     public void initView() {
         mIvBack.setVisibility(View.INVISIBLE);
         mTvTitle.setText(R.string.app_name);
+
+        Logger.e("invoke ndk " + NdkHelper.addFromC(1, 2));
     }
 
     @OnItemClick(R.id.lv_activity_category)

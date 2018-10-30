@@ -46,7 +46,7 @@ public class HandlerExerciseActivity extends BaseActivity {
                 Message message = Message.obtain();
                 message.what = MSG_REFRESH_UI;
                 message.obj = "send Message 更新UI";
-                handlerMsg.sendMessage(message);
+                handlerMsg.sendMessageDelayed(message, 6 * 30 * 1000);
             }
         }).start();
     }
@@ -112,6 +112,6 @@ public class HandlerExerciseActivity extends BaseActivity {
         Logger.e("onDestroy");
         //建议进行GC操作, 触发Activity被销毁,释放弱引用
         System.gc();
-        delayHandler.removeMessages(MSG_REFRESH_UI);
+//        delayHandler.removeMessages(MSG_REFRESH_UI);
     }
 }
