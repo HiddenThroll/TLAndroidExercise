@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fefefe"
+    android:orientation="vertical"
     >
 
     <TextView
@@ -13,10 +14,6 @@
         android:gravity="center"
         android:background="@drawable/x"
         android:paddingBottom="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         />
 
     <LinearLayout
@@ -47,4 +44,17 @@
             />
 
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_write_file"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="写文件"
+        />
+    <Button
+        android:id="@+id/btn_read_file"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="读文件"
+        />
+</LinearLayout>

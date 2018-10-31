@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="activity"
+            type="com.tanlong.exercise.ui.activity.view.optimization.ViewStubExampleActivity"/>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <include layout="@layout/layout_toolbar"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="显示/隐藏"
+            android:onClick="@{()->activity.showHideNetworkError()}"
+            />
+
+        <ViewStub
+            android:id="@+id/stub_import"
+            android:layout="@layout/layout_network_error"
+            android:inflatedId="@+id/cl_network_error"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </LinearLayout>
+
+</layout>

@@ -24,6 +24,7 @@
         <item>ConstraintLayout练习</item>
         <item>CoordinatorLayout练习</item>
         <item>图片加载</item>
+        <item>View性能优化</item>
     </array>
 
     <array name="custom_view_category">
@@ -148,6 +149,11 @@
     <array name="image_load_category">
         <item>自定义ImageLoader</item>
         <item>加载高清长图</item>
+    </array>
+
+    <array name="view_optimization_category">
+        <item>使用merge标签减少布局层级</item>
+        <item>使用ViewStub按需加载View</item>
     </array>
 
     <!-- 百度地图 -->

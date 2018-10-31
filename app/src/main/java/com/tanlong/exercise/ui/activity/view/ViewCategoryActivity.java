@@ -19,6 +19,7 @@ import com.tanlong.exercise.ui.activity.view.fragment.FragmentCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.image.ImageLoadCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.listview.ListViewCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.notification.NotificationCategoryActivity;
+import com.tanlong.exercise.ui.activity.view.optimization.ViewOptimizationCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.recyclerview.RecyclerViewCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.surfaceview.SurfaceViewCategoryActivity;
 import com.tanlong.exercise.ui.activity.view.vieweffect.ViewEffectCategory;
@@ -108,6 +109,9 @@ public class ViewCategoryActivity extends BaseActivity {
                 break;
             case 13:
                 intent.setClass(this, ImageLoadCategoryActivity.class);
+                break;
+            case 14:
+                intent.setClass(this, ViewOptimizationCategoryActivity.class);
                 break;
             default:
                 break;

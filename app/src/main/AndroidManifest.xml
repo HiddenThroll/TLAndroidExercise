@@ -530,6 +530,9 @@
             android:exported="true"
             />
         <activity android:name=".ui.activity.view.image.LoadSuperBigImageActivity" />
+        <activity android:name=".ui.activity.view.optimization.ViewOptimizationCategoryActivity" />
+        <activity android:name=".ui.activity.view.optimization.MergeExampleActivity" />
+        <activity android:name=".ui.activity.view.optimization.ViewStubExampleActivity" />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"
