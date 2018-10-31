@@ -154,6 +154,7 @@
     <array name="view_optimization_category">
         <item>使用merge标签减少布局层级</item>
         <item>使用ViewStub按需加载View</item>
+        <item>减少重复背景引起的过度绘制</item>
     </array>
 
     <!-- 百度地图 -->

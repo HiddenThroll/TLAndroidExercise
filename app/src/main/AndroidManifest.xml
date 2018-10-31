@@ -533,6 +533,7 @@
         <activity android:name=".ui.activity.view.optimization.ViewOptimizationCategoryActivity" />
         <activity android:name=".ui.activity.view.optimization.MergeExampleActivity" />
         <activity android:name=".ui.activity.view.optimization.ViewStubExampleActivity" />
+        <activity android:name=".ui.activity.view.optimization.OverdrawBackgroundActivity" />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"

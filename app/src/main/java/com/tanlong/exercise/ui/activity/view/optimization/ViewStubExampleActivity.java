@@ -42,7 +42,6 @@ public class ViewStubExampleActivity extends BaseActivity {
             binding.stubImport.getViewStub().setVisibility(View.VISIBLE);
             clNetwork = findViewById(R.id.cl_network_error);
         } else {
-            Logger.e("binding.stubImport.getViewStub() is null");
             clNetwork.setVisibility(View.VISIBLE);
         }
     }

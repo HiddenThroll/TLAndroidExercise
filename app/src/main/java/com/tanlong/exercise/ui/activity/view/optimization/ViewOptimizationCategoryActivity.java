@@ -56,6 +56,9 @@ public class ViewOptimizationCategoryActivity extends BaseActivity {
             case 1:
                 intent.setClass(this, ViewStubExampleActivity.class);
                 break;
+            case 2:
+                intent.setClass(this, OverdrawBackgroundActivity.class);
+                break;
             default:
                 break;
         }
