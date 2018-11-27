@@ -43,6 +43,7 @@ public class LargeImageView extends View {
 
     private ExecutorService threadPool;
 
+    private int lastMoveX, lastMoveY;
 
     private static final BitmapFactory.Options options = new BitmapFactory.Options();
 
@@ -64,12 +65,7 @@ public class LargeImageView extends View {
             @Override
             public void run() {
                 bm = mDecoder.decodeRegion(mRect, options);
-                post(new Runnable() {
-                    @Override
-                    public void run() {
-                        invalidate();
-                    }
-                });
+                postInvalidate();
             }
         });
     }
@@ -82,14 +78,20 @@ public class LargeImageView extends View {
                 int moveY = (int) detector.getMoveY();
 
                 if (mImageWidth > getWidth()) {
-                    mRect.offset(-moveX, 0);
-                    checkWidth();
-                    decodeBitmap();
+                    if (lastMoveX != moveX) {
+                        lastMoveX = moveX;
+                        mRect.offset(-moveX, 0);
+                        checkWidth();
+                        decodeBitmap();
+                    }
                 }
                 if (mImageHeight > getHeight()) {
-                    mRect.offset(0, -moveY);
-                    checkHeight();
-                    decodeBitmap();
+                    if (lastMoveY != moveY) {
+                        lastMoveY = moveY;
+                        mRect.offset(0, -moveY);
+                        checkHeight();
+                        decodeBitmap();
+                    }
                 }
                 return true;
             }
@@ -98,13 +100,15 @@ public class LargeImageView extends View {
 
     public void setInputStream(InputStream is) {
         try {
+            //有的手机上, 如小米6, 在创建BitmapRegionDecoder后 InputStream已读完,
+            //inputStream需要读取的数据位置被更改(read返回-1)
+            //这就导致通过BitmapFactory.decodeStream无法获取图片宽高,为解决这个问题,既可以将InputStream复位
+            //也可以通过BitmapRegionDecoder获取图片宽高
+//            is.reset();
             mDecoder = BitmapRegionDecoder.newInstance(is, false);
-            BitmapFactory.Options tmpOptions = new BitmapFactory.Options();
-            // Grab the bounds for the scene dimensions
-            tmpOptions.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(is, null, tmpOptions);
-            mImageWidth = tmpOptions.outWidth;
-            mImageHeight = tmpOptions.outHeight;
+
+            mImageWidth = mDecoder.getWidth();
+            mImageHeight = mDecoder.getHeight();
 
             requestLayout();
             invalidate();
