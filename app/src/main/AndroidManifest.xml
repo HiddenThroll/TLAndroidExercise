@@ -534,6 +534,10 @@
         <activity android:name=".ui.activity.view.optimization.MergeExampleActivity" />
         <activity android:name=".ui.activity.view.optimization.ViewStubExampleActivity" />
         <activity android:name=".ui.activity.view.optimization.OverdrawBackgroundActivity" />
+        <activity android:name=".ui.activity.decode.DecodeCategoryActivity" />
+        <activity android:name=".ui.activity.decode.Base64DecodeActivity"
+            android:exported="true"
+            />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"

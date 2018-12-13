@@ -7,6 +7,7 @@
         <item>DataBinding</item>
         <item>下载更新</item>
         <item>Handler</item>
+        <item>编解码加解密</item>
     </array>
 
     <array name="view_category">
@@ -175,5 +176,8 @@
         <item>简单示例</item>
     </array>
 
+    <array name="decode_category">
+        <item>Base64编解码练习</item>
+    </array>
 
 </resources>

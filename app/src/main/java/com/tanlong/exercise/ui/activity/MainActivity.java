@@ -14,6 +14,7 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ndk.NdkHelper;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.databinding.DataBindingCategoryActivity;
+import com.tanlong.exercise.ui.activity.decode.DecodeCategoryActivity;
 import com.tanlong.exercise.ui.activity.download.DownloadAppActivity;
 import com.tanlong.exercise.ui.activity.handler.HandlerExerciseActivity;
 import com.tanlong.exercise.ui.activity.ipc.IPCCategoryActivity;
@@ -77,6 +78,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case 5:
                 intent.setClass(this, HandlerExerciseActivity.class);
+                break;
+            case 6:
+                intent.setClass(this, DecodeCategoryActivity.class);
                 break;
             default:
                 break;

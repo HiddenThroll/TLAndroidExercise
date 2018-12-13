@@ -16,7 +16,6 @@ import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -72,6 +71,8 @@ public class ViewPagerWelcomeActivity extends BaseActivity {
                 break;
             case R.id.btn_help:
                 showTips();
+                break;
+            default:
                 break;
         }
     }
