@@ -178,6 +178,7 @@
 
     <array name="decode_category">
         <item>Base64编解码练习</item>
+        <item>MD5加密练习</item>
     </array>
 
 </resources>
