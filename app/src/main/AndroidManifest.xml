@@ -539,6 +539,7 @@
             android:exported="true"
             />
         <activity android:name=".ui.activity.decode.MD5DecodeActivity" />
+        <activity android:name=".ui.activity.decode.AESDecodeActivity" />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"

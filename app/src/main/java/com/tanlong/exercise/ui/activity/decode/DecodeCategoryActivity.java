@@ -59,6 +59,7 @@ public class DecodeCategoryActivity extends BaseActivity {
                 intent.setClass(this, MD5DecodeActivity.class);
                 break;
             case 2:
+                intent.setClass(this, AESDecodeActivity.class);
                 break;
             case 3:
                 break;
