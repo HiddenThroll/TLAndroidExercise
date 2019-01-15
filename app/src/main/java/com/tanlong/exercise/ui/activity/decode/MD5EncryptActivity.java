@@ -14,7 +14,7 @@ import com.tanlong.exercise.util.ToastHelp;
  * MD5加密
  * @author Administrator
  */
-public class MD5DecodeActivity extends BaseActivity {
+public class MD5EncryptActivity extends BaseActivity {
     ActivityMd5DecodeBinding binding;
 
     @Override

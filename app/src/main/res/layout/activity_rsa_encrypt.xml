@@ -2,9 +2,10 @@
 <layout>
 
     <data>
+
         <variable
             name="activity"
-            type="com.tanlong.exercise.ui.activity.decode.MD5EncryptActivity"/>
+            type="com.tanlong.exercise.ui.activity.decode.RSAEncryptActivity" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,12 +15,20 @@
 
         <include layout="@layout/layout_toolbar"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="原内容"
+            android:layout_margin="16dp"
+            />
+
         <EditText
-            android:id="@+id/et_decode_content"
+            android:id="@+id/et_encode"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_margin="16dp"
             android:background="@drawable/bg_rectangle_empty_dddddd"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             />
 
         <LinearLayout
@@ -32,31 +41,38 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="16位加密"
+                android:text="加密"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:onClick="@{()->activity.doMD5Decode16()}"
+                android:onClick="@{()->activity.encodeContent()}"
                 />
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="32位加密"
+                android:text="解密"
                 android:layout_marginRight="16dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:onClick="@{()->activity.doMD5Decode32()}"
+                android:onClick="@{()->activity.decodeContent()}"
                 />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_result"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="加密结果:"
+            android:text="加密后内容"
             android:layout_margin="16dp"
             />
 
+        <EditText
+            android:id="@+id/et_decode"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/bg_rectangle_empty_dddddd"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            />
     </LinearLayout>
 </layout>

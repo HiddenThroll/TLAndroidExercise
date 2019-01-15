@@ -180,6 +180,7 @@
         <item>Base64编解码练习</item>
         <item>MD5加密练习</item>
         <item>AES加解密练习</item>
+        <item>RSA加解密练习</item>
     </array>
 
 </resources>

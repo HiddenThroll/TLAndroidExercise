@@ -15,7 +15,7 @@ import com.tanlong.exercise.util.ToastHelp;
 /**
  * @author 龙
  */
-public class AESDecodeActivity extends BaseActivity {
+public class AESEncryptActivity extends BaseActivity {
 
     ActivityAesDecodeBinding binding;
     String decodeMode;

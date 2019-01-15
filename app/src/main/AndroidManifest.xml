@@ -538,10 +538,11 @@
         <activity android:name=".ui.activity.decode.Base64DecodeActivity"
             android:exported="true"
             />
-        <activity android:name=".ui.activity.decode.MD5DecodeActivity" />
-        <activity android:name=".ui.activity.decode.AESDecodeActivity"
-            android:exported="true"
+        <activity android:name=".ui.activity.decode.MD5EncryptActivity" />
+        <activity android:name=".ui.activity.decode.AESEncryptActivity"
             />
+        <activity android:name=".ui.activity.decode.RSAEncryptActivity"
+            android:exported="true"/>
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"

@@ -129,7 +129,7 @@ public class RSAUtil {
     /**
      * 从文件中加载私钥
      *
-     * @param keyFileName 私钥文件名
+     * @param in 私钥输入流
      * @return 是否成功
      * @throws Exception
      */
