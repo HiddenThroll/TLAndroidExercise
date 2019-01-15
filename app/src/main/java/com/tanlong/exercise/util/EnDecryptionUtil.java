@@ -28,8 +28,9 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import Decoder.BASE64Decoder;
-
+/**
+ * @author 龙
+ */
 public class EnDecryptionUtil {
 /************************** Base64 begin *******************************************/
     /**
@@ -278,8 +279,7 @@ public class EnDecryptionUtil {
      */
     public static void loadPublicKey(String publicKeyStr) throws Exception {
         try {
-            BASE64Decoder base64Decoder = new BASE64Decoder();
-            byte[] buffer = base64Decoder.decodeBuffer(publicKeyStr);
+            byte[] buffer = EnDecryptionUtil.base64Decode(publicKeyStr);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(buffer);
             publicKey = (RSAPublicKey) keyFactory.generatePublic(keySpec);
@@ -287,8 +287,6 @@ public class EnDecryptionUtil {
             throw new Exception("无此算法");
         } catch (InvalidKeySpecException e) {
             throw new Exception("公钥非法");
-        } catch (IOException e) {
-            throw new Exception("公钥数据内容读取错误");
         } catch (NullPointerException e) {
             throw new Exception("公钥数据为空");
         }
@@ -329,8 +327,7 @@ public class EnDecryptionUtil {
      */
     public static void loadPrivateKey(String privateKeyStr) throws Exception {
         try {
-            BASE64Decoder base64Decoder = new BASE64Decoder();
-            byte[] buffer = base64Decoder.decodeBuffer(privateKeyStr);
+            byte[] buffer = EnDecryptionUtil.base64Decode(privateKeyStr);
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(buffer);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             privateKey = (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
@@ -338,8 +335,6 @@ public class EnDecryptionUtil {
             throw new Exception("无此算法");
         } catch (InvalidKeySpecException e) {
             throw new Exception("私钥非法");
-        } catch (IOException e) {
-            throw new Exception("私钥数据内容读取错误");
         } catch (NullPointerException e) {
             throw new Exception("私钥数据为空");
         }
@@ -384,7 +379,7 @@ public class EnDecryptionUtil {
      * @return 明文
      * @throws Exception 解密过程中的异常信息
      */
-    public byte[] decrypt(RSAPrivateKey privateKey, byte[] cipherData) throws Exception {
+    public static byte[] decrypt(RSAPrivateKey privateKey, byte[] cipherData) throws Exception {
         if (privateKey == null) {
             throw new Exception("解密私钥为空, 请设置");
         }
