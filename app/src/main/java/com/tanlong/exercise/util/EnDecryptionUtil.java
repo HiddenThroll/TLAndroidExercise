@@ -274,7 +274,7 @@ public class EnDecryptionUtil {
     /**
      * 从字符串中加载公钥
      *
-     * @param publicKeyStr 公钥数据字符串
+     * @param publicKeyStr -- 公钥数据字符串,已Base64编码
      * @throws Exception 加载公钥时产生的异常
      */
     public static void loadPublicKey(String publicKeyStr) throws Exception {
@@ -322,7 +322,7 @@ public class EnDecryptionUtil {
 
     /**
      * 从字符串中加载私钥
-     * @param privateKeyStr
+     * @param privateKeyStr -- 私钥数据字符串,已Base64编码
      * @throws Exception
      */
     public static void loadPrivateKey(String privateKeyStr) throws Exception {
