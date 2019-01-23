@@ -23,6 +23,7 @@ public class OverlapFragmentActivity extends BaseActivity {
     OverlapThreeFragment threeFragment;
     TabLayout tabLayout;
 
+    private final String CURRENT_TAB_POSITION = "current_tab_position";
     private final int INDEX_ONE = 0;
     private final int INDEX_TWO = 1;
     private final int INDEX_THREE = 2;
@@ -35,6 +36,10 @@ public class OverlapFragmentActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_overlap_fragment);
         binding.setActivity(this);
 
+        if (savedInstanceState != null) {
+            curPosition = savedInstanceState.getInt(CURRENT_TAB_POSITION, INDEX_ONE);
+        }
+
         initView();
     }
 
@@ -42,6 +47,23 @@ public class OverlapFragmentActivity extends BaseActivity {
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
         Logger.e("fragment is " + fragment.toString());
+        if (oneFragment == null && fragment instanceof OverlapOneFragment) {
+            Logger.e("onAttachFragment 赋值oneFragment");
+            oneFragment = (OverlapOneFragment) fragment;
+        } else if (twoFragment == null && fragment instanceof OverlapTwoFragment) {
+            Logger.e("onAttachFragment 赋值twoFragment");
+            twoFragment = (OverlapTwoFragment) fragment;
+        } else if (threeFragment == null && fragment instanceof OverlapThreeFragment) {
+            Logger.e("onAttachFragment 赋值threeFragment");
+            threeFragment = (OverlapThreeFragment) fragment;
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        int curTabPosition = tabLayout.getSelectedTabPosition();
+        outState.putInt(CURRENT_TAB_POSITION, curTabPosition);
+        super.onSaveInstanceState(outState);
     }
 
     private void initView() {
@@ -49,6 +71,7 @@ public class OverlapFragmentActivity extends BaseActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                Logger.e("select tab position is " + tab.getPosition());
                 showFragmentByPosition(tab.getPosition());
             }
 
@@ -59,11 +82,12 @@ public class OverlapFragmentActivity extends BaseActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                Logger.e("reselect tab position is " + tab.getPosition());
+                showFragmentByPosition(tab.getPosition());
             }
         });
 
-        showFragmentByPosition(curPosition);
+        tabLayout.getTabAt(curPosition).select();
     }
 
     private void showFragmentByPosition(int position) {
@@ -86,6 +110,7 @@ public class OverlapFragmentActivity extends BaseActivity {
     private void showOneFragment() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (oneFragment == null) {
+            Logger.e("oneFragment为null,新建");
             oneFragment = OverlapOneFragment.newInstance();
             transaction.add(R.id.fl_container, oneFragment);
         } else {
@@ -97,6 +122,7 @@ public class OverlapFragmentActivity extends BaseActivity {
     private void showTwoFragment() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (twoFragment == null) {
+            Logger.e("twoFragment为null,新建");
             twoFragment = OverlapTwoFragment.newInstance();
             transaction.add(R.id.fl_container, twoFragment);
         } else {
@@ -108,6 +134,7 @@ public class OverlapFragmentActivity extends BaseActivity {
     private void showThreeFragment() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (threeFragment == null) {
+            Logger.e("threeFragment为null,新建");
             threeFragment = OverlapThreeFragment.newInstance();
             transaction.add(R.id.fl_container, threeFragment);
         } else {
