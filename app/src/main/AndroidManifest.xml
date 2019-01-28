@@ -547,6 +547,7 @@
             />
         <activity android:name=".ui.activity.plugin.PluginExerciseActivity" />
         <activity android:name=".ui.activity.plugin.SimpleLoadDexActivity" />
+        <activity android:name=".ui.activity.plugin.ProxyActivity" />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"

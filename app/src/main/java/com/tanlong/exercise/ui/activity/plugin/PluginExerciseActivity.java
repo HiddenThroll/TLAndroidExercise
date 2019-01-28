@@ -55,6 +55,9 @@ public class PluginExerciseActivity extends BaseActivity {
             case 0:
                 intent.setClass(this, SimpleLoadDexActivity.class);
                 break;
+            case 1:
+                intent.setClass(this, ProxyActivity.class);
+                break;
             default:
                 break;
         }

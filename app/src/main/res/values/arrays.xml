@@ -186,7 +186,8 @@
     </array>
 
     <array name="plugin_category">
-        <item>简单加载外部Dex文件</item>
+        <item>简单加载模式</item>
+        <item>代理Activity模式</item>
     </array>
 
 </resources>
