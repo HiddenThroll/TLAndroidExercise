@@ -7,41 +7,42 @@ import android.util.Log;
  * 动态加载的插件Activity
  * @author 龙
  */
-public class RemoteActivity implements DLPlugin {
-    private final String TAG = "RemoteActivity";
+public class OldRemoteActivity implements DLPlugin {
+    private final String TAG = "OldRemoteActivity";
+    private final String ALFLASFKADFS = "OldRemoteActivity";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.e(TAG, "RemoteActivity onCreate");
+        Log.e(TAG, "OldRemoteActivity onCreate");
     }
 
     @Override
     public void onStart() {
-        Log.e(TAG, "RemoteActivity onStart");
+        Log.e(TAG, "OldRemoteActivity onStart");
     }
 
     @Override
     public void onRestart() {
-        Log.e(TAG, "RemoteActivity onRestart");
+        Log.e(TAG, "OldRemoteActivity onRestart");
     }
 
     @Override
     public void onResume() {
-        Log.e(TAG, "RemoteActivity onResume");
+        Log.e(TAG, "OldRemoteActivity onResume");
     }
 
     @Override
     public void onPause() {
-        Log.e(TAG, "RemoteActivity onPause");
+        Log.e(TAG, "OldRemoteActivity onPause");
     }
 
     @Override
     public void onStop() {
-        Log.e(TAG, "RemoteActivity onStop");
+        Log.e(TAG, "OldRemoteActivity onStop");
     }
 
     @Override
     public void onDestroy() {
-        Log.e(TAG, "RemoteActivity onDestroy");
+        Log.e(TAG, "OldRemoteActivity onDestroy");
     }
 }
