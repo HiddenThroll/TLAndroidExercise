@@ -17,6 +17,7 @@ import com.tanlong.exercise.ui.activity.databinding.DataBindingCategoryActivity;
 import com.tanlong.exercise.ui.activity.decode.DecodeCategoryActivity;
 import com.tanlong.exercise.ui.activity.download.DownloadAppActivity;
 import com.tanlong.exercise.ui.activity.handler.HandlerExerciseActivity;
+import com.tanlong.exercise.ui.activity.hotfix.HotFixSampleActivity;
 import com.tanlong.exercise.ui.activity.ipc.IPCCategoryActivity;
 import com.tanlong.exercise.ui.activity.map.MapCategoryActivity;
 import com.tanlong.exercise.ui.activity.plugin.PluginExerciseActivity;
@@ -85,6 +86,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case 7:
                 intent.setClass(this, PluginExerciseActivity.class);
+                break;
+            case 8:
+                intent.setClass(this, HotFixSampleActivity.class);
                 break;
             default:
                 break;
