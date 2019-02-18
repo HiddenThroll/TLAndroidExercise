@@ -10,12 +10,15 @@ import com.tanlong.exercise.databinding.ActivityHotFixSampleBinding;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.util.FixDexUtil;
 
+import java.io.File;
+
 /**
  * @author 龙
  */
 public class HotFixSampleActivity extends BaseActivity {
     ActivityHotFixSampleBinding binding;
-
+    private final String DEX_FILE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath()
+            + File.separator + "wxlz" + File.separator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,8 @@ public class HotFixSampleActivity extends BaseActivity {
 
     public void hotFix() {
         Logger.e("加载Dex补丁");
-        FixDexUtil.loadFixedDex(this, Environment.getExternalStorageDirectory());
+        File dexFile = new File(DEX_FILE_PATH);
+        dexFile.mkdirs();
+        FixDexUtil.loadFixedDex(this, dexFile);
     }
 }

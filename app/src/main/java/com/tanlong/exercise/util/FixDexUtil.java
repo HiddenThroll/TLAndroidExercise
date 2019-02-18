@@ -61,6 +61,11 @@ public class FixDexUtil {
         doDexInject(context, loadedDex);
     }
 
+    /**
+     * 合并Dex文件
+     * @param appContext -- 上下文
+     * @param loadedDex -- 补丁dex
+     */
     private static void doDexInject(Context appContext, HashSet<File> loadedDex) {
         // data/data/包名/files/optimize_dex（这个必须是自己程序下的目录）
         String optimizeDir = appContext.getFilesDir().getAbsolutePath() + File.separator + OPTIMIZE_DEX_DIR;
@@ -142,6 +147,7 @@ public class FixDexUtil {
         int k = i + j;
         // 创建一个类型为componentType，长度为k的新数组
         Object result = Array.newInstance(componentType, k);
+        //让补丁dex数组在原dex数组之前
         System.arraycopy(arrayLhs, 0, result, 0, i);
         System.arraycopy(arrayRhs, 0, result, i, j);
         return result;
