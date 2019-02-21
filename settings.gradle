@@ -1,1 +1,1 @@
-include ':app', ':maplibrary', ':woasislog'
+include ':app', ':maplibrary', ':woasislog', ':updateversion'

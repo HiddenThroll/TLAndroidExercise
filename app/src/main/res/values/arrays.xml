@@ -10,6 +10,7 @@
         <item>编解码加解密</item>
         <item>插件化</item>
         <item>热更新</item>
+        <item>在线版本更新</item>
     </array>
 
     <array name="view_category">

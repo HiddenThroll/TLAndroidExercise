@@ -549,6 +549,7 @@
         <activity android:name=".ui.activity.plugin.SimpleLoadDexActivity" />
         <activity android:name=".ui.activity.plugin.ProxyActivity" />
         <activity android:name=".ui.activity.hotfix.HotFixSampleActivity" />
+        <activity android:name=".ui.activity.updateversion.UpdateVersionActivity" />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"

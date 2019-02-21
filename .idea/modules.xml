@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Exercise.iml" filepath="$PROJECT_DIR$/Exercise.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/maplibrary/maplibrary.iml" filepath="$PROJECT_DIR$/maplibrary/maplibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/updateversion/updateversion.iml" filepath="$PROJECT_DIR$/updateversion/updateversion.iml" />
       <module fileurl="file://$PROJECT_DIR$/woasislog/woasislog.iml" filepath="$PROJECT_DIR$/woasislog/woasislog.iml" />
     </modules>
   </component>

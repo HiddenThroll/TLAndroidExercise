@@ -21,7 +21,9 @@ import com.tanlong.exercise.ui.activity.hotfix.HotFixSampleActivity;
 import com.tanlong.exercise.ui.activity.ipc.IPCCategoryActivity;
 import com.tanlong.exercise.ui.activity.map.MapCategoryActivity;
 import com.tanlong.exercise.ui.activity.plugin.PluginExerciseActivity;
+import com.tanlong.exercise.ui.activity.updateversion.UpdateVersionActivity;
 import com.tanlong.exercise.ui.activity.view.ViewCategoryActivity;
+
 
 
 import java.util.ArrayList;
@@ -89,6 +91,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case 8:
                 intent.setClass(this, HotFixSampleActivity.class);
+                break;
+            case 9:
+                intent.setClass(this, UpdateVersionActivity.class);
                 break;
             default:
                 break;
