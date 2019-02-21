@@ -15,9 +15,6 @@
     <!-- 蒙版效果需要 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
-    <!-- 在线更新安装包需要 -->
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
-
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
