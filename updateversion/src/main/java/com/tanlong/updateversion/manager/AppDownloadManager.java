@@ -56,11 +56,19 @@ public class AppDownloadManager {
      * 指定下载APK名称
      */
     private String apkName;
-
+    /**
+     * FileProvider使用的Auth
+     */
     private String fileProviderAuth;
 
     private IUpdateListener mUpdateListener;
 
+    /**
+     * 构造函数
+     * @param activity -- 运行在哪个Activity
+     * @param apkName -- 下载apk的命名
+     * @param fileProviderAuth -- FileProvider使用的Auth
+     */
     public AppDownloadManager(Activity activity, String apkName, String fileProviderAuth) {
         weakReference = new WeakReference<>(activity);
         mDownloadManager = (DownloadManager) weakReference.get().getSystemService(Context.DOWNLOAD_SERVICE);
@@ -77,6 +85,12 @@ public class AppDownloadManager {
         return apkFile;
     }
 
+    /**
+     * 下载Apk
+     * @param apkUrl -- Apk地址
+     * @param title -- 下载时通知栏展示的标题
+     * @param desc -- 下载时通知栏展示的描述
+     */
     public void downloadApk(String apkUrl, String title, String desc) {
         File apkFile = getApkFile();
         //在下载之前应该删除已有文件

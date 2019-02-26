@@ -547,6 +547,9 @@
         <activity android:name=".ui.activity.plugin.ProxyActivity" />
         <activity android:name=".ui.activity.hotfix.HotFixSampleActivity" />
         <activity android:name=".ui.activity.updateversion.UpdateVersionActivity" />
+        <activity android:name=".ui.activity.view.customviewgroup.TestViewGroupActivity"
+            android:exported="true"
+            />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"

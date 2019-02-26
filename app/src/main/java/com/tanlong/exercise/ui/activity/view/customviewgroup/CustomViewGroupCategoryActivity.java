@@ -66,6 +66,9 @@ public class CustomViewGroupCategoryActivity extends BaseActivity {
             case 4:
                 intent.setClass(this, ScrollConflictEx1Activity.class);
                 break;
+            case 5:
+                intent.setClass(this, TestViewGroupActivity.class);
+                break;
             default:
                 break;
         }

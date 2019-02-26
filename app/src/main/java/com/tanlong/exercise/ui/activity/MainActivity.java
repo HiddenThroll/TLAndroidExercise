@@ -2,6 +2,7 @@ package com.tanlong.exercise.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -23,11 +24,6 @@ import com.tanlong.exercise.ui.activity.map.MapCategoryActivity;
 import com.tanlong.exercise.ui.activity.plugin.PluginExerciseActivity;
 import com.tanlong.exercise.ui.activity.updateversion.UpdateVersionActivity;
 import com.tanlong.exercise.ui.activity.view.ViewCategoryActivity;
-
-
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +48,8 @@ public class MainActivity extends BaseActivity {
         String[] items = getResources().getStringArray(R.array.main_category);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_category, items);
         mLvCategory.setAdapter(adapter);
+
+//        test();
     }
 
     public void initView() {
@@ -107,26 +105,15 @@ public class MainActivity extends BaseActivity {
     }
 
     private void test() {
-        List<Integer> srcList = new ArrayList<>();
-        for (int i = 1; i <= 100; i++) {
-            srcList.add(i);
+        try {
+            Log.e(TAG, "files-path " + getFilesDir().getAbsolutePath());
+            Log.e(TAG, "cache-path " + getCacheDir().getAbsolutePath());
+            Log.e(TAG, "external-path " + Environment.getExternalStorageDirectory().getAbsolutePath());
+            Log.e(TAG, "external-files-path null " + getExternalFilesDir(null).getAbsolutePath());
+            Log.e(TAG, "external-files-path Environment.DIRECTORY_DOWNLOADS " + getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+            Log.e(TAG, "external-cache-path " + getExternalCacheDir().getAbsolutePath());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        long num = 1;
-        int index = 0;
-
-        while (srcList.size() > 1) {
-            if (num % 7 == 0) {
-                Log.e(TAG, "remove " + srcList.get(index) + " num is " + num);
-                srcList.remove(index);
-                index--;
-            }
-            index++;
-            num++;
-            if (index > srcList.size() - 1) {
-                index = 0;
-            }
-        }
-        Log.e(TAG, "result is " + srcList.get(0));
     }
 }
