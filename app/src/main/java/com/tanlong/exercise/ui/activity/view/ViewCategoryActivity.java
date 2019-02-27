@@ -25,7 +25,6 @@ import com.tanlong.exercise.ui.activity.view.surfaceview.SurfaceViewCategoryActi
 import com.tanlong.exercise.ui.activity.view.vieweffect.ViewEffectCategory;
 import com.tanlong.exercise.ui.activity.view.viewpager.ViewPagerCategoryActivity;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
