@@ -5,4 +5,7 @@
 
     <dimen name="text_size_info_small">12sp</dimen>
     <dimen name="text_size_info_normal">16sp</dimen>
+
+    <dimen name="chart_padding">16dp</dimen>
+    <dimen name="min_chart_size">100dp</dimen>
 </resources>

@@ -1,0 +1,87 @@
+<layout>
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tanlong.exercise.ui.activity.view.customviewgroup.InteractiveChartActivity" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{()->activity.zoomIn()}"
+                android:text="ZoomIn" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{()->activity.zoomOut()}"
+                android:text="ZoomOut" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{()->activity.panLeft()}"
+                android:text="panLeft" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{()->activity.panRight()}"
+                android:text="panRight" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{()->activity.panUp()}"
+                android:text="panUp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{()->activity.panDown()}"
+                android:text="panDown" />
+
+        </LinearLayout>
+
+        <com.tanlong.exercise.ui.view.customview.interativechart.InteractiveLineGraphView
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/chart_padding"
+            app:axisColor="#d000"
+            app:axisThickness="2dp"
+            app:dataColor="#a6c"
+            app:dataThickness="8dp"
+            app:gridColor="#2000"
+            app:gridThickness="1dp"
+            app:labelSeparation="10dp"
+            app:labelTextColor="#d000"
+            app:labelTextSize="14sp" />
+    </LinearLayout>
+</layout>
+
+

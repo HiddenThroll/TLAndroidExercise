@@ -51,6 +51,7 @@
         <item>GestureLockViewGroup</item>
         <item>解决滑动冲突练习-1</item>
         <item>理清View事件分发机制</item>
+        <item>Google Sample: InteractiveChart</item>
     </array>
 
     <array name="list_view_category">

@@ -550,6 +550,9 @@
         <activity android:name=".ui.activity.view.customviewgroup.TestViewGroupActivity"
             android:exported="true"
             />
+        <activity android:name=".ui.activity.view.customviewgroup.InteractiveChartActivity"
+            android:exported="true"
+            />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"

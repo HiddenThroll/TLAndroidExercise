@@ -1,4 +1,4 @@
-package com.tanlong.exercise.ui.activity.view.customview;
+package com.tanlong.exercise.ui.view.customview;
 
 import android.content.Context;
 import android.graphics.Canvas;

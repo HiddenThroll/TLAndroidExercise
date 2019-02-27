@@ -69,6 +69,9 @@ public class CustomViewGroupCategoryActivity extends BaseActivity {
             case 5:
                 intent.setClass(this, TestViewGroupActivity.class);
                 break;
+            case 6:
+                intent.setClass(this, InteractiveChartActivity.class);
+                break;
             default:
                 break;
         }
