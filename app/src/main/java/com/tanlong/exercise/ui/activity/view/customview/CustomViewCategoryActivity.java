@@ -88,6 +88,9 @@ public class CustomViewCategoryActivity extends BaseActivity {
             case 10:
                 intent.setClass(this, SimpleVideoControlActivity.class);
                 break;
+            case 11:
+                intent.setClass(this, SimpleScrolledViewActivity.class);
+                break;
             default:
                 break;
         }

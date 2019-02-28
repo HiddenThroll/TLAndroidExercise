@@ -557,6 +557,9 @@
             android:exported="true"
             android:screenOrientation="landscape"
             />
+        <activity android:name=".ui.activity.view.customview.SimpleScrolledViewActivity"
+            android:exported="true"
+            />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"
