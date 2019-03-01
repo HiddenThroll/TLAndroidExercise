@@ -560,6 +560,7 @@
         <activity android:name=".ui.activity.view.customview.SimpleScrolledViewActivity"
             android:exported="true"
             />
+        <activity android:name=".ui.activity.view.vieweffect.TouchDelegateActivity" />
 
         <provider
             android:authorities="com.tanlong.exercise.book.provider"

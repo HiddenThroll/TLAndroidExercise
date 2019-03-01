@@ -74,6 +74,7 @@
         <item>根据图片动态改变颜色</item>
         <item>Tint和Clipping</item>
         <item>可拖动ImageView</item>
+        <item>增加View响应区域</item>
     </array>
 
     <array name="fragment_category">

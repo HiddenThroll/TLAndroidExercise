@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -76,6 +75,9 @@ public class ViewEffectCategory extends BaseActivity {
                 break;
             case 6:
                 intent.setClass(this, DragImageViewActivity.class);
+                break;
+            case 7:
+                intent.setClass(this, TouchDelegateActivity.class);
                 break;
             default:
                 break;
