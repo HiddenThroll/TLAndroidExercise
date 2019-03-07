@@ -13,6 +13,7 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
 import com.tanlong.exercise.ui.activity.view.fragment.dataload.LoadDataActivity;
 import com.tanlong.exercise.ui.activity.view.fragment.datatransfer.ListArticleActivity;
+import com.tanlong.exercise.ui.activity.view.fragment.lazyload.FragmentLazyLoadActivity;
 import com.tanlong.exercise.ui.activity.view.fragment.overlap.OverlapFragmentActivity;
 import com.tanlong.exercise.util.ToastHelp;
 
@@ -60,6 +61,9 @@ public class FragmentCategoryActivity extends BaseActivity {
                         break;
                     case 3:
                         intent.setClass(FragmentCategoryActivity.this, OverlapFragmentActivity.class);
+                        break;
+                    case 4:
+                        intent.setClass(FragmentCategoryActivity.this, FragmentLazyLoadActivity.class);
                         break;
                     default:
                         break;

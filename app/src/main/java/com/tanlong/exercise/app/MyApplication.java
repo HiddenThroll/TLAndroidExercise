@@ -24,7 +24,7 @@ public class MyApplication extends Application {
         initLog();
         initReservoir();
         initCrashHandler();
-        initLeakCanary();
+//        initLeakCanary();
     }
 
     private void initLog() {

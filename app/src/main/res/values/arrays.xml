@@ -82,6 +82,7 @@
         <item>Fragment之间数据传递</item>
         <item>屏幕旋转时处理网络加载数据</item>
         <item>Activity意外销毁后Fragment重叠显示</item>
+        <item>Fragment懒加载</item>
     </array>
 
     <array name="viewpager_category">
