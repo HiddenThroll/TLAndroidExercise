@@ -13,7 +13,7 @@
         android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        custom:custom_volume_bar_bg="@mipmap/ic_launcher"
+        custom:custom_volume_bar_bg="@drawable/ic_launcher"
         custom:custom_volume_bar_circle_width="16dp"
         custom:custom_volume_bar_count="12"
         custom:custom_volume_bar_fir_color="#dddddd"

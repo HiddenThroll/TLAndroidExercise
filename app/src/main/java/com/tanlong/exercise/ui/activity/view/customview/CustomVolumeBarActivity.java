@@ -16,7 +16,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Administrator on 2016/5/17.
+ *
+ * @author Administrator
+ * @date 2016/5/17
  */
 public class CustomVolumeBarActivity extends BaseActivity {
 

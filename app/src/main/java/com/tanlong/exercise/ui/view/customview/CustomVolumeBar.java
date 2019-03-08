@@ -16,7 +16,9 @@ import com.tanlong.exercise.R;
 
 /**
  * 音频控制Bar,有一定实用价值
- * Created by Administrator on 2016/4/25.
+ *
+ * @author Administrator
+ * @date 2016/4/25
  */
 public class CustomVolumeBar extends View {
 
