@@ -31,11 +31,17 @@ public class CustomImageView extends View {
 
     private Paint mPaint;
     private TextPaint mTextPaint;
-    private Rect mRect;// 内容区
-    private Rect mTextRect;// 文本区
+    /**
+     * 内容区
+     */
+    private Rect mRect;
+    /**
+     * 文本区
+     */
+    private Rect mTextRect;
 
-    private int mWidth;// View宽度
-    private int mHeight;// View高度
+    private int mWidth;
+    private int mHeight;
     private Context mContext;
 
     private static final int IMAGE_SCALE_FITXY = 0;
@@ -69,6 +75,9 @@ public class CustomImageView extends View {
                     mTextSize = array.getDimensionPixelSize(attr, DisplayUtil.dip2px(context, 16f));
                     break;
                 case R.styleable.CustomImageView_custom_image_src:
+                    //对于Launcher图标,在8.0及以上系统,通过BitmapFactory.decodeResource方法获取
+                    //应传入 R.drawable.launcher 而 不是R.mipmap.launcher
+                    //R.mipmap.launcher会查找mipmap-anydpi-v26中的launcher(xml文件),而不是不同分辨率下的launcher图标
                     int src = array.getResourceId(attr, 0);
                     mImage = BitmapFactory.decodeResource(context.getResources(), src);
                     break;
@@ -97,7 +106,8 @@ public class CustomImageView extends View {
         int specMode = MeasureSpec.getMode(widthMeasureSpec);
         int specSize = MeasureSpec.getSize(widthMeasureSpec);
 
-        if (specMode == MeasureSpec.EXACTLY) {// 精确值
+        if (specMode == MeasureSpec.EXACTLY) {
+            // 对应精确值(dp) 或者 match_parent
             mWidth = specSize;
         } else {
             // 宽度是文字与图片宽度中的最大值
@@ -146,7 +156,6 @@ public class CustomImageView extends View {
          * 当前设置的宽度小于字体需要的宽度，将字体改为xxx...
          */
         if (mWidth < mTextRect.width()) {
-//            TextPaint paint = new TextPaint(mPaint);
             mTextPaint.set(mPaint);
             String msg = TextUtils.ellipsize(mText, mTextPaint,
                     (float) mWidth - getPaddingLeft() - getPaddingRight(),
@@ -175,4 +184,5 @@ public class CustomImageView extends View {
         }
 
     }
+
 }
