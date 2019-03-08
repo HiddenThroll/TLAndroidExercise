@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Region;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -18,7 +17,9 @@ import java.util.Random;
 
 /**
  * 自定义TitleView, 练习使用
- * Created by Administrator on 2016/4/15.
+ *
+ * @author Administrator
+ * @date 2016/4/15
  */
 public class CustomTitleView extends View {
 
@@ -29,7 +30,10 @@ public class CustomTitleView extends View {
     private float mTextSize;
 
     private Paint mPaint;
-    private Rect mRect;// 绘制区域
+    /**
+     * 绘制区域
+     */
+    private Rect mRect;
 
     public CustomTitleView(Context context) {
         this(context, null);
@@ -58,6 +62,8 @@ public class CustomTitleView extends View {
                 case R.styleable.CustomTitleView_custom_title_size:
                     mTextSize = array.getDimensionPixelSize(attr, DisplayUtil.sp2px(context, 16));
                     break;
+                default:
+                    break;
             }
         }
         array.recycle();// 使用完毕记得释放资源
@@ -65,8 +71,6 @@ public class CustomTitleView extends View {
         mPaint = new Paint();
         mPaint.setTextSize(mTextSize);
         mRect = new Rect();
-        // 返回能够包裹绘制内容的最小矩形
-        mPaint.getTextBounds(mText, 0, mText.length(), mRect);
 
         this.setOnClickListener(new OnClickListener() {
             @Override
@@ -77,7 +81,6 @@ public class CustomTitleView extends View {
         });
     }
 
-    //TODO 覆写onMeasure方法
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
@@ -86,10 +89,13 @@ public class CustomTitleView extends View {
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
         int width, height;
 
-        if (widthMode == MeasureSpec.EXACTLY) {// 使用指定宽度
+        if (widthMode == MeasureSpec.EXACTLY) {
+            // 使用指定宽度
             width = widthSize;
-        } else {// 计算应有宽度
+        } else {
+            // 计算应有宽度
             mPaint.setTextSize(mTextSize);
+            // 返回能够包裹绘制内容的最小矩形
             mPaint.getTextBounds(mText, 0, mText.length(), mRect);
             width = getPaddingLeft() + mRect.width() + getPaddingRight();
         }
@@ -104,7 +110,6 @@ public class CustomTitleView extends View {
         setMeasuredDimension(width, height);
     }
 
-    // TODO 覆写onDraw方法
     @Override
     protected void onDraw(Canvas canvas) {
         mPaint.setColor(Color.YELLOW);
@@ -112,8 +117,9 @@ public class CustomTitleView extends View {
 
         mPaint.setColor(mTextColor);
         /**
-         * 设置文字绘制起点为 getWidth() / 2 - mRect.width() / 2, getHeight() / 2 +
-         *  mRect.height() / 2，纵坐标设置为getHeight() / 2 + mRect.height() / 2是因为文字绘制起点在其左下角
+         * 因为文字绘制起点在View左下角
+         * 故设置文字绘制起点为 getWidth() / 2 - mRect.width() / 2, getHeight() / 2 +
+         *  mRect.height() / 2，纵坐标设置为getHeight() / 2 + mRect.height() / 2
          */
         canvas.drawText(mText, getWidth() / 2 - mRect.width() / 2, getHeight() / 2 +
                 mRect.height() / 2, mPaint);
