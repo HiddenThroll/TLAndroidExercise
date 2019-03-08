@@ -13,6 +13,8 @@ import com.tanlong.exercise.R;
 import com.tanlong.exercise.util.DisplayUtil;
 import com.tanlong.exercise.util.LogTool;
 
+import java.util.concurrent.Executors;
+
 
 /**
  * 自定义CircleView，模拟等待效果
@@ -24,6 +26,9 @@ public class CustomCircleView extends View {
      * 圆环宽度
      */
     private float mCircleWidth;
+    /**
+     * 绘制速度
+     */
     private float mSpeed;
     private int mFirCircleColor;
     private int mSecCircleColor;
@@ -38,9 +43,14 @@ public class CustomCircleView extends View {
      * 用于定义的圆弧的形状和大小的界限
      */
     private RectF mRectF;
-
-    private int center;// 圆心
-    private int radius;// 半径
+    /**
+     * 圆心
+     */
+    private int center;
+    /**
+     * 半径
+     */
+    private int radius;
     /**
      * 是否应该开始下一个
      */
@@ -75,22 +85,22 @@ public class CustomCircleView extends View {
                 case R.styleable.CustomCircle_custom_circle_sec_color:
                     mSecCircleColor = array.getColor(index, Color.RED);
                     break;
+                default:
+                    break;
             }
         }
         array.recycle();
 
         mPaint = new Paint();
         // 绘图线程
-        new Thread() {
+        Executors.newSingleThreadExecutor().submit(new Runnable() {
+            @Override
             public void run() {
                 while (true) {
                     mProgress++;
                     if (mProgress == 360) {
                         mProgress = 0;
-                        if (!isNext)
-                            isNext = true;
-                        else
-                            isNext = false;
+                        isNext = !isNext;
                     }
                     postInvalidate();//非UI线程, 使用postInvalidate更新View
                     try {
@@ -100,23 +110,19 @@ public class CustomCircleView extends View {
                     }
                 }
             }
-
-            ;
-        }.start();
+        });
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        mPaint.setStrokeWidth(mCircleWidth);// 设置圆环宽度
+        // 设置圆环宽度
+        mPaint.setStrokeWidth(mCircleWidth);
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
         center = getWidth() / 2;
         radius = (int) (center - mCircleWidth / 2);
         if (mRectF == null) {
             mRectF = new RectF(center - radius, center - radius, center + radius, center + radius);
-            LogTool.e("CustomCircleView", "mCircleWidth is " + mCircleWidth);
-            LogTool.e("CustomCircleView", "center is " + center);
-            LogTool.e("CustomCircleView", "radius is " + radius);
         }
 
         if (!isNext) {

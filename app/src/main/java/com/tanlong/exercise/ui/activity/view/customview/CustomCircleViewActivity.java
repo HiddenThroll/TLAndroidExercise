@@ -16,7 +16,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by 龙 on 2016/6/27.
+ *
+ * @author 龙
+ * @date 2016/6/27
  */
 public class CustomCircleViewActivity extends BaseActivity {
 
