@@ -69,10 +69,13 @@ public class CustomImageView extends View {
                     mTextSize = array.getDimensionPixelSize(attr, DisplayUtil.dip2px(context, 16f));
                     break;
                 case R.styleable.CustomImageView_custom_image_src:
-                    mImage = BitmapFactory.decodeResource(context.getResources(), array.getResourceId(attr, 0));
+                    int src = array.getResourceId(attr, 0);
+                    mImage = BitmapFactory.decodeResource(context.getResources(), src);
                     break;
                 case R.styleable.CustomImageView_custom_image_scale:
                     mImageScale = array.getInt(attr, 0);
+                    break;
+                default:
                     break;
             }
         }

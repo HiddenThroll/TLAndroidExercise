@@ -15,7 +15,9 @@ import butterknife.OnClick;
 
 /**
  *
- * Created by Administrator on 2016/5/16.
+ *
+ * @author Administrator
+ * @date 2016/5/16
  */
 public class CustomImageViewActivity extends BaseActivity {
 
