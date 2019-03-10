@@ -47,7 +47,7 @@ public class LazyLoadFragment extends Fragment {
         Log.e(TAG, "isVisibleToUser " + isVisibleToUser);
         if (isVisibleToUser) {
             isUIVisiable = true;
-            //ViewPager会缓存至少相邻一页Fragment,当切换Fragment时,会回调setUserVisibleHint方法
+            //ViewPager会缓存至少相邻一页Fragment,当切换Fragment时,会调用setUserVisibleHint方法
             //这里再次触发懒加载
             lazyLoad();
         } else {
