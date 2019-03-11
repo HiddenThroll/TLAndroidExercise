@@ -1,6 +1,7 @@
 package com.tanlong.exercise.ui.activity.view.customview;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,12 +13,17 @@ import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.ui.view.customview.CustomSimpleClock;
 
 
+import java.util.Date;
+import java.util.concurrent.Executors;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Administrator on 2017/3/20.
+ *
+ * @author Administrator
+ * @date 2017/3/20
  */
 
 public class CustomSimpleClockActivity extends BaseActivity {
@@ -31,6 +37,8 @@ public class CustomSimpleClockActivity extends BaseActivity {
     @BindView(R.id.custom_simple_clock)
     CustomSimpleClock customSimpleClock;
 
+    private boolean isStartClock = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +47,26 @@ public class CustomSimpleClockActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         initView();
+        startClock();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isStartClock = false;
+    }
+
+    private void startClock() {
+        Executors.newSingleThreadExecutor().submit(new Runnable() {
+            @Override
+            public void run() {
+                while (isStartClock) {
+                    customSimpleClock.setCurDate(new Date());
+
+                    SystemClock.sleep(200);
+                }
+            }
+        });
     }
 
     private void initView() {
@@ -54,6 +82,8 @@ public class CustomSimpleClockActivity extends BaseActivity {
                 break;
             case R.id.btn_help:
                 showTips();
+                break;
+            default:
                 break;
         }
     }
