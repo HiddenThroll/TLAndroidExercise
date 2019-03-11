@@ -79,6 +79,8 @@ public class ScheduleChart extends View {
                 case R.styleable.ScheduleChart_line_height:
                     mLineHeight = typedArray.getDimension(index, DisplayUtil.dip2px(context, 300));
                     break;
+                default:
+                    break;
             }
         }
 

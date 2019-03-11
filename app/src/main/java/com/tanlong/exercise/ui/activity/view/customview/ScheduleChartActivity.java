@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tanlong.exercise.R;
 import com.tanlong.exercise.model.entity.OfficialCarSchedule;
 import com.tanlong.exercise.ui.activity.base.BaseActivity;
+import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.ui.view.customview.ScheduleChart;
 import com.tanlong.exercise.ui.view.customviewgroup.timepopupwindow.TimePopupWindow;
 import com.tanlong.exercise.util.DateUtil;
@@ -25,12 +27,16 @@ import butterknife.ButterKnife;
 
 /**
  * 时间分配表
- * Created by 龙 on 2016/9/11.
+ *
+ * @author 龙
+ * @date 2016/9/11
  */
 public class ScheduleChartActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.btn_help)
+    Button btnHelp;
     @BindView(R.id.schedule_chart)
     ScheduleChart scheduleChart;
     @BindView(R.id.iv_back)
@@ -58,12 +64,10 @@ public class ScheduleChartActivity extends BaseActivity implements View.OnClickL
 
     private void initView() {
         tvTitle.setText(R.string.schedule_chart);
+        btnHelp.setVisibility(View.VISIBLE);
     }
 
     private void initData() {
-        List<OfficialCarSchedule> scheduleTime = new ArrayList<>();
-        List<OfficialCarSchedule> useTime = new ArrayList<>();
-
 
     }
 
@@ -73,6 +77,7 @@ public class ScheduleChartActivity extends BaseActivity implements View.OnClickL
         tvScheduleTimeEnd.setOnClickListener(this);
         tvSelectTimeStart.setOnClickListener(this);
         tvSelectTimeEnd.setOnClickListener(this);
+        btnHelp.setOnClickListener(this);
     }
 
     @Override
@@ -92,6 +97,11 @@ public class ScheduleChartActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.tv_select_time_end:
                 selectTime(3);
+                break;
+            case R.id.btn_help:
+                showTips();
+                break;
+            default:
                 break;
         }
     }
@@ -116,6 +126,8 @@ public class ScheduleChartActivity extends BaseActivity implements View.OnClickL
                     case 3:
                         tvSelectTimeEnd.setText(selectDate);
                         break;
+                    default:
+                        break;
                 }
 
                 changeScheduleTime();
@@ -125,6 +137,9 @@ public class ScheduleChartActivity extends BaseActivity implements View.OnClickL
         timePopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
+    /**
+     * 改变已分配时间
+     */
     private void changeScheduleTime() {
         List<OfficialCarSchedule> scheduleTime = new ArrayList<>();
 
@@ -147,6 +162,9 @@ public class ScheduleChartActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+    /**
+     * 改变选择时间
+     */
     private void changeSelectTime() {
         List<OfficialCarSchedule> scheduleTime = new ArrayList<>();
 
@@ -167,5 +185,14 @@ public class ScheduleChartActivity extends BaseActivity implements View.OnClickL
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public void showTips() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("1. 根据时间绘制对应矩形块\n")
+                .append("2. 按照已分配时间、已选择时间和冲突时间的顺序绘制\n");
+
+        ShowTipsFragment fragment = ShowTipsFragment.newInstance(sb.toString());
+        fragment.show(getSupportFragmentManager(), "");
     }
 }

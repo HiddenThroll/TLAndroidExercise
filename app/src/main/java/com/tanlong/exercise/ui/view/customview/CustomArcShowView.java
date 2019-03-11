@@ -96,8 +96,8 @@ public class CustomArcShowView extends View {
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setColor(mArcColor);
-
-        int sweepAngle = currentCount * 360 / mTotalCount;// 计算圆弧扫过弧度
+        // 计算圆弧扫过弧度
+        int sweepAngle = currentCount * 360 / mTotalCount;
         canvas.drawArc(mCircleRect, -90, sweepAngle, false, mPaint);
 
         // 画中间圆形
@@ -106,7 +106,6 @@ public class CustomArcShowView extends View {
         canvas.drawCircle(center, center, circleRadius, mPaint);
 
         // 画中间文字
-//        Rect mTextRect = new Rect();
         String text = NumberUtil.keepTwoDecimal((currentCount / (float) mTotalCount) * 100) + "%";
         mPaint.setTextSize(mTextSize);
         mPaint.setColor(mTextColor);
