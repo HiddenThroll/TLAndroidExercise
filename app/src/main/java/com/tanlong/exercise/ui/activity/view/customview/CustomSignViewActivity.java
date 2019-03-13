@@ -1,9 +1,13 @@
 package com.tanlong.exercise.ui.activity.view.customview;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,9 +19,11 @@ import com.tanlong.exercise.ui.fragment.dialog.ShowTipsFragment;
 import com.tanlong.exercise.ui.fragment.dialog.SignDialogFragment;
 import com.tanlong.exercise.ui.view.customview.CustomSignView;
 import com.tanlong.exercise.util.ImageTool;
+import com.tanlong.exercise.util.ToastHelp;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.util.concurrent.Executors;
 
 
 import butterknife.BindView;
@@ -29,6 +35,8 @@ import butterknife.OnClick;
  */
 
 public class CustomSignViewActivity extends BaseActivity {
+
+    private final int PERMISSION_CODE_FILE = 1;
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -70,23 +78,45 @@ public class CustomSignViewActivity extends BaseActivity {
                 mCvSign.resetSign();
                 break;
             case R.id.btn_save:
-                saveSign();
+                requestFilePermission() ;
+                break;
+            default:
                 break;
         }
     }
 
     MyHandler handler = new MyHandler(this);
 
+    private void requestFilePermission() {
+        ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_CODE_FILE);
+    }
+
+    /**
+     * 保存签名文件,先动态申请读写权限
+     */
     private void saveSign() {
         final Bitmap bitmap = mCvSign.getSignBitmap();
-        new Thread(new Runnable() {
+        Executors.newSingleThreadExecutor().submit(new Runnable() {
             @Override
             public void run() {
                 mSignFile = ImageTool.saveBitmapToFile(CustomSignViewActivity.this, mSignFilePath,
                         bitmap);
                 handler.sendEmptyMessage(1);
             }
-        }).start();
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_CODE_FILE && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                saveSign();
+            } else {
+                ToastHelp.showShortMsg(this, "请授予读写文件权限");
+            }
+        }
     }
 
     private static class MyHandler extends Handler {
@@ -101,6 +131,8 @@ public class CustomSignViewActivity extends BaseActivity {
             switch (msg.what) {
                 case 1:
                     activity.showSignDialog();
+                    break;
+                default:
                     break;
             }
         }

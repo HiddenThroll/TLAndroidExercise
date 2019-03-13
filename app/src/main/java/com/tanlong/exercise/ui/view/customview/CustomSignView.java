@@ -21,7 +21,10 @@ import com.tanlong.exercise.util.DisplayUtil;
 public class CustomSignView extends View {
 
     private Paint mPaint;
-    private Bitmap mBitmap;//缓存Bitmap
+    /**
+     * 缓存Bitmap
+     */
+    private Bitmap mBitmap;
     private Canvas mCanvas;
     private Path mPath;
     private float startX;
@@ -53,10 +56,13 @@ public class CustomSignView extends View {
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(PANIT_WIDTH);
-        mPaint.setAntiAlias(true);//设置抗锯齿
-        mPaint.setStrokeJoin(Paint.Join.ROUND);//让Path的连接变得圆滑
+        //设置抗锯齿
+        mPaint.setAntiAlias(true);
+        //让Path的连接变得圆滑
+        mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setColor(Color.BLACK);//画笔颜色
+        //画笔颜色
+        mPaint.setColor(Color.BLACK);
 
         mPath = new Path();
 
@@ -83,6 +89,8 @@ public class CustomSignView extends View {
                 break;
             case MotionEvent.ACTION_UP:
                 canvasEnd();
+                break;
+            default:
                 break;
         }
         invalidate();
@@ -116,8 +124,10 @@ public class CustomSignView extends View {
     }
 
     public void resetSign() {
-        mPath.reset();// 重置路径
-        mCanvas.drawColor(BACKGROUND_COLOR);//清空已绘制内容
+        // 重置路径
+        mPath.reset();
+        //清空已绘制内容
+        mCanvas.drawColor(BACKGROUND_COLOR);
         invalidate();
     }
 
